@@ -77,16 +77,23 @@ let moments = dataFile.map(d => moment(d.ctime, 'MM/DD/YYYY'))
 let maxDate = moment.max(moments)
 let minDate = moment.min(moments)
 // numArray = numArray.sort((a, b) => a - b);
-let sizes = dataFile.map(s => s.size )
+var sizes = dataFile.map(s => s.size )
+
 
 sizes = sizes.sort((a, b) => a - b)
+
+console.log(sizes)
+if(sizes.length == 0) {
+  sizes = [0]  
+} 
+
 
 console.log("sizes", sizes[sizes.length - 1])
 
 document.getElementById("largest-file").innerHTML = sizes[sizes.length - 1]
 
     
-    document.getElementById("oldest-file").innerHTML = minDate
+    document.getElementById("oldest-file").innerHTML = minDate.format("DD MMM YY")
     document.getElementById("human-oldest").innerHTML = minDate.fromNow()
     
     console.log("Max Date", maxDate.format('DD-MM-YYYY'))
@@ -131,8 +138,8 @@ document.getElementById("largest-file").innerHTML = sizes[sizes.length - 1]
 // Chart options
 const options = {
   chart: {
-    height: 450,
-    width: "30%",
+    height: 350,
+    width: "40%",
     type: "bar",
     background: "#f4f4f4",
     foreColor: "#333"
