@@ -1,7 +1,7 @@
-var myButton = document.getElementById("clickButton");
+//var myButton = document.getElementById("clickButton");
 var myText = document.getElementById("helloText");
 
-myButton.addEventListener('click', doSomething, false)
+//myButton.addEventListener('click', doSomething, false)
 
 
 

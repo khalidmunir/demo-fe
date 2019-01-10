@@ -80,11 +80,59 @@ fileListHtml = dataFile.map((src, index) => `
         </tr>
 
             `).join('\n')
-            
-            
-console.log("THe FileList ", fileListHtml)   
 
-document.getElementById("table-block").innerHTML = fileListHtml
+
+
+
+var theader = `<table class="table table-striped jambo_table bulk_action"> 
+                        <thead> 
+                            <tr class="headings$"> 
+                                <th>
+                                    <div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" id="check-all" class="flat" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                </th>
+                                <th class="column-title" style="display: table-cell;">Invoice </th>
+                                <th class="column-title" style="display: table-cell;">Invoice Date </th>
+                                <th class="column-title" style="display: table-cell;">Order </th>
+                                <th class="column-title" style="display: table-cell;">Bill to Name </th>
+                                <th class="column-title" style="display: table-cell;">Status </th>
+                                <th class="column-title" style="display: table-cell;">Amount </th>
+                                <th class="column-title no-link last" style="display: table-cell;"><span class="nobr">Action</span>
+                                </th>
+                                <th class="bulk-actions" colspan="7" style="display: none;">
+                                    <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt">1 Records Selected</span> ) <i class="fa fa-chevron-down"></i></a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>`; 
+                        
+                        
+                        
+                            
+                            
+                            // <tr class="odd pointer">
+                            //     <td class="a-center ">
+                            //         <div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" class="flat" name="table_records" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                            //     </td>
+                            //     <td class=" ">121000039</td>
+                            //     <td class=" ">May 28, 2014 11:30:12 PM</td>
+                            //     <td class=" ">121000208</td>
+                            //     <td class=" ">John Blank L</td>
+                            //     <td class=" ">Paid</td>
+                            //     <td class="a-right a-right ">$741.20</td>
+                            //     <td class=" last"><a href="#">View</a>
+                            //     </td>
+                            // </tr>
+                        
+
+
+var tableFooter = "</tbody> \
+                    </table>"
+
+var fullTable = theader + fileListHtml  + tableFooter     
+            
+console.log("The FileList ", fileListHtml)   
+
+document.getElementById("table-block").innerHTML = fullTable
 
 
 let moments = dataFile.map(d => moment(d.ctime, 'MM/DD/YYYY'))
@@ -131,17 +179,17 @@ document.getElementById("largest-file").innerHTML = sizes[sizes.length - 1] + " 
   // Chart.defaults.global.defaultFontColor = "#777";
   
   function genRandom() {
-    return Math.floor((Math.random() * 10) + 4);
+    return Math.floor((Math.random() * 10) + 1);
   }
 
   let massPopChart = new Chart(myChart, {
     type: "bar", // bar, horizontalBar, pie, line, doughnut, radar, polarArea
     data: {
       labels: [
-        "Boston",
-        "Worcester",
-        "Springfield",
-        "Lowell"
+        "PII",
+        "PCI",
+        "SPEC",
+        "RET"
       ],
       datasets: [
         {
@@ -167,7 +215,7 @@ document.getElementById("largest-file").innerHTML = sizes[sizes.length - 1] + " 
     options: {
       title: {
         display: true,
-        text: "Largest Cities In Massachusetts",
+        text: "Absolute classification",
         fontSize: 12
       },
       legend: {
@@ -283,7 +331,7 @@ const options = {
   },
 
   title: {
-    text: "Largest US Cities By Population",
+    text: "Absolute classification",
     align: "center",
     margin: 20,
     offsetY: 20,
@@ -320,3 +368,64 @@ document.querySelector("#change2").addEventListener("click", () =>
     }
   })
 );
+
+
+
+
+
+var optionsGauge = {
+            chart: {
+                type: 'radialBar',
+                height: 216
+            },
+            plotOptions: {
+                radialBar: {
+                    startAngle: -90,
+                    endAngle: 90,
+                    track: {
+                        background: "#e7e7e7",
+                        strokeWidth: '97%',
+                        margin: 5, // margin is in pixels
+                        shadow: {
+                            enabled: true,
+                            top: 2,
+                            left: 0,
+                            color: '#999',
+                            opacity: 1,
+                            blur: 2
+                        }
+                    },
+                    dataLabels: {
+                        name: {
+                            show: false
+                        },   
+                        value: {
+                            offsetY: 15,
+                            fontSize: '22px'
+                        }                     
+                    }
+                }
+            },
+            fill: {
+                gradient: {
+                    enabled: true,
+                    shade: 'light',
+                    shadeIntensity: 0.4,
+                    inverseColors: false,
+                    opacityFrom: 1,
+                    opacityTo: 1,
+                    stops: [0, 50, 53, 91]
+                },
+            },
+            series: [ genRandom() ],
+            labels: ['Average Results'],
+            height: '100px'
+           
+        }
+
+       var chartGauge = new ApexCharts(
+            document.querySelector("#chartGuage"),
+            optionsGauge
+        );
+        
+        chartGauge.render();
