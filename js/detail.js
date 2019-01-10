@@ -36,8 +36,10 @@ var dataObj = findDataFromLS(urlid)
 
 console.log("We are dealing with ..", dataObj)
 
-
-var dataFile = dataObj.files
+if(dataObj.files == undefined) {
+  dataObj.files = []  
+} 
+var dataFile = dataObj.files 
 
 console.log("DataFiles Array length ", dataFile.length)
 document.getElementById("total-files").innerHTML = dataFile.length
@@ -74,6 +76,14 @@ document.getElementById("table-block").innerHTML = fileListHtml
 let moments = dataFile.map(d => moment(d.ctime, 'MM/DD/YYYY'))
 let maxDate = moment.max(moments)
 let minDate = moment.min(moments)
+// numArray = numArray.sort((a, b) => a - b);
+let sizes = dataFile.map(s => s.size )
+
+sizes = sizes.sort((a, b) => a - b)
+
+console.log("sizes", sizes[sizes.length - 1])
+
+document.getElementById("largest-file").innerHTML = sizes[sizes.length - 1]
 
     
     document.getElementById("oldest-file").innerHTML = minDate
