@@ -70,6 +70,18 @@ console.log("THe FileList ", fileListHtml)
 
 document.getElementById("table-block").innerHTML = fileListHtml
 
+
+let moments = dataFile.map(d => moment(d.ctime, 'MM/DD/YYYY'))
+let maxDate = moment.max(moments)
+let minDate = moment.min(moments)
+
+    
+    document.getElementById("oldest-file").innerHTML = minDate
+    document.getElementById("human-oldest").innerHTML = minDate.fromNow()
+    
+    console.log("Max Date", maxDate.format('DD-MM-YYYY'))
+    console.log("Min Date", minDate)
+
 /* 
 
 <tr class="even pointer">
