@@ -33,6 +33,20 @@ function findDataFromLS(ID) {
 
 var dataObj = findDataFromLS(urlid)
 
+var image = id="user-image-cont"
+
+
+
+
+var img = document.createElement("img");
+img.src = dataObj.Image;
+
+
+console.log(img)
+var div = document.getElementById("user-image-cont");
+console.log(div)
+
+div.appendChild(img);
 
 console.log("We are dealing with ..", dataObj)
 
@@ -97,7 +111,7 @@ document.getElementById("total-usage").innerHTML = sizes.reduce(getSum, 0);
 
 console.log("sizes", sizes[sizes.length - 1])
 
-document.getElementById("largest-file").innerHTML = sizes[sizes.length - 1]
+document.getElementById("largest-file").innerHTML = sizes[sizes.length - 1] + " kb"
 
     
     document.getElementById("oldest-file").innerHTML = minDate.format("DD MMM YY")
@@ -105,6 +119,76 @@ document.getElementById("largest-file").innerHTML = sizes[sizes.length - 1]
     
     console.log("Max Date", maxDate.format('DD-MM-YYYY'))
     console.log("Min Date", minDate)
+    
+    
+    
+// Graph stuff start paste     
+    let myChart = document.getElementById("myChart").getContext("2d");
+
+  // Global Options
+  // Chart.defaults.global.defaultFontFamily = "Lato";
+  // Chart.defaults.global.defaultFontSize = 18;
+  // Chart.defaults.global.defaultFontColor = "#777";
+
+  let massPopChart = new Chart(myChart, {
+    type: "bar", // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+    data: {
+      labels: [
+        "Boston",
+        "Worcester",
+        "Springfield",
+        "Lowell"
+      ],
+      datasets: [
+        {
+          // label: "Population",
+          data: [617594, 181045, 153060, 106519, 105162, 95072],
+          //backgroundColor:'green',
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.6)",
+            "rgba(54, 162, 235, 0.6)",
+            "rgba(255, 206, 86, 0.6)",
+            "rgba(75, 192, 192, 0.6)",
+            "rgba(153, 102, 255, 0.6)",
+            "rgba(255, 159, 64, 0.6)",
+            "rgba(255, 99, 132, 0.6)"
+          ],
+          borderWidth: 1,
+          borderColor: "#777",
+          hoverBorderWidth: 3,
+          hoverBorderColor: "#000"
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: "Largest Cities In Massachusetts",
+        fontSize: 12
+      },
+      legend: {
+        display: false,
+        position: "right",
+        labels: {
+          fontColor: "#000"
+        }
+      },
+      layout: {
+        padding: {
+          left: 0,
+          right: 0,
+          bottom: 0,
+          top: 0
+        }
+      },
+      tooltips: {
+        enabled: true
+      }
+    }
+  });
+  // Graph stuff end paste 
+    
+    
 
 /* 
 
