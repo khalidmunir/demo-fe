@@ -129,6 +129,10 @@ document.getElementById("largest-file").innerHTML = sizes[sizes.length - 1] + " 
   // Chart.defaults.global.defaultFontFamily = "Lato";
   // Chart.defaults.global.defaultFontSize = 18;
   // Chart.defaults.global.defaultFontColor = "#777";
+  
+  function genRandom() {
+    return Math.floor((Math.random() * 10) + 4);
+  }
 
   let massPopChart = new Chart(myChart, {
     type: "bar", // bar, horizontalBar, pie, line, doughnut, radar, polarArea
@@ -142,7 +146,7 @@ document.getElementById("largest-file").innerHTML = sizes[sizes.length - 1] + " 
       datasets: [
         {
           // label: "Population",
-          data: [617594, 181045, 153060, 106519, 105162, 95072],
+          data: [ genRandom(), genRandom(), genRandom(), genRandom() ],
           //backgroundColor:'green',
           backgroundColor: [
             "rgba(255, 99, 132, 0.6)",
