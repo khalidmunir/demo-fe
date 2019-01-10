@@ -99,23 +99,10 @@ async function updateData() {
 </div>
 <h3 class="name"><a href="detail.html?id=${src.UUID}">${src.UserName}</a></h3>
 <div class="flex">
-<ul class="list-inline count2">
-<li>
-<h3>123</h3>
-<span>Articles</span>
-</li>
-<li>
-<p>1234</p>
-<span>Files</span>
-</li>
-<li>
-<h3>123</h3>
-<span>Following</span>
-</li>
-</ul>
+
 </div>
 <p>
-message here
+
 </p>
 </div>
 </div>

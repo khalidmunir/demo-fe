@@ -50,6 +50,9 @@ div.appendChild(img);
 
 console.log("We are dealing with ..", dataObj)
 
+document.getElementById("user-name-title").innerHTML = dataObj.FirstName + " " + dataObj.LastName
+
+
 if(dataObj.files == undefined) {
   dataObj.files = []  
 } 
@@ -58,7 +61,11 @@ var dataFile = dataObj.files
 console.log("DataFiles Array length ", dataFile.length)
 document.getElementById("total-files").innerHTML = dataFile.length
 console.log("Actual File Info", dataFile)
-
+/*
+var string = "this is a string";
+var length = 7;
+var trimmedString = string.substring(0, length);
+*/
 fileListHtml = dataFile.map((src, index) => `
 
         <tr class="even pointer">
@@ -71,8 +78,8 @@ fileListHtml = dataFile.map((src, index) => `
             <td class=" ">
                 ${src.fullpath}
             </td>
-            <td class=" ">${src.size} <i class="success fa fa-long-arrow-up"></i></td>
-            <td class=" ">${src.uuid}</td>
+            <td class=" ">${src.size}</td>
+            <td class=" ">${src.uuid.substring(0, 8)}...</td>
             <td class=" ">${src.extension}</td>
             <td class="a-right a-right ">${src.mimetype}</td>
             <td class=" last"><a href="#">${src.filename}</a>
@@ -90,13 +97,13 @@ var theader = `<table class="table table-striped jambo_table bulk_action">
                                 <th>
                                     <div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" id="check-all" class="flat" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
                                 </th>
-                                <th class="column-title" style="display: table-cell;">Invoice </th>
-                                <th class="column-title" style="display: table-cell;">Invoice Date </th>
-                                <th class="column-title" style="display: table-cell;">Order </th>
-                                <th class="column-title" style="display: table-cell;">Bill to Name </th>
-                                <th class="column-title" style="display: table-cell;">Status </th>
-                                <th class="column-title" style="display: table-cell;">Amount </th>
-                                <th class="column-title no-link last" style="display: table-cell;"><span class="nobr">Action</span>
+                                <th class="column-title" style="display: table-cell;">Acessed Date</th>
+                                <th class="column-title" style="display: table-cell;">Full Path</th>
+                                <th class="column-title" style="display: table-cell;">Size (bytes)</th>
+                                <th class="column-title" style="display: table-cell;">MD5 Hash </th>
+                                <th class="column-title" style="display: table-cell;">Extension </th>
+                                <th class="column-title" style="display: table-cell;">Extension Desc </th>
+                                <th class="column-title no-link last" style="display: table-cell;"><span class="nobr">File Name</span>
                                 </th>
                                 <th class="bulk-actions" colspan="7" style="display: none;">
                                     <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt">1 Records Selected</span> ) <i class="fa fa-chevron-down"></i></a>
@@ -125,8 +132,8 @@ var theader = `<table class="table table-striped jambo_table bulk_action">
                         
 
 
-var tableFooter = "</tbody> \
-                    </table>"
+var tableFooter = `</tbody> 
+                    </table>`
 
 var fullTable = theader + fileListHtml  + tableFooter     
             
@@ -179,7 +186,7 @@ document.getElementById("largest-file").innerHTML = sizes[sizes.length - 1] + " 
   // Chart.defaults.global.defaultFontColor = "#777";
   
   function genRandom() {
-    return Math.floor((Math.random() * 10) + 1);
+    return Math.floor((Math.random() * 10) + 20);
   }
 
   let massPopChart = new Chart(myChart, {
