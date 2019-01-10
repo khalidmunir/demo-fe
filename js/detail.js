@@ -87,6 +87,13 @@ if(sizes.length == 0) {
   sizes = [0]  
 } 
 
+function getSum(total, num) {
+  return total + num;
+}
+
+document.getElementById("total-usage").innerHTML = sizes.reduce(getSum, 0);
+
+
 
 console.log("sizes", sizes[sizes.length - 1])
 
