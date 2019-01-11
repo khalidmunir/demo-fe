@@ -78,8 +78,8 @@ fileListHtml = dataFile.map((src, index) => `
             <td class=" ">
                 ${src.fullpath}
             </td>
-            <td class=" ">${src.size}</td>
-            <td class=" ">${src.uuid.substring(0, 8)}...</td>
+            <td class=" ">${humanFileSize(src.size, true)}</td>
+            <td class=" " title="${src.uuid}">${src.uuid.substring(0, 8)}...</td>
             <td class=" ">${src.extension}</td>
             <td class="a-right a-right ">${src.mimetype}</td>
             <td class=" last"><a href="#">${src.filename}</a>
@@ -160,13 +160,13 @@ function getSum(total, num) {
   return total + num;
 }
 
-document.getElementById("total-usage").innerHTML = sizes.reduce(getSum, 0);
+document.getElementById("total-usage").innerHTML = humanFileSize(sizes.reduce(getSum, 0), true)
 
 
 
 console.log("sizes", sizes[sizes.length - 1])
 
-document.getElementById("largest-file").innerHTML = sizes[sizes.length - 1] + " kb"
+document.getElementById("largest-file").innerHTML = humanFileSize(sizes[sizes.length - 1], true)
 
     
     document.getElementById("oldest-file").innerHTML = minDate.format("DD MMM YY")
@@ -186,11 +186,11 @@ document.getElementById("largest-file").innerHTML = sizes[sizes.length - 1] + " 
   // Chart.defaults.global.defaultFontColor = "#777";
   
   function genRandom() {
-    return Math.floor((Math.random() * 10) + 20);
+    return Math.floor((Math.random() * 10) + 4);
   }
 
   let massPopChart = new Chart(myChart, {
-    type: "bar", // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+    type: "doughnut", // bar, horizontalBar, pie, line, doughnut, radar, polarArea
     data: {
       labels: [
         "PII",
@@ -226,7 +226,7 @@ document.getElementById("largest-file").innerHTML = sizes[sizes.length - 1] + " 
         fontSize: 12
       },
       legend: {
-        display: false,
+        display: true,
         position: "right",
         labels: {
           fontColor: "#000"
@@ -289,7 +289,7 @@ document.getElementById("largest-file").innerHTML = sizes[sizes.length - 1] + " 
 const options = {
   chart: {
     height: 350,
-    width: "40%",
+    width: "35%",
     type: "bar",
     background: "#f4f4f4",
     foreColor: "#333"
@@ -380,10 +380,10 @@ document.querySelector("#change2").addEventListener("click", () =>
 
 
 
-var optionsGauge = {
+var optionsGauge1 = {
             chart: {
                 type: 'radialBar',
-                height: 216
+                height: 316
             },
             plotOptions: {
                 radialBar: {
@@ -429,10 +429,538 @@ var optionsGauge = {
             height: '100px'
            
         }
+        
+var optionsGauge2 = {
+            chart: {
+                type: 'radialBar',
+                height: 316
+            },
+            plotOptions: {
+                radialBar: {
+                    startAngle: -90,
+                    endAngle: 90,
+                    track: {
+                        background: "#e7e7e7",
+                        strokeWidth: '97%',
+                        margin: 5, // margin is in pixels
+                        shadow: {
+                            enabled: true,
+                            top: 2,
+                            left: 0,
+                            color: '#999',
+                            opacity: 1,
+                            blur: 2
+                        }
+                    },
+                    dataLabels: {
+                        name: {
+                            show: false
+                        },   
+                        value: {
+                            offsetY: 15,
+                            fontSize: '22px'
+                        }                     
+                    }
+                }
+            },
+            fill: {
+                gradient: {
+                    enabled: true,
+                    shade: 'light',
+                    shadeIntensity: 0.4,
+                    inverseColors: false,
+                    opacityFrom: 1,
+                    opacityTo: 1,
+                    stops: [0, 50, 53, 91]
+                },
+            },
+            series: [ genRandom() ],
+            labels: ['Average Results'],
+            height: '100px'
+           
+        }
+        
+var optionsGauge3 = {
+            chart: {
+                type: 'radialBar',
+                height: 316
+            },
+            plotOptions: {
+                radialBar: {
+                    startAngle: -90,
+                    endAngle: 90,
+                    track: {
+                        background: "#e7e7e7",
+                        strokeWidth: '97%',
+                        margin: 5, // margin is in pixels
+                        shadow: {
+                            enabled: true,
+                            top: 2,
+                            left: 0,
+                            color: '#999',
+                            opacity: 1,
+                            blur: 2
+                        }
+                    },
+                    dataLabels: {
+                        name: {
+                            show: false
+                        },   
+                        value: {
+                            offsetY: 15,
+                            fontSize: '22px'
+                        }                     
+                    }
+                }
+            },
+            fill: {
+                gradient: {
+                    enabled: true,
+                    shade: 'light',
+                    shadeIntensity: 0.4,
+                    inverseColors: false,
+                    opacityFrom: 1,
+                    opacityTo: 1,
+                    stops: [0, 50, 53, 91]
+                },
+            },
+            series: [ genRandom() ],
+            labels: ['Average Results'],
+            height: '100px'
+           
+        }
+        
+// var optionsGauge4 = {
+//             chart: {
+//                 type: 'radialBar',
+//                 height: 316
+//             },
+//             plotOptions: {
+//                 radialBar: {
+//                     startAngle: -90,
+//                     endAngle: 90,
+//                     track: {
+//                         background: "#e7e7e7",
+//                         strokeWidth: '97%',
+//                         margin: 5, // margin is in pixels
+//                         shadow: {
+//                             enabled: true,
+//                             top: 2,
+//                             left: 0,
+//                             color: '#999',
+//                             opacity: 1,
+//                             blur: 2
+//                         }
+//                     },
+//                     dataLabels: {
+//                         name: {
+//                             show: false
+//                         },   
+//                         value: {
+//                             offsetY: 15,
+//                             fontSize: '22px'
+//                         }                     
+//                     }
+//                 }
+//             },
+//             fill: {
+//                 gradient: {
+//                     enabled: true,
+//                     shade: 'light',
+//                     shadeIntensity: 0.4,
+//                     inverseColors: false,
+//                     opacityFrom: 1,
+//                     opacityTo: 1,
+//                     stops: [0, 50, 53, 91]
+//                 },
+//             },
+//             series: [ genRandom() ],
+//             labels: ['Average Results'],
+//             height: '100px'
+           
+//         }        
 
-       var chartGauge = new ApexCharts(
-            document.querySelector("#chartGuage"),
-            optionsGauge
+        var chartGauge1 = new ApexCharts(
+            document.querySelector("#chartGuage1"),
+            optionsGauge1
         );
         
-        chartGauge.render();
+        var chartGauge2 = new ApexCharts(
+            document.querySelector("#chartGuage2"),
+            optionsGauge2
+        );
+
+        var chartGauge3 = new ApexCharts(
+            document.querySelector("#chartGuage3"),
+            optionsGauge3
+        );
+
+        // var chartGauge4 = new ApexCharts(
+        //     document.querySelector("#chartGuage4"),
+        //     optionsGauge4
+        // );
+        
+        
+        chartGauge1.render();
+        chartGauge2.render();
+        chartGauge3.render();
+        //chartGauge4.render();
+        
+function humanFileSize(bytes, si) {
+    var thresh = si ? 1000 : 1024;
+    if(Math.abs(bytes) < thresh) {
+        return bytes + ' B';
+    }
+    var units = si
+        ? ['kB','MB','GB','TB','PB','EB','ZB','YB']
+        : ['KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB'];
+    var u = -1;
+    do {
+        bytes /= thresh;
+        ++u;
+    } while(Math.abs(bytes) >= thresh && u < units.length - 1);
+    return bytes.toFixed(1)+' '+units[u];
+}
+
+
+
+
+    var optionsarea2 = {
+      chart: {
+        id: 'chartyear',
+        type: 'area',
+        height: 320,
+        background: '#F6F8FA',
+        toolbar: {
+          show: false,
+          autoSelected: 'pan'
+        },
+        events: {
+          mounted: function (chart) {
+            var commitsEl = document.querySelector('p span.commits');
+            var commits = chart.getSeriesTotalXRange(chart.w.globals.minX, chart.w.globals.maxX)
+
+            commitsEl.innerHTML = commits
+          },
+          updated: function (chart) {
+            var commitsEl = document.querySelector('.cmeta span.commits');
+            var commits = chart.getSeriesTotalXRange(chart.w.globals.minX, chart.w.globals.maxX)
+
+            commitsEl.innerHTML = commits
+          }
+        }
+      },
+      colors: ['#FF7F00'],
+      stroke: {
+        width: 0,
+        curve: 'smooth'
+      },
+      dataLabels: {
+        enabled: false
+      },
+      fill: {
+        opacity: 1,
+        type: 'solid'
+      },
+      series: [{
+        name: 'files',
+        data: githubdata.series
+      }],
+      yaxis: {
+        tickAmount: 3,
+        labels: {
+          show: false
+        }
+      },
+      xaxis: {
+        type: 'datetime',
+      }
+    }
+
+    var chartarea2 = new ApexCharts(
+      document.querySelector("#chart-area2"),
+      optionsarea2
+    );
+
+  //  chartarea2.render();
+
+    var optionsArea = {
+      chart: {
+        height: 400,
+        type: 'area',
+        background: '#F6F8FA',
+        toolbar: {
+          autoSelected: 'selection',
+        },
+        brush: {
+          enabled: true,
+          target: 'chartyear'
+        },
+        selection: {
+          enabled: true,
+          xaxis: {
+            min: new Date('05 Jan 2014').getTime(),
+            max: new Date('04 Jan 2015').getTime()
+          }
+        },
+      },
+      colors: ['#7BD39A'],
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        width: 0,
+        curve: 'smooth'
+      },
+
+      series: [{
+        name: 'files',
+        data: githubdata.series
+      }],
+      fill: {
+        opacity: 1,
+        type: 'solid'
+      },
+      legend: {
+        position: 'top',
+        horizontalAlign: 'left'
+      },
+      xaxis: {
+        type: 'datetime'
+      },
+    }
+
+    var chartArea = new ApexCharts(
+      document.querySelector("#chart-area"),
+      optionsArea
+    );
+
+ //   chartArea.render();
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    var products = [
+			{
+            	"name": "Burnify 1",
+	            "points": 120,
+    	        "lastSprint": 13,
+        	    "mvpSprint": 10,
+            	"sprints": [
+					{
+                    	"planned": 10,
+	                    "done": 10
+    	    	    }, {
+        	            "planned": 12,
+            	        "done": 10
+		            }, {
+    	                "planned": 10,
+        	            "done": 10
+    	        	}, {
+                	    "planned": 10,
+	                    "done": 6,
+    	                "added": 52
+        		    }, {
+            	        "planned": 14,
+                	    "done": 8,
+                    	"added": 12
+	        	    }, {
+    	                "planned": 14,
+        	            "done": 8,
+            	        "added": 2,
+                	    "removed": 20
+	            	}, {
+    	                "planned": 12,
+        	            "done": 4
+	            	}, {
+                	    "planned": 10,
+	                    "done": 6,
+    	                "added": 2
+    	    	    }
+        	    ]
+			}, {
+		        "name": "Burnify 2",
+		        "points": 220,
+		        "lastSprint": 10,
+		        "mvpSprint": 8,
+		        "sprints": [{
+		                "done": 18
+		        }, {
+		                "done": 24
+		        }, {
+		                "done": 16
+		        }, {
+		                "done": 22
+		        }, {
+		                "done": 8,
+		                "added": 32
+		        }, {
+		                "done": 20,
+		                "removed": 20
+		        }, {
+		                "done": 30,
+		                "added": 2
+		        }
+		    ]
+		}, {
+		        "name": "Burnify 3",
+		        "points": 120,
+		        "lastSprint": 10,
+		        "mvpSprint": 10,
+		        "sprints": [{
+		                "done": 10
+		        }, {
+		                "done": 10
+		        }, {
+		                "done": 10
+		        }
+		    ]
+		}, {
+		        "name": "Burnify 4",
+		        "points": 200,
+		        "lastSprint": 10,
+		        "mvpSprint": 8,
+		        "sprints": [{
+		                "done": 20
+		        }, {
+		                "done": 20
+		        }, {
+		                "done": 20
+		        }
+		    ]
+		}
+        ];
+        	
+        b1 = new Burnify("#product1", products[0], 450, 250);
+        b1.onSprintBarClick = function(sprintNumber, sprint) { alert('Sprint ' + sprintNumber + ' (done: '+ sprint.done + ')'); };
+        b1.onFullScopeAreaClick = function(p) { alert('Project ' + p.name + ' full scope area!'); };
+        b1.onDoneScopeAreaClick = function(p) { alert('Project ' + p.name + ' done scope area!'); };
+        b1.onOutScopeAreaClick = function(p) { alert('Project ' + p.name + ' out scope area!'); };
+        b1.draw();
+        new Burnify("#product2", products[1], 450, 250).draw();
+        new Burnify("#product3", products[2], 450, 250).draw();
+        new Burnify("#product4", products[3], 450, 250).draw();
+        
+        
+        
+        
+      function generateData(count, yrange) {
+            var i = 0;
+            var series = [];
+            while (i < count) {
+                var x = 'w' + (i + 1).toString();
+                var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+
+                series.push({
+                    x: x,
+                    y: y
+                });
+                i++;
+            }
+            return series;
+        }
+
+
+        var optionsHeat = {
+            chart: {
+                height: 350,
+                type: 'heatmap',
+            },
+            dataLabels: {
+                enabled: false
+            },
+            colors: ["#008FFB"],
+            series: [{
+                    name: 'Old Files',
+                    data: generateData(12, {
+                        min: 0,
+                        max: 90
+                    })
+                },
+                {
+                    name: 'Secure Files',
+                    data: generateData(12, {
+                        min: 0,
+                        max: 90
+                    })
+                },
+                {
+                    name: 'Large Files',
+                    data: generateData(12, {
+                        min: 0,
+                        max: 90
+                    })
+                },
+                {
+                    name: 'System Files',
+                    data: generateData(12, {
+                        min: 0,
+                        max: 90
+                    })
+                },
+                {
+                    name: 'config Files',
+                    data: generateData(12, {
+                        min: 0,
+                        max: 90
+                    })
+                },
+                {
+                    name: 'Doc Files',
+                    data: generateData(12, {
+                        min: 0,
+                        max: 90
+                    })
+                },
+                {
+                    name: 'Files',
+                    data: generateData(12, {
+                        min: 0,
+                        max: 90
+                    })
+                },
+                {
+                    name: 'Directories',
+                    data: generateData(12, {
+                        min: 0,
+                        max: 90
+                    })
+                },
+                {
+                    name: 'Archives',
+                    data: generateData(12, {
+                        min: 0,
+                        max: 90
+                    })
+                }
+            ],
+            title: {
+                text: ''
+            },
+
+        }
+
+        var chartHeat = new ApexCharts(
+            document.querySelector("#chartHeat"),
+            optionsHeat
+        );
+
+        chartHeat.render();

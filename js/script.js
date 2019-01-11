@@ -62,6 +62,7 @@ function initApp() {
 }
 
 
+
 async function updateData() {
 
     var res = await fetch(`./data1.json`);
@@ -77,36 +78,49 @@ async function updateData() {
     myText.innerHTML += localInfo.map((src, index) => `
     
     
-    <div class="col-md-3 col-xs-12 widget widget_tally_box">
-<div class="x_panel fixed_height_390">
-<div class="x_content">
-<div class="flex">
-<ul class="list-inline widget_profile_box">
-<li>
-<a>
-<i class="fa fa-facebook"></i>
-</a>
-</li>
-<li>
-<a href="detail.html?id=${src.UUID}"><img src="${src.Image}" alt="..." class="img-circle profile_img"></a>
-</li>
-<li>
-<a>
-<i class="fa fa-twitter"></i>
-</a>
-</li>
-</ul>
-</div>
-<h3 class="name"><a href="detail.html?id=${src.UUID}">${src.UserName}</a></h3>
-<div class="flex">
+    
 
-</div>
-<p>
 
-</p>
+
+<div class="container">
+    <!-- contacts card -->
+    <div class="card card-default" id="card_contacts">
+        <div id="contacts" class="panel-collapse collapse show" aria-expanded="true" style="">
+            <ul class="list-group pull-down" id="contact-list">
+                <li class="list-group-item">
+                    <div class="row w-100">
+                        <div class="col-12 col-sm-6 col-md-3 px-0">
+                            <a href="detail.html?id=${src.UUID}"><img class="user-image" src="${src.Image}" alt="${src.Image}" class="rounded-circle mx-auto d-block img-fluid"></a>
+                        </div>
+                        
+                        <div class="col-12 col-sm-6 col-md-9 text-center text-sm-left">
+                            <span class="fa fa-mobile fa-2x text-success float-right pulse" title="online now"></span>
+                            <a href="detail.html?id=${src.UUID}"><label class="name lead">${src.FirstName} ${src.LastName}</label></a>
+                            <br> 
+                            <span class="fa fa-map-marker fa-fw text-muted" data-toggle="tooltip" title="" data-original-title="5842 Hillcrest Rd"></span>
+                            <a href="detail.html?id=${src.UUID}"><span class="text-muted">${src.UserName}</span></a>
+                            <br>
+                            <span class="fa fa-phone fa-fw text-muted" data-toggle="tooltip" title="" data-original-title="(870) 288-4149"></span>
+                            <a href="detail.html?id=${src.UUID}"><span class="text-muted small">${(src.files ? src.files.length : 0 ) } Files</span></a>
+                            <br>
+                            <span class="fa fa-envelope fa-fw text-muted" data-toggle="tooltip" data-original-title="" title=""></span>
+                            <span class="text-muted small text-truncate">${src.email}</span>
+                        </div>
+                        </a>
+                    </div>
+                </li>
+                
+            </ul>
+            <!--/contacts list-->
+        </div>
+    </div>
 </div>
-</div>
-</div>
+
+
+
+
+    
+    
     
     
     
