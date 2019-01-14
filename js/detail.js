@@ -323,14 +323,14 @@ const deepFlatten =
         <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
       </div>
       <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-clock-o"></i>Next Action</span></br>
+        <span class="count_top"><i class="fa fa-clock-o"></i> Next Action</span></br>
         <span style="color:coral" class="count_top"><i class="fa fa-calendar"></i> 15 Actions Urgent </span></br>
-        <span class="purple"><i class=" fa fa-user"></i> 4 Action in next 3 months </span></br>
-        <span class="green"><i class=" fa fa-user"></i> 15 action in next 6 months </span></br>
+        <span class="purple"><i class=" fa fa-calendar"></i> 4 Action in next 3 months </span></br>
+        <span class="green"><i class=" fa fa-calendar"></i> 15 action in next 6 months </span></br>
         <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>7% </i> From last Week</span>
       </div>
       <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-clock-o"></i>Next Action</span>
+        <span class="count_top"><i class="fa fa-clock-o"></i> Next Action</span>
         <div id="team-total-file-count" class="count">......</div>
         <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
       </div>
@@ -381,8 +381,8 @@ var fileListHtml = dataFile.map((src, index) => `
             <td class=" ">
                 ${src.atime}
             </td>
-            <td class=" ">
-                ${src.fullpath}
+            <td title="${src.fullpath}" class=" ">
+                ${src.fullpath.substring(0,20)}...
             </td>
             <td class=" ">${humanFileSize(src.size, true)}</td>
             <td class=" " title="${src.uuid}">${src.uuid.substring(0, 8)}...</td>
