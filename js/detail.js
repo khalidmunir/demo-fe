@@ -226,7 +226,9 @@ if (dataObj.PUUID == null ) { /* this means a team leader */
     </div>`
 
 
-  document.getElementById("team-block-list"). innerHTML = userTableHeader + userTable + userTableFooter
+  //document.getElementById("team-block-list"). innerHTML
+  
+  var teamTable = userTableHeader + userTable + userTableFooter
 
   let elem = document.getElementById("team-block")
   
@@ -285,7 +287,21 @@ const deepFlatten =
   
   elem.innerHTML = `
   <div class="row tile_count team_tile_count">
+      
+
       <h3>Team Memebers (${(team.length) ? (team.length) : 0})</h3>
+      
+      ${(team.length) ? '<div class="container"> \
+        <h2>Team Member Details</h2> \
+        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Toggle Team Details</button> \
+        <div id="demo" class="collapse"> \
+            <div id="team-block-list" class="container">' + teamTable + ' \
+            </div> \
+        </div> \
+      </div>': 0}
+      
+      
+      
       <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
         <span class="count_top"><i class="fa fa-file"></i> Total Files</span>
         <div id="team-total-files" class="count">${newArr.length}</div>
@@ -349,10 +365,10 @@ var fileListHtml = dataFile.map((src, index) => `
            
                 
             	<select class="form-control">
-                  <option><i class="fa fa-file"></i>No Action</option>
-                  <option><i class="fa fa-file"></i>Moved</option>
-                  <option><i class="fa fa-file"></i>Archived</option>
-                  <option><i class="fa fa-file"></i>Lost/unknown</option>
+                  <option style="background-color: lightgreen"><i class="fa fa-file"></i>No Action</option>
+                  <option style="background-color: lightblue"><i class="fa fa-file"></i>Moved</option>
+                  <option style="background-color: yellow"><i class="fa fa-file"></i>Archived</option>
+                  <option style="background-color: lightpink"><i class="fa fa-file"></i>Lost/unknown</option>
                 </select>
          
             
