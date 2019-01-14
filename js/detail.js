@@ -1,4 +1,5 @@
 var urlid = $_GET('id')
+var team = null
 
 console.log("From URL", urlid)
 
@@ -31,6 +32,14 @@ function findDataFromLS(ID) {
     })[0];
 }
 
+
+function findTeamFromLS(PID) {
+    const objArray = JSON.parse(localStorage.getItem("local_data"));
+    return filterObj = objArray.filter(function(e) {
+        return e.PUUID == PID;
+    });
+}
+
 var dataObj = findDataFromLS(urlid)
 
 var image = id="user-image-cont"
@@ -53,6 +62,271 @@ console.log("We are dealing with ..", dataObj)
 document.getElementById("user-name-title").innerHTML = dataObj.FirstName + " " + dataObj.LastName
 
 
+/* team leader stuff  */ 
+
+
+
+if (dataObj.PUUID == null ) { /* this means a team leader */
+  //console.log("We got a Team Leader Here")
+  team = findTeamFromLS(dataObj.UUID)
+  
+  var userTableHeader = `
+      <div class="row user-block">
+
+        <section class="content">
+
+          <div class="col-md-12">
+            <div class="panel panel-default">
+              <h2>Team Members</h2>
+              <div class="panel-body">
+                <div class="pull-right"> 
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-success btn-filter" data-target="items-clear">Clear</button>
+                    <button type="button" class="btn btn-warning btn-filter" data-target="items-pending">3 Month Warning</button>
+                    <button type="button" class="btn btn-danger btn-filter" data-target="items-overdue">Overdue</button>
+                    <button type="button" class="btn btn-default btn-filter" data-target="all">All</button>
+                  </div>
+                </div>
+                <div class="table-container">
+                  <table class="table table-filter">
+                    <tbody>
+                    
+    `
+  
+  var userTable = team.map( user => `
+                    <tr data-status="items-overdue">
+                        <td>
+                          <div class="ckbox">
+                            <input type="checkbox" id="checkbox2">
+                            <label for="checkbox2"></label>
+                          </div>
+                        </td>
+                        <td>
+                          <a href="javascript:;" class="star">
+												<i class="glyphicon glyphicon-star"></i>
+											</a>
+                        </td>
+                        <td>
+                        
+                        
+                        
+                          <div class="media">
+                            <a href="detail.html?id=${user.UUID}" class="pull-left">
+													<img src="${user.Image}" class="media-photo">
+												</a>
+                            <div class="media-body">
+                              <span class="media-meta pull-right"><i>last login</i>Febrero 13, 2016</span>
+                              <h4 class="title">
+                                <a href="detail.html?id=${user.UUID}">${user.FirstName} ${user.LastName} (${user.UserName})</a>
+                                <span class="pull-right items-overdue">(items-overdue)</span>
+                              </h4>
+                              <p class="summary">Ut enim ad minim veniam, quis nostrud exercitation...</p>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+  
+  `).join('\n')
+
+
+  var userTableFooter = `<tr data-status="items-clear">
+                        <td>
+                          <div class="ckbox">
+                            <input type="checkbox" id="checkbox1">
+                            <label for="checkbox1"></label>
+                          </div>
+                        </td>
+                        <td>
+                          <a href="javascript:;" class="star">
+												<i class="glyphicon glyphicon-star"></i>
+											</a>
+                        </td>
+                        <td>
+                          <div class="media">
+                            <a href="#" class="pull-left">
+													<img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo">
+												</a>
+                            <div class="media-body">
+                              <span class="media-meta pull-right">Febrero 13, 2016</span>
+                              <h4 class="title">
+                                Lorem Impsum
+                                <span class="pull-right items-clear">(Review Soon)</span>
+                              </h4>
+                              <p class="summary">Has files that should be reviewed within 3 months.</p>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr data-status="items-pending">
+                        <td>
+                          <div class="ckbox">
+                            <input type="checkbox" id="checkbox3">
+                            <label for="checkbox3"></label>
+                          </div>
+                        </td>
+                        <td>
+                          <a href="javascript:;" class="star">
+												<i class="glyphicon glyphicon-star"></i>
+											</a>
+                        </td>
+                        <td>
+                          <div class="media">
+                            <a href="#" class="pull-left">
+													<img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo">
+												</a>
+                            <div class="media-body">
+                              <span class="media-meta pull-right">Febrero 13, 2016</span>
+                              <h4 class="title">
+                                Lorem Impsum
+                                <span class="pull-right items-pending">(items-pending)</span>
+                              </h4>
+                              <p class="summary">Ut enim ad minim veniam, quis nostrud exercitation...</p>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr data-status="items-overdue">
+                        <td>
+                          <div class="ckbox">
+                            <input type="checkbox" id="checkbox2">
+                            <label for="checkbox2"></label>
+                          </div>
+                        </td>
+                        <td>
+                          <a href="javascript:;" class="star">
+												<i class="glyphicon glyphicon-star"></i>
+											</a>
+                        </td>
+                        <td>
+                          <div class="media">
+                            <a href="#" class="pull-left">
+													<img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo">
+												</a>
+                            <div class="media-body">
+                              <span class="media-meta pull-right">Febrero 13, 2016</span>
+                              <h4 class="title">
+                                Lorem Impsum
+                                <span class="pull-right items-overdue">(items-overdue)</span>
+                              </h4>
+                              <p class="summary">Ut enim ad minim veniam, quis nostrud exercitation...</p>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      
+                    </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+    </div>`
+
+
+  document.getElementById("team-block-list"). innerHTML = userTableHeader + userTable + userTableFooter
+
+  let elem = document.getElementById("team-block")
+  
+  let localTeamFiles = team.map( (src, index) => {
+    if(src.files == undefined) {
+          src.files = []  
+    } 
+    let FileArray  = src.files.map( file =>  file.size )
+    return FileArray 
+  })
+  
+  console.log("LocalFIles Before Butchers", localTeamFiles)
+  
+  
+  // concatMap :: (a -> [b]) -> [a] -> [b]
+const concatMap = f => xs =>
+  xs.reduce (mapReduce (f, concat), [])
+
+  // mapReduce = (a -> b, (b,a) -> b, (b,a) -> b)
+const mapReduce = (m,r) =>
+  (acc,x) => r (acc, m (x))
+
+// concat :: ([a],[a]) -> [a]
+const concat = (xs,ys) =>
+  xs.concat (ys)
+
+  
+  
+  // deepFlatten :: [[a]] -> [a]
+const deepFlatten =
+  concatMap (x =>
+    Array.isArray (x) ? deepFlatten (x) : x)
+    
+    
+    //console.log (deepFlatten (localTeamFiles))
+  
+  var newArr = deepFlatten (localTeamFiles)
+  
+  console.log("localTeamFiles", localTeamFiles)
+  
+  newArr = newArr.sort((a, b) => a - b)
+  console.log("newArr", newArr)
+
+  
+  
+  // const teamFileTotal = localTeam.files.map( (src, index) => {
+  //   //console.log(src.files.length)
+    
+  // })
+    
+  
+  
+  
+  
+  
+  
+  elem.innerHTML = `
+  <div class="row tile_count team_tile_count">
+      <h3>Team Memebers (${(team.length) ? (team.length) : 0})</h3>
+      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-file"></i> Total Files</span>
+        <div id="team-total-files" class="count">${newArr.length}</div>
+        <span class="count_bottom"><i class="green">4% </i> From last Week</span>
+      </div>
+      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-clock-o"></i> Oldest File</span>
+        <div id="team-oldest-file" class="count"></div>
+        <span id="human-oldest" class="count_bottom green">......</span>
+      </div>
+      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-user"></i> Largest File</span>
+        <div id="team-largest-file" class="count green">${ humanFileSize(newArr[newArr.length - 1], true) } </div>
+        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
+      </div>
+      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-user"></i> Total Usage</span>
+        <div id="team-total-usage" class="count">${ humanFileSize(newArr.reduce(getSum, 0), true) }</div>
+        <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
+      </div>
+      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-clock-o"></i>Next Action</span></br>
+        <span style="color:coral" class="count_top"><i class="fa fa-calendar"></i> 15 Actions Urgent </span></br>
+        <span class="purple"><i class=" fa fa-user"></i> 4 Action in next 3 months </span></br>
+        <span class="green"><i class=" fa fa-user"></i> 15 action in next 6 months </span></br>
+        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>7% </i> From last Week</span>
+      </div>
+      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-clock-o"></i>Next Action</span>
+        <div id="team-total-file-count" class="count">......</div>
+        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
+      </div>
+  </div>
+  `
+  
+  console.log(team)
+}
+
+document.getElementById("total-file-count").innerHTML = dataObj.TotalFiles
+
+
 if(dataObj.files == undefined) {
   dataObj.files = []  
 } 
@@ -66,11 +340,27 @@ var string = "this is a string";
 var length = 7;
 var trimmedString = string.substring(0, length);
 */
-fileListHtml = dataFile.map((src, index) => `
+var fileListHtml = dataFile.map((src, index) => `
 
         <tr class="even pointer">
             <td class="a-center ">
-                <div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" class="flat" name="table_records" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+            
+            
+           
+                
+            	<select class="form-control">
+                  <option><i class="fa fa-file"></i>No Action</option>
+                  <option><i class="fa fa-file"></i>Moved</option>
+                  <option><i class="fa fa-file"></i>Archived</option>
+                  <option><i class="fa fa-file"></i>Lost/unknown</option>
+                </select>
+         
+            
+            
+            
+            
+            <!--    <div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" class="flat" name="table_records" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+            -->
             </td>
             <td class=" ">
                 ${src.atime}
@@ -94,9 +384,8 @@ fileListHtml = dataFile.map((src, index) => `
 var theader = `<table class="table table-striped jambo_table bulk_action"> 
                         <thead> 
                             <tr class="headings$"> 
-                                <th>
-                                    <div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" id="check-all" class="flat" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
-                                </th>
+                                
+                                <th class="column-title" style="display: table-cell;">Action Type</th>
                                 <th class="column-title" style="display: table-cell;">Acessed Date</th>
                                 <th class="column-title" style="display: table-cell;">Full Path</th>
                                 <th class="column-title" style="display: table-cell;">Size (bytes)</th>
@@ -193,10 +482,10 @@ document.getElementById("largest-file").innerHTML = humanFileSize(sizes[sizes.le
     type: "doughnut", // bar, horizontalBar, pie, line, doughnut, radar, polarArea
     data: {
       labels: [
-        "PII",
-        "PCI",
-        "SPEC",
-        "RET"
+        "type1",
+        "type2",
+        "type3",
+        "type4"
       ],
       datasets: [
         {
@@ -227,7 +516,7 @@ document.getElementById("largest-file").innerHTML = humanFileSize(sizes[sizes.le
       },
       legend: {
         display: true,
-        position: "right",
+        position: "bottom",
         labels: {
           fontColor: "#000"
         }
@@ -629,7 +918,7 @@ function humanFileSize(bytes, si) {
       chart: {
         id: 'chartyear',
         type: 'area',
-        height: 220,
+        height: 320,
         background: '#F6F8FA',
         toolbar: {
           show: false,
@@ -637,7 +926,7 @@ function humanFileSize(bytes, si) {
         },
         events: {
           mounted: function (chart) {
-            var commitsEl = document.querySelector('p span.commits');
+            var commitsEl = document.querySelector('div span.commits');
             var commits = chart.getSeriesTotalXRange(chart.w.globals.minX, chart.w.globals.maxX)
 
             commitsEl.innerHTML = commits
@@ -686,7 +975,7 @@ function humanFileSize(bytes, si) {
 
     var optionsArea = {
       chart: {
-        height: 200,
+        height: 360,
         type: 'area',
         background: '#F6F8FA',
         toolbar: {
@@ -849,15 +1138,15 @@ function humanFileSize(bytes, si) {
 		}
         ];
         	
-        b1 = new Burnify("#product1", products[0], 450, 250);
+        b1 = new Burnify("#product1", products[0], 400, 250);
         b1.onSprintBarClick = function(sprintNumber, sprint) { alert('Sprint ' + sprintNumber + ' (done: '+ sprint.done + ')'); };
         b1.onFullScopeAreaClick = function(p) { alert('Project ' + p.name + ' full scope area!'); };
         b1.onDoneScopeAreaClick = function(p) { alert('Project ' + p.name + ' done scope area!'); };
         b1.onOutScopeAreaClick = function(p) { alert('Project ' + p.name + ' out scope area!'); };
         b1.draw();
-        new Burnify("#product2", products[1], 450, 250).draw();
-        new Burnify("#product3", products[2], 450, 250).draw();
-        new Burnify("#product4", products[3], 450, 250).draw();
+        new Burnify("#product2", products[1], 400, 250).draw();
+        new Burnify("#product3", products[2], 400, 250).draw();
+        new Burnify("#product4", products[3], 400, 250).draw();
         
         
         
@@ -964,16 +1253,7 @@ function humanFileSize(bytes, si) {
         );
 
         chartHeat.render();
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+  
             window.Apex = {
       stroke: {
         width: 3

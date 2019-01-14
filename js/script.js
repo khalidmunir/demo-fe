@@ -74,12 +74,54 @@ async function updateData() {
     console.log(res)
     console.log(localInfo)
 
-
+    myText.innerHTML = `<div class="container">
+        <div class="row">`
     myText.innerHTML += localInfo.map((src, index) => `
     
     
+            <div class="col-md-6">
+                <div class="well well-sm">
+                    <div class="row">
+                        <div class="col-xs-3 col-md-3 text-center">
+                            <img src="${src.Image}" alt="${src.FirstName} ${src.LastName}"
+                                class="img-rounded img-responsive" />
+                        </div>
+                        <div class="col-xs-9 col-md-9 section-box">
+                            <h2>
+                                <a href="detail.html?id=${src.UUID}">${src.UserName}</a> <a href="detail.html?id=${src.UUID}" target="_blank"><span class="fa fa-folder-open">
+                                </span></a>
+                            </h2>
+                            <p>
+                                <a href="detail.html?id=${src.UUID}"><label class="name lead">${src.FirstName} ${src.LastName}</label></a>
+                            </p>
+                            <p>
+                                <a href="detail.html?id=${src.UUID}"><label class="name lead">${ !(src.PUUID) ? '<button class="btn btn-success ">Team Leader</button>' : '<button class="btn btn-warning">Team Member</button>' } </label></a>
+                            </p>
+                            <hr />
+                            <div class="row rating-desc">
+                                <div class="col-md-12 ">
+                                    <span class="fa fa-database"></span> <span class="green fa fa-check"></span> <span class="separator">|</span>
+                                    <span class="red fa fa-file"></span> <span class="red fa fa-times-circle">
+                                    </span> <span class="separator">|</span>
+                                    <span class="fa skull-crossbones"></span>(${src.TotalFiles} Total)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
     
 
+            `).join('\n')
+}
+
+    myText.innerHTML += `        </div>
+    </div>
+`
+
+
+/* 
 
 
 <div class="container">
@@ -116,18 +158,4 @@ async function updateData() {
     </div>
 </div>
 
-
-
-
-    
-    
-    
-    
-    
-    
-    
-           
-               
-          
-            `).join('\n')
-}
+*/
