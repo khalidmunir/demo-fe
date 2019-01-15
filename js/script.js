@@ -88,8 +88,8 @@ async function updateData() {
                         </div>
                         <div class="col-xs-9 col-md-9 section-box">
                             <h2>
-                                <a href="detail.html?id=${src.UUID}">${src.UserName}</a> <a href="detail.html?id=${src.UUID}" target="_blank"><span class="fa fa-folder-open">
-                                </span></a>
+                                <a href="detail.html?id=${src.UUID}"><button class="btn btn-primary">${src.UserName} <span class="fa fa-folder-open"></span></button></a> <a href="detail.html?id=${src.UUID}" target="_blank">
+                                </a>
                             </h2>
                             <p>
                                 <a href="detail.html?id=${src.UUID}"><label class="name lead">${src.FirstName} ${src.LastName}</label></a>

@@ -42,7 +42,7 @@ function findTeamFromLS(PID) {
 
 var dataObj = findDataFromLS(urlid)
 
-var image = id="user-image-cont"
+// var image = id="user-image-cont"
 
 
 
@@ -60,8 +60,13 @@ div.appendChild(img);
 console.log("We are dealing with ..", dataObj)
 
 document.getElementById("user-name-title").innerHTML = dataObj.FirstName + " " + dataObj.LastName
+document.getElementById("nextUrgent").innerHTML = dataObj.nextAction
+document.getElementById("nextActionIcon").innerHTML = dataObj.nextAction
+document.getElementById("nextActionIcon1").innerHTML = dataObj.nextAction
 
 
+document.getElementById("next3Urgent").innerHTML = dataObj.next3Action
+document.getElementById("next6Urgent").innerHTML = dataObj.next6Action
 /* team leader stuff  */ 
 
 
@@ -120,7 +125,8 @@ if (dataObj.PUUID == null ) { /* this means a team leader */
                                 <a href="detail.html?id=${user.UUID}">${user.FirstName} ${user.LastName} (${user.UserName})</a>
                                 <span class="pull-right items-overdue">(items-overdue)</span>
                               </h4>
-                              <p class="summary">Ut enim ad minim veniam, quis nostrud exercitation...</p>
+                              </br>
+                              <p class="summary">| Total Files: ${user.TotalFiles} | | <span class="red"><b>Next Action URGENT : ${user.nextAction}</b></span> | | <span class="purple">Next Action 3 months : ${user.next3Action}</span> | | <span class="green">Next Action 6 months : ${user.next6Action} |</p>
                             </div>
                           </div>
                         </td>
@@ -286,13 +292,12 @@ const deepFlatten =
   
   
   elem.innerHTML = `
-  <div class="row tile_count team_tile_count">
+  <div class="row team-div-main tile_count team_tile_count">
       
 
-      <h3>Team Memebers (${(team.length) ? (team.length) : 0})</h3>
+      <h3>Team Members (${(team.length) ? (team.length) : 0})</h3>
       
       ${(team.length) ? '<div class="container"> \
-        <h2>Team Member Details</h2> \
         <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Toggle Team Details</button> \
         <div id="demo" class="collapse"> \
             <div id="team-block-list" class="container">' + teamTable + ' \
@@ -302,45 +307,69 @@ const deepFlatten =
       
       
       
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-file"></i> Total Files</span>
+      <div class="col-md-2 col-sm-6 col-xs-12 tile_stats_count">
+        <span class="count_top"><i class="fa fa-file"></i><b>Team </b> Total Files</span>
         <div id="team-total-files" class="count">${newArr.length}</div>
-        <span class="count_bottom"><i class="green">4% </i> From last Week</span>
+        <span class="count_bottom"><i class="green">4% </i> From last Week</span><hr>
       </div>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-clock-o"></i> Oldest File</span>
-        <div id="team-oldest-file" class="count"></div>
-        <span id="human-oldest" class="count_bottom green">......</span>
+      <div class="col-md-2 col-sm-6 col-xs-12 tile_stats_count">
+        <span class="count_top"><i class="fa fa-clock-o"></i><b>Team </b> Oldest File</span>
+        <div id="team-oldest-file" class="count">25 Mar 99</div>
+        <span id="human-oldest" class="count_bottom red">......</span><hr>
       </div>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> Largest File</span>
+      <div class="col-md-2 col-sm-6 col-xs-12 tile_stats_count">
+        <span class="count_top"><i class="fa fa-file"></i><b>Team </b> Largest File</span>
         <div id="team-largest-file" class="count green">${ humanFileSize(newArr[newArr.length - 1], true) } </div>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
+        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span><hr>
       </div>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> Total Usage</span>
+      <div class="col-md-2 col-sm-6 col-xs-12 tile_stats_count">
+        <span class="count_top"><i class="fa fa-file"></i><b>Team </b> Total Usage</span>
         <div id="team-total-usage" class="count">${ humanFileSize(newArr.reduce(getSum, 0), true) }</div>
-        <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
+        <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span><hr>
       </div>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-clock-o"></i> Next Action</span></br>
+      <div class="col-md-2 col-sm-6 col-xs-12 tile_stats_count">
+        <span class="count_top"><i class="fa fa-clock-o"></i> Next Action</span>
+        <div id="team-total-file-date" class="count">......</div>
+        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span><hr>
+      </div>
+      <div class="col-md-2 col-sm-6 col-xs-12 tile_stats_count">
+        <span class="count_top"><i class="fa fa-clock-o"></i><b>Team </b> Next Action</span></br>
         <span style="color:coral" class="count_top"><i class="fa fa-calendar"></i> 15 Actions Urgent </span></br>
         <span class="purple"><i class=" fa fa-calendar"></i> 4 Action in next 3 months </span></br>
         <span class="green"><i class=" fa fa-calendar"></i> 15 action in next 6 months </span></br>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>7% </i> From last Week</span>
+        <span class="green"></span>
+        <hr>
       </div>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-clock-o"></i> Next Action</span>
-        <div id="team-total-file-count" class="count">......</div>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
-      </div>
+      
   </div>
   `
   
   console.log(team)
 }
 
-document.getElementById("total-file-count").innerHTML = dataObj.TotalFiles
+
+
+if ( dataObj.nextActionDay >= 7 ) {
+  document.getElementById("total-file-date").classList.add("green")
+  document.getElementById("total-file-date").innerHTML =  moment().add( dataObj.nextActionDay, 'days' ).format("DD MMM YY")   // moment( dataObj.nextActionDay ).fromNow()
+  // next-footer-date
+      
+    // document.getElementById("oldest-file").innerHTML = minDate.format("DD MMM YY")
+    // document.getElementById("human-oldest").innerHTML = minDate.fromNow()
+    
+    // console.log("Max Date", maxDate.format('DD-MM-YYYY'))
+    // console.log("Min Date", minDate)
+    
+  document.getElementById("next-footer-date").innerHTML =  moment().add( dataObj.nextActionDay, 'days' ).fromNow('days') + " from Now"  // moment( dataObj.nextActionDay ).fromNow()
+  document.getElementById("nextActionDay").innerHTML = dataObj.nextActionDay + " days time"
+  
+  
+} else {
+  document.getElementById("total-file-date").classList.add("red") 
+  document.getElementById("total-file-date").innerHTML = moment().add( dataObj.nextActionDay, 'days' ).format("DD MMM YY")   // format("DD MMM YY")moment( dataObj.nextActionDay ).fromNow()
+  document.getElementById("next-footer-date").innerHTML =  moment().add( dataObj.nextActionDay, 'days' ).fromNow('days') + " overdue"
+  document.getElementById("nextActionDay").innerHTML = dataObj.nextActionDay + " days overdue"
+}
 
 
 if(dataObj.files == undefined) {
@@ -348,17 +377,29 @@ if(dataObj.files == undefined) {
 } 
 var dataFile = dataObj.files 
 
+
+var top20 = dataFile.splice(0, 15)
+
+var remain = dataFile.splice(15, dataFile.length)
+
+
+
 console.log("DataFiles Array length ", dataFile.length)
 document.getElementById("total-files").innerHTML = dataFile.length
 console.log("Actual File Info", dataFile)
+
+console.log("top20", top20)
+
+console.log("remain", remain)
+
 /*
 var string = "this is a string";
 var length = 7;
 var trimmedString = string.substring(0, length);
 */
-var fileListHtml = dataFile.map((src, index) => `
+var fileListHtml = top20.map((src, index) => `
 
-        <tr class="even pointer">
+        <tr class="${ (index%2) ? "odd" : "even" } pointer">
             <td class="a-center ">
             
             
@@ -394,6 +435,43 @@ var fileListHtml = dataFile.map((src, index) => `
 
             `).join('\n')
 
+var fileListHtmlex = remain.map((src, index) => `
+
+        <tr class="${ (index % 2) ? "odd" : "even" } pointer">
+            <td class="a-center ">
+            
+            
+           
+                
+            	<select class="form-control">
+                  <option style="background-color: lightgreen"><i class="fa fa-file"></i>No Action</option>
+                  <option style="background-color: lightblue"><i class="fa fa-file"></i>Moved</option>
+                  <option style="background-color: yellow"><i class="fa fa-file"></i>Archived</option>
+                  <option style="background-color: lightpink"><i class="fa fa-file"></i>Lost/unknown</option>
+                </select>
+         
+            
+            
+            
+            
+            <!--    <div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" class="flat" name="table_records" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+            -->
+            </td>
+            <td class=" ">
+                ${src.atime}
+            </td>
+            <td title="${src.fullpath}" class=" ">
+                ${src.fullpath.substring(0,20)}...
+            </td>
+            <td class=" ">${humanFileSize(src.size, true)}</td>
+            <td class=" " title="${src.uuid}">${src.uuid.substring(0, 8)}...</td>
+            <td class=" ">${src.extension}</td>
+            <td class="a-right a-right ">${src.mimetype}</td>
+            <td class=" last"><a href="#">${src.filename}</a>
+            </td>
+        </tr>
+
+            `).join('\n')
 
 
 
@@ -440,12 +518,13 @@ var theader = `<table class="table table-striped jambo_table bulk_action">
 var tableFooter = `</tbody> 
                     </table>`
 
-var fullTable = theader + fileListHtml  + tableFooter     
+var fullTable  = theader + fileListHtml  + tableFooter   
+var extraTable = theader + fileListHtmlex  + tableFooter   
             
 console.log("The FileList ", fileListHtml)   
 
 document.getElementById("table-block").innerHTML = fullTable
-
+document.getElementById("table-block-ex").innerHTML = extraTable
 
 let moments = dataFile.map(d => moment(d.ctime, 'MM/DD/YYYY'))
 let maxDate = moment.max(moments)
@@ -1154,6 +1233,7 @@ function humanFileSize(bytes, si) {
 		}
         ];
         	
+//        b1 = new Burnify("#product1", products[0], 800, 550);
         b1 = new Burnify("#product1", products[0], 400, 250);
         b1.onSprintBarClick = function(sprintNumber, sprint) { alert('Sprint ' + sprintNumber + ' (done: '+ sprint.done + ')'); };
         b1.onFullScopeAreaClick = function(p) { alert('Project ' + p.name + ' full scope area!'); };
@@ -1795,4 +1875,8 @@ function humanFileSize(bytes, si) {
         
         chartRadialBar.render();
         
-        
+$( "#btn-toggle-table" ).click(function() {
+    $( "#table-block-ex" ).toggle();
+});
+
+$("#table-block-ex").css("display", "none");

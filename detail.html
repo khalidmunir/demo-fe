@@ -62,54 +62,57 @@
           <li role="presentation" class="dropdown">
             <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">6</span>
+                    <span class="badge bg-red"><span id="nextActionIcon"></span></span>
                   </a>
             <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
               <li>
-                <a>
-                        <span  class="image"></span>
+                  <a>
+                        <span class="image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Achtung.svg/220px-Achtung.svg.png" alt="Profile Image"></span>
                         <span>
-                          <span id="user-name">John Smith</span>
-                          <span class="time">3 mins ago</span>
+                          <span class="red"> <b>Action required Now!</b></span>
+                          <span class="time red"> <b><span id="nextActionDay"></span> </b></span>
                         </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        <span class="message red">
+                          Something needs your urgent attention...
+                        </span>
+                        <hr>
+                        <span class="red">[ <b><span id="nextActionIcon1"></span></b> Files overdue actions ]</span>
+                  </a>      
+              </li>
+              <li>
+                 <a>
+                        <span class="image"><img src="https://vignette.wikia.nocookie.net/adventurequestworlds/images/d/d0/Warning-purple.png/revision/latest?cb=20090404111943" alt="Profile Image"></span>
+                        <span>
+                          <span class="purple"> <b>Action required Soon!</b></span>
+                          <span class="time purple"> <b>in 3 months</b></span>
+                        </span>
+                        <span class="message purple">
+                          Please Action these in a timely manner...
+                        </span>
+                  </a>      
+              
+              </li>
+              <li>
+                <a>
+                        <span class="image"><img src="http://www.clker.com/cliparts/S/a/X/I/Q/8/black-green-black-warning-1-hi.png" alt="Profile Image"></span>
+                        <span>
+                          <span class="green"><b>Review these files</b></span>
+                          <span class="time green">in 6 months</span>
+                        </span>
+                        <span class="message green">
+                          Files tagged for review in approx 6 months...
                         </span>
                       </a>
               </li>
               <li>
                 <a>
-                        <span  class="image"></span>
+                        <span class="image"><img src="data:image/png;base64,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" alt="Profile Image"></span>
                         <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
+                          <span><b>Other Messages</b></span>
+                          <span class="time">1 mins ago</span>
                         </span>
                         <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-              </li>
-              <li>
-                <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image"></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-              </li>
-              <li>
-                <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image"></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                          Space for other messages. They were here...
                         </span>
                       </a>
               </li>
@@ -155,17 +158,19 @@
         <div id="total-usage" class="count">......</div>
         <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
       </div>
+      
+      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-user"></i> Next Action Date</span>
+        <div id="total-file-date" class="count">......</div>
+        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i></i> <span id="next-footer-date"></span></span>
+      </div>
+      
       <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
         <span class="count_top"><i class="fa fa-clock-o"></i> Next Action</span></br>
-        <span class="count_top red"><i class=" fa fa-calendar"></i> 15 Actions Urgent </span></br>
-        <span class="purple"><i class=" fa fa-calendar"></i>  4 Action in next 3 months </span></br>
-        <span class="green"><i class=" fa fa-calendar"></i> 15 action in next 6 months </span></br>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>7% </i> From last Week</span>
-      </div>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> Total Connections</span>
-        <div id="total-file-count" class="count">......</div>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
+        <span class="count_top red"><i class=" fa fa-calendar"></i> <span id="nextUrgent"></span> Urgent </span></br>
+        <span class="purple"><i class=" fa fa-calendar"></i>  <span id="next3Urgent"></span> Action in next 3 months </span></br>
+        <span class="green"><i class=" fa fa-calendar"></i> <span id="next6Urgent"></span> action in next 6 months </span></br>
+        <span class="count_bottom"><i class="green"><i class="fa "></i>.  </i>&nbsp;</span> 
       </div>
     </div>
 
@@ -190,7 +195,7 @@
   <div class="">
 
 
-    <div class="col-md-4 col-sm-4 col-xs-12">
+    <div class="col-md-4 col-sm-12 col-xs-12">
       <div class="x_panel tile fixed_height_595">
         <div class="x_title">
           <h2># files by classification</h2>
@@ -301,7 +306,7 @@
 
 
     <div class="col-md-8 col-sm-4 col-xs-12">
-      <div class="x_panel tile" style="height:440px">
+      <div class="x_panel tile" style="height:445px">
         <div class="x_title">
           <h2>Files Deletion History</h2>
           <ul class="nav navbar-right panel_toolbox">
@@ -400,6 +405,10 @@
 
         <div class="table-responsive">
           <div id="table-block"></div>
+        </div>
+        <button id="btn-toggle-table" class="btn btn-primary">Open more times</button>
+        <div class="table-responsive">
+          <div id="table-block-ex"></div>
         </div>
 
       </div>
@@ -513,57 +522,7 @@
 
 
 
-    <div class="col-md-4 col-sm-4 col-xs-12">
-      <div class="x_panel tile fixed_height_320">
-        <div class="x_title">
-          <h2>Quick Settings</h2>
-          <ul class="nav navbar-right panel_toolbox">
-            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-            </li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Settings 1</a>
-                </li>
-                <li><a href="#">Settings 2</a>
-                </li>
-              </ul>
-            </li>
-            <li><a class="close-link"><i class="fa fa-close"></i></a>
-            </li>
-          </ul>
-          <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-          <div class="dashboard-widget-content">
-            <ul class="quick-list">
-              <li><i class="fa fa-calendar-o"></i><a href="#">Settings</a>
-              </li>
-              <li><i class="fa fa-bars"></i><a href="#">Subscription</a>
-              </li>
-              <li><i class="fa fa-bar-chart"></i><a href="#">Auto Renewal</a> </li>
-              <li><i class="fa fa-line-chart"></i><a href="#">Achievements</a>
-              </li>
-              <li><i class="fa fa-bar-chart"></i><a href="#">Auto Renewal</a> </li>
-              <li><i class="fa fa-line-chart"></i><a href="#">Achievements</a>
-              </li>
-              <li><i class="fa fa-area-chart"></i><a href="#">Logout</a>
-              </li>
-            </ul>
-
-            <div class="sidebar-widget">
-              <h4>Profile Completion</h4>
-              <canvas width="150" height="80" id="chart_gauge_01" class="" style="width: 160px; height: 100px;"></canvas>
-              <div class="goal-wrapper">
-                <span id="gauge-text" class="gauge-value pull-left">3,200</span>
-                <span class="gauge-value pull-left">%</span>
-                <span id="goal-text" class="goal-value pull-right">100%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    
 
   </div>
 

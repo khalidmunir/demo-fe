@@ -427,9 +427,13 @@ img.user-image {
 }
 
 .row.team_tile_count {
-    background-color: beige;
+    background-color: #ddd;
 }
 
+
+.row.team-div-main.tile_count.team_tile_count {
+    padding-left: 20px;
+}
 
 
 /*	--------------------------------------------------
@@ -437,7 +441,7 @@ img.user-image {
 	-------------------------------------------------- */
 .panel {
 	border: 1px solid #ddd;
-	background-color: #f5f5dc;
+	background-color: #ddd;
 }
 .panel .btn-group {
 	margin: 15px 0 30px;
@@ -457,7 +461,7 @@ img.user-image {
     padding: 10px;
     vertical-align: middle;
     border-top-color: #eee;
-    background-color: aliceblue;
+    /* background-color: aliceblue; */
 }
 .table-filter tbody tr.selected td {
 	background-color: #eee;
@@ -562,8 +566,9 @@ img.user-image {
 
 .user-block { 
 
-  background-color: beige;
-  
+/*
+background-color: beige;
+*/  
 }
 
 
@@ -572,4 +577,13 @@ img.user-image {
     display: block;    
 }
 
+hr.style5 {
+	background-color: #fff;
+	border-top: 1px dashed #8c8b8b;
+	border-top: 0px dashed #8c8b8b;
+	
+}
 
+.navbar-nav .open .dropdown-menu.msg_list {
+    width: 330px;
+}
