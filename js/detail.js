@@ -1879,5 +1879,4 @@ $( "#btn-toggle-table" ).click(function() {
     $( "#table-block-ex" ).toggle();
 });
 
-
 $("#table-block-ex").css("display", "none");
