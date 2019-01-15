@@ -75,6 +75,36 @@ if (dataObj.PUUID == null ) { /* this means a team leader */
   //console.log("We got a Team Leader Here")
   team = findTeamFromLS(dataObj.UUID)
   
+  console.log("Got the team here", team)
+  
+  var arrNextAction = team.map( member => member.nextAction )
+ // document.getElementById("team-urgent-sum").innerHTML = arrNextAction.reduce(getSum, 0)
+  
+//   let moments = dataFile.map(d => moment(d.ctime, 'MM/DD/YYYY'))
+// let maxDate = moment.max(moments)
+// let minDate = moment.min(moments)
+// // numArray = numArray.sort((a, b) => a - b);
+// var sizes = dataFile.map(s => s.size )
+
+
+// sizes = sizes.sort((a, b) => a - b)
+
+// console.log(sizes)
+// if(sizes.length == 0) {
+//   sizes = [0]  
+// } 
+
+// function getSum(total, num) {
+//   return total + num;
+// }
+
+  
+  
+  
+  
+  
+  console.log("we reckon this is an sum of 17 0 40 0 & 3 !! ", arrNextAction.reduce(getSum, 0))
+  
   var userTableHeader = `
       <div class="row user-block">
 
@@ -310,35 +340,35 @@ const deepFlatten =
       <div class="col-md-2 col-sm-6 col-xs-12 tile_stats_count">
         <span class="count_top"><i class="fa fa-file"></i><b>Team </b> Total Files</span>
         <div id="team-total-files" class="count">${newArr.length}</div>
-        <span class="count_bottom"><i class="green">4% </i> From last Week</span><hr>
+  <!--       <span class="count_bottom"><i class="green">4% </i> From last Week</span> -->
       </div>
       <div class="col-md-2 col-sm-6 col-xs-12 tile_stats_count">
         <span class="count_top"><i class="fa fa-clock-o"></i><b>Team </b> Oldest File</span>
         <div id="team-oldest-file" class="count">25 Mar 99</div>
-        <span id="human-oldest" class="count_bottom red">......</span><hr>
+        <span id="human-oldest" class="count_bottom red">......</span>
       </div>
       <div class="col-md-2 col-sm-6 col-xs-12 tile_stats_count">
         <span class="count_top"><i class="fa fa-file"></i><b>Team </b> Largest File</span>
         <div id="team-largest-file" class="count green">${ humanFileSize(newArr[newArr.length - 1], true) } </div>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span><hr>
+        <!-- <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>  --> 
       </div>
       <div class="col-md-2 col-sm-6 col-xs-12 tile_stats_count">
         <span class="count_top"><i class="fa fa-file"></i><b>Team </b> Total Usage</span>
         <div id="team-total-usage" class="count">${ humanFileSize(newArr.reduce(getSum, 0), true) }</div>
-        <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span><hr>
+        <!-- <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span> --> 
       </div>
       <div class="col-md-2 col-sm-6 col-xs-12 tile_stats_count">
         <span class="count_top"><i class="fa fa-clock-o"></i> Next Action</span>
         <div id="team-total-file-date" class="count">......</div>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span><hr>
+        <!-- <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> --> 
       </div>
       <div class="col-md-2 col-sm-6 col-xs-12 tile_stats_count">
         <span class="count_top"><i class="fa fa-clock-o"></i><b>Team </b> Next Action</span></br>
-        <span style="color:coral" class="count_top"><i class="fa fa-calendar"></i> 15 Actions Urgent </span></br>
+        <span style="color:coral" class="count_top"><i class="fa fa-calendar"></i> <span id="team-urgent-sum"><span> Actions Urgent </span></br>
         <span class="purple"><i class=" fa fa-calendar"></i> 4 Action in next 3 months </span></br>
         <span class="green"><i class=" fa fa-calendar"></i> 15 action in next 6 months </span></br>
         <span class="green"></span>
-        <hr>
+        
       </div>
       
   </div>
@@ -367,8 +397,10 @@ if ( dataObj.nextActionDay >= 7 ) {
 } else {
   document.getElementById("total-file-date").classList.add("red") 
   document.getElementById("total-file-date").innerHTML = moment().add( dataObj.nextActionDay, 'days' ).format("DD MMM YY")   // format("DD MMM YY")moment( dataObj.nextActionDay ).fromNow()
-  document.getElementById("next-footer-date").innerHTML =  moment().add( dataObj.nextActionDay, 'days' ).fromNow('days') + " overdue"
+  document.getElementById("next-footer-date").innerHTML = "<span class='red'><i class='red fa fa-ban'></i>" + moment().add( dataObj.nextActionDay, 'days' ).fromNow('days') + " overdue </span>"
   document.getElementById("nextActionDay").innerHTML = dataObj.nextActionDay + " days overdue"
+  
+
 }
 
 
@@ -378,14 +410,16 @@ if(dataObj.files == undefined) {
 var dataFile = dataObj.files 
 
 
-var top20 = dataFile.splice(0, 15)
+var top20 = dataFile.slice(0, 15)
 
-var remain = dataFile.splice(15, dataFile.length)
+var remain = dataFile.slice(15, dataFile.length)
 
 
 
 console.log("DataFiles Array length ", dataFile.length)
 document.getElementById("total-files").innerHTML = dataFile.length
+// 
+document.getElementById("btn-open-more").innerHTML = remain.length
 console.log("Actual File Info", dataFile)
 
 console.log("top20", top20)
