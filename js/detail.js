@@ -40,6 +40,57 @@ function findTeamFromLS(PID) {
     });
 }
 
+
+
+  //   // mapReduce = (a -> b, (b,a) -> b, (b,a) -> b)
+  // const mapReduce = (m,r) =>
+  //   (acc,x) => r (acc, m (x))
+  
+  // // concatMap :: (a -> [b]) -> [a] -> [b]
+  // const concatMap = f => xs =>
+  //   xs.reduce (mapReduce (f, concat), [])
+  
+  // // concat :: ([a],[a]) -> [a]
+  // const concat = (xs,ys) =>
+  //   xs.concat (ys)
+  
+  // // id :: a -> a
+  // const id = x =>
+  //   x
+  
+  // // flatten :: [[a]] -> [a]
+  // const flatten =
+  //   concatMap (id)
+
+
+
+// mapReduce = (a -> b, (b,a) -> b, (b,a) -> b)
+const mapReduce = (m,r) =>
+  (acc,x) => r (acc, m (x))
+
+// concatMap :: (a -> [b]) -> [a] -> [b]
+const concatMap = f => xs =>
+  xs.reduce (mapReduce (f, concat), [])
+
+// concat :: ([a],[a]) -> [a]
+const concat = (xs,ys) =>
+  xs.concat (ys)
+
+// id :: a -> a
+const id = x =>
+  x
+
+// flatten :: [[a]] -> [a]
+const flatten =
+  concatMap (id)
+  
+// deepFlatten :: [[a]] -> [a]
+const deepFlatten =
+  concatMap (x =>
+    Array.isArray (x) ? deepFlatten (x) : x)
+
+
+
 var dataObj = findDataFromLS(urlid)
 
 // var image = id="user-image-cont"
@@ -69,24 +120,30 @@ document.getElementById("next3Urgent").innerHTML = dataObj.next3Action
 document.getElementById("next6Urgent").innerHTML = dataObj.next6Action
 /* team leader stuff  */ 
 
+  
+  
+  if (dataObj.PUUID == null ) { /* this means a team leader */
+    //console.log("We got a Team Leader Here")
 
-
-if (dataObj.PUUID == null ) { /* this means a team leader */
-  //console.log("We got a Team Leader Here")
+    
   team = findTeamFromLS(dataObj.UUID)
   
-  
+  var arrTeamFiles = team.map( member => member.files )
   var arrNextAction = team.map( member => member.nextAction )
   var arrNext3Action = team.map( member => member.next3Action )
   var arrNext6Action = team.map( member => member.next6Action )
   var arrNextActionDay = team.map( member => member.nextActionDay )
   // nextActionDay
       
-  console.log("Got the nextActionDa here", arrNextActionDay)
+  console.log("Got the arrTeamFiles here", arrTeamFiles)
+  var newArrTeam = flatten( arrTeamFiles )
+  console.log("Got the FLat arrTeamFiles here", newArrTeam)
   console.log("Got the arrNext6Action here", arrNext6Action)
-      
-  arrNextActionDay = arrNextActionDay.sort((a, b) => a - b)
-
+  
+  let teamMoments = newArrTeam.map(d => moment(d.ctime, 'MM/DD/YYYY'))
+  let teamMinDate = moment.min(teamMoments)
+  //arrNextActionDay = arrNextActionDay.sort((a, b) => a - b)
+  
   console.log("smallest num was",  arrNextActionDay[0])
  // document.getElementById("team-urgent-sum").innerHTML = arrNextAction.reduce(getSum, 0)
   
@@ -299,16 +356,16 @@ if (dataObj.PUUID == null ) { /* this means a team leader */
   
   
   // concatMap :: (a -> [b]) -> [a] -> [b]
-const concatMap = f => xs =>
-  xs.reduce (mapReduce (f, concat), [])
+// const concatMap = f => xs =>
+//   xs.reduce (mapReduce (f, concat), [])
 
   // mapReduce = (a -> b, (b,a) -> b, (b,a) -> b)
-const mapReduce = (m,r) =>
-  (acc,x) => r (acc, m (x))
+// const mapReduce = (m,r) =>
+//   (acc,x) => r (acc, m (x))
 
-// concat :: ([a],[a]) -> [a]
-const concat = (xs,ys) =>
-  xs.concat (ys)
+// // concat :: ([a],[a]) -> [a]
+// const concat = (xs,ys) =>
+//   xs.concat (ys)
 
   
   
@@ -419,6 +476,9 @@ const deepFlatten =
     
   
   }
+  
+  document.getElementById("team-oldest-file").innerHTML = teamMinDate.format("DD MMM YY")
+  document.getElementById("team-human-oldest").innerHTML = teamMinDate.fromNow()
 }
 
 
@@ -677,7 +737,7 @@ document.getElementById("largest-file").innerHTML = humanFileSize(sizes[sizes.le
   }
 
   let massPopChart = new Chart(myChart, {
-    type: "doughnut", // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+    type: "line", // bar, horizontalBar, pie, line, doughnut, radar, polarArea
     data: {
       labels: [
         "type1",
@@ -772,96 +832,96 @@ document.getElementById("largest-file").innerHTML = humanFileSize(sizes[sizes.le
 
 */
 
-// Chart options
-const options = {
-  chart: {
-    height: 350,
-    width: "35%",
-    type: "bar",
-    background: "#f4f4f4",
-    foreColor: "#333"
-  },
-  plotOptions: {
-    bar: {
-      horizontal: false
-    }
-  },
-  series: [
-    {
-      name: "Population",
-      data: [
-        8550405,
-        3971883,
-        2720546,
-        2296224,
-        1567442,
-        1563025,
-        1469845,
-        1394928,
-        1300092,
-        1026908
-      ]
-    }
-  ],
-  xaxis: {
-    categories: [
-      "New York",
-      "Los Angeles",
-      "Chicago",
-      "Houston",
-      "Philadelphia",
-      "Phoenix",
-      "San Antonio",
-      "San Diego",
-      "Dallas",
-      "San Jose"
-    ]
-  },
-  fill: {
-    colors: ["#00ff00", "#ffff00", "#00ffff", "#0000ff", "#ff00ff",        "#00ff00", "#ffff00", "#00ffff", "#0000ff", "#ff00ff"  ]
-  },
-  dataLabels: {
-    enabled: false
-  },
+// // Chart options
+// const options = {
+//   chart: {
+//     height: 350,
+//     width: "35%",
+//     type: "bar",
+//     background: "#f4f4f4",
+//     foreColor: "#333"
+//   },
+//   plotOptions: {
+//     bar: {
+//       horizontal: false
+//     }
+//   },
+//   series: [
+//     {
+//       name: "Population",
+//       data: [
+//         8550405,
+//         3971883,
+//         2720546,
+//         2296224,
+//         1567442,
+//         1563025,
+//         1469845,
+//         1394928,
+//         1300092,
+//         1026908
+//       ]
+//     }
+//   ],
+//   xaxis: {
+//     categories: [
+//       "New York",
+//       "Los Angeles",
+//       "Chicago",
+//       "Houston",
+//       "Philadelphia",
+//       "Phoenix",
+//       "San Antonio",
+//       "San Diego",
+//       "Dallas",
+//       "San Jose"
+//     ]
+//   },
+//   fill: {
+//     colors: ["#00ff00", "#ffff00", "#00ffff", "#0000ff", "#ff00ff",        "#00ff00", "#ffff00", "#00ffff", "#0000ff", "#ff00ff"  ]
+//   },
+//   dataLabels: {
+//     enabled: false
+//   },
 
-  title: {
-    text: "Absolute classification",
-    align: "center",
-    margin: 20,
-    offsetY: 20,
-    style: {
-      fontSize: "25px"
-    }
-  }
-};
+//   title: {
+//     text: "Absolute classification",
+//     align: "center",
+//     margin: 20,
+//     offsetY: 20,
+//     style: {
+//       fontSize: "25px"
+//     }
+//   }
+// };
 
-// Init chart
-const chart = new ApexCharts(document.querySelector("#chart"), options);
+// // Init chart
+// const chart = new ApexCharts(document.querySelector("#chart"), options);
 
-// Render chart
-chart.render();
+// // Render chart
+// chart.render();
 
-// Event example
-document.querySelector("#change").addEventListener("click", () =>
-  chart.updateOptions({
-    plotOptions: {
-      bar: {
-        horizontal: true
-      }
-    }
-  })
-);
+// // Event example
+// document.querySelector("#change").addEventListener("click", () =>
+//   chart.updateOptions({
+//     plotOptions: {
+//       bar: {
+//         horizontal: true
+//       }
+//     }
+//   })
+// );
 
 
-document.querySelector("#change2").addEventListener("click", () =>
-  chart.updateOptions({
-    plotOptions: {
-      bar: {
-        horizontal: false
-      }
-    }
-  })
-);
+// document.querySelector("#change2").addEventListener("click", () =>
+//   chart.updateOptions({
+//     plotOptions: {
+//       bar: {
+//         horizontal: false
+//       }
+//     }
+//   })
+// );
 
 
 
@@ -1485,454 +1545,454 @@ function humanFileSize(bytes, si) {
       return array;
     }
 
-    // data for the sparklines that appear below header area
-    var sparklineData = [47, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54, 43, 19, 46];
+    // // data for the sparklines that appear below header area
+    // var sparklineData = [47, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54, 43, 19, 46];
 
-    var spark1 = {
-      chart: {
-        type: 'area',
-        height: 160,
-        sparkline: {
-          enabled: true
-        },
-      },
-      stroke: {
-        curve: 'straight'
-      },
-      fill: {
-        opacity: 0.3,
-        gradient: {
-          enabled: false
-        }
-      },
-      series: [{
-        data: randomizeArray(sparklineData)
-      }],
-      yaxis: {
-        min: 0
-      },
-      colors: ['#DCE6EC'],
-      title: {
-        text: '$424,652',
-        offsetX: 0,
-        style: {
-          fontSize: '24px',
-          cssClass: 'apexcharts-yaxis-title'
-        }
-      },
-      subtitle: {
-        text: 'Sales',
-        offsetX: 0,
-        style: {
-          fontSize: '14px',
-          cssClass: 'apexcharts-yaxis-title'
-        }
-      }
-    }
+    // var spark1 = {
+    //   chart: {
+    //     type: 'area',
+    //     height: 160,
+    //     sparkline: {
+    //       enabled: true
+    //     },
+    //   },
+    //   stroke: {
+    //     curve: 'straight'
+    //   },
+    //   fill: {
+    //     opacity: 0.3,
+    //     gradient: {
+    //       enabled: false
+    //     }
+    //   },
+    //   series: [{
+    //     data: randomizeArray(sparklineData)
+    //   }],
+    //   yaxis: {
+    //     min: 0
+    //   },
+    //   colors: ['#DCE6EC'],
+    //   title: {
+    //     text: '$424,652',
+    //     offsetX: 0,
+    //     style: {
+    //       fontSize: '24px',
+    //       cssClass: 'apexcharts-yaxis-title'
+    //     }
+    //   },
+    //   subtitle: {
+    //     text: 'Sales',
+    //     offsetX: 0,
+    //     style: {
+    //       fontSize: '14px',
+    //       cssClass: 'apexcharts-yaxis-title'
+    //     }
+    //   }
+    // }
 
-    var spark2 = {
-      chart: {
-        type: 'area',
-        height: 160,
-        sparkline: {
-          enabled: true
-        },
-      },
-      stroke: {
-        curve: 'straight'
-      },
-      fill: {
-        opacity: 0.3,
-        gradient: {
-          enabled: false
-        }
-      },
-      series: [{
-        data: randomizeArray(sparklineData)
-      }],
-      yaxis: {
-        min: 0
-      },
-      colors: ['#DCE6EC'],
-      title: {
-        text: '$235,312',
-        offsetX: 0,
-        style: {
-          fontSize: '24px',
-          cssClass: 'apexcharts-yaxis-title'
-        }
-      },
-      subtitle: {
-        text: 'Expenses',
-        offsetX: 0,
-        style: {
-          fontSize: '14px',
-          cssClass: 'apexcharts-yaxis-title'
-        }
-      }
-    }
+    // var spark2 = {
+    //   chart: {
+    //     type: 'area',
+    //     height: 160,
+    //     sparkline: {
+    //       enabled: true
+    //     },
+    //   },
+    //   stroke: {
+    //     curve: 'straight'
+    //   },
+    //   fill: {
+    //     opacity: 0.3,
+    //     gradient: {
+    //       enabled: false
+    //     }
+    //   },
+    //   series: [{
+    //     data: randomizeArray(sparklineData)
+    //   }],
+    //   yaxis: {
+    //     min: 0
+    //   },
+    //   colors: ['#DCE6EC'],
+    //   title: {
+    //     text: '$235,312',
+    //     offsetX: 0,
+    //     style: {
+    //       fontSize: '24px',
+    //       cssClass: 'apexcharts-yaxis-title'
+    //     }
+    //   },
+    //   subtitle: {
+    //     text: 'Expenses',
+    //     offsetX: 0,
+    //     style: {
+    //       fontSize: '14px',
+    //       cssClass: 'apexcharts-yaxis-title'
+    //     }
+    //   }
+    // }
 
-    var spark3 = {
-      chart: {
-        type: 'area',
-        height: 160,
-        sparkline: {
-          enabled: true
-        },
-      },
-      stroke: {
-        curve: 'straight'
-      },
-      fill: {
-        opacity: 0.3,
-        gradient: {
-          enabled: false
-        }
-      },
-      series: [{
-        data: randomizeArray(sparklineData)
-      }],
-      xaxis: {
-        crosshairs: {
-          width: 1
-        },
-      },
-      yaxis: {
-        min: 0
-      },
-      title: {
-        text: '$135,965',
-        offsetX: 0,
-        style: {
-          fontSize: '24px',
-          cssClass: 'apexcharts-yaxis-title'
-        }
-      },
-      subtitle: {
-        text: 'Profits',
-        offsetX: 0,
-        style: {
-          fontSize: '14px',
-          cssClass: 'apexcharts-yaxis-title'
-        }
-      }
-    }
+    // var spark3 = {
+    //   chart: {
+    //     type: 'area',
+    //     height: 160,
+    //     sparkline: {
+    //       enabled: true
+    //     },
+    //   },
+    //   stroke: {
+    //     curve: 'straight'
+    //   },
+    //   fill: {
+    //     opacity: 0.3,
+    //     gradient: {
+    //       enabled: false
+    //     }
+    //   },
+    //   series: [{
+    //     data: randomizeArray(sparklineData)
+    //   }],
+    //   xaxis: {
+    //     crosshairs: {
+    //       width: 1
+    //     },
+    //   },
+    //   yaxis: {
+    //     min: 0
+    //   },
+    //   title: {
+    //     text: '$135,965',
+    //     offsetX: 0,
+    //     style: {
+    //       fontSize: '24px',
+    //       cssClass: 'apexcharts-yaxis-title'
+    //     }
+    //   },
+    //   subtitle: {
+    //     text: 'Profits',
+    //     offsetX: 0,
+    //     style: {
+    //       fontSize: '14px',
+    //       cssClass: 'apexcharts-yaxis-title'
+    //     }
+    //   }
+    // }
 
-    var spark1 = new ApexCharts(document.querySelector("#spark1"), spark1);
-    spark1.render();
-    var spark2 = new ApexCharts(document.querySelector("#spark2"), spark2);
-    spark2.render();
-    var spark3 = new ApexCharts(document.querySelector("#spark3"), spark3);
-    spark3.render();
+    // var spark1 = new ApexCharts(document.querySelector("#spark1"), spark1);
+    // spark1.render();
+    // var spark2 = new ApexCharts(document.querySelector("#spark2"), spark2);
+    // spark2.render();
+    // var spark3 = new ApexCharts(document.querySelector("#spark3"), spark3);
+    // spark3.render();
 
-    var options1 = {
-      chart: {
-        type: 'line',
-        width: 100,
-        height: 35,
-        sparkline: {
-          enabled: true
-        }
-      },
-      series: [{
-        data: [25, 66, 41, 89, 63, 25, 44, 12, 36, 9, 54]
-      }],
-      tooltip: {
-        fixed: {
-          enabled: false
-        },
-        x: {
-          show: false
-        },
-        y: {
-          title: {
-            formatter: function (seriesName) {
-              return ''
-            }
-          }
-        },
-        marker: {
-          show: false
-        }
-      }
-    }
+    // var options1 = {
+    //   chart: {
+    //     type: 'line',
+    //     width: 100,
+    //     height: 35,
+    //     sparkline: {
+    //       enabled: true
+    //     }
+    //   },
+    //   series: [{
+    //     data: [25, 66, 41, 89, 63, 25, 44, 12, 36, 9, 54]
+    //   }],
+    //   tooltip: {
+    //     fixed: {
+    //       enabled: false
+    //     },
+    //     x: {
+    //       show: false
+    //     },
+    //     y: {
+    //       title: {
+    //         formatter: function (seriesName) {
+    //           return ''
+    //         }
+    //       }
+    //     },
+    //     marker: {
+    //       show: false
+    //     }
+    //   }
+    // }
 
-    var options2 = {
-      chart: {
-        type: 'line',
-        width: 100,
-        height: 35,
-        sparkline: {
-          enabled: true
-        }
-      },
-      series: [{
-        data: [12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14]
-      }],
-      tooltip: {
-        fixed: {
-          enabled: false
-        },
-        x: {
-          show: false
-        },
-        y: {
-          title: {
-            formatter: function (seriesName) {
-              return ''
-            }
-          }
-        },
-        marker: {
-          show: false
-        }
-      }
-    }
+    // var options2 = {
+    //   chart: {
+    //     type: 'line',
+    //     width: 100,
+    //     height: 35,
+    //     sparkline: {
+    //       enabled: true
+    //     }
+    //   },
+    //   series: [{
+    //     data: [12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14]
+    //   }],
+    //   tooltip: {
+    //     fixed: {
+    //       enabled: false
+    //     },
+    //     x: {
+    //       show: false
+    //     },
+    //     y: {
+    //       title: {
+    //         formatter: function (seriesName) {
+    //           return ''
+    //         }
+    //       }
+    //     },
+    //     marker: {
+    //       show: false
+    //     }
+    //   }
+    // }
 
-    var options3 = {
-      chart: {
-        type: 'line',
-        width: 100,
-        height: 35,
-        sparkline: {
-          enabled: true
-        }
-      },
-      series: [{
-        data: [47, 45, 74, 14, 56, 74, 14, 11, 7, 39, 82]
-      }],
-      tooltip: {
-        fixed: {
-          enabled: false
-        },
-        x: {
-          show: false
-        },
-        y: {
-          title: {
-            formatter: function (seriesName) {
-              return ''
-            }
-          }
-        },
-        marker: {
-          show: false
-        }
-      }
-    }
+    // var options3 = {
+    //   chart: {
+    //     type: 'line',
+    //     width: 100,
+    //     height: 35,
+    //     sparkline: {
+    //       enabled: true
+    //     }
+    //   },
+    //   series: [{
+    //     data: [47, 45, 74, 14, 56, 74, 14, 11, 7, 39, 82]
+    //   }],
+    //   tooltip: {
+    //     fixed: {
+    //       enabled: false
+    //     },
+    //     x: {
+    //       show: false
+    //     },
+    //     y: {
+    //       title: {
+    //         formatter: function (seriesName) {
+    //           return ''
+    //         }
+    //       }
+    //     },
+    //     marker: {
+    //       show: false
+    //     }
+    //   }
+    // }
 
-    var options4 = {
-      chart: {
-        type: 'line',
-        width: 100,
-        height: 35,
-        sparkline: {
-          enabled: true
-        }
-      },
-      series: [{
-        data: [15, 75, 47, 65, 14, 2, 41, 54, 4, 27, 15]
-      }],
-      tooltip: {
-        fixed: {
-          enabled: false
-        },
-        x: {
-          show: false
-        },
-        y: {
-          title: {
-            formatter: function (seriesName) {
-              return ''
-            }
-          }
-        },
-        marker: {
-          show: false
-        }
-      }
-    }
+    // var options4 = {
+    //   chart: {
+    //     type: 'line',
+    //     width: 100,
+    //     height: 35,
+    //     sparkline: {
+    //       enabled: true
+    //     }
+    //   },
+    //   series: [{
+    //     data: [15, 75, 47, 65, 14, 2, 41, 54, 4, 27, 15]
+    //   }],
+    //   tooltip: {
+    //     fixed: {
+    //       enabled: false
+    //     },
+    //     x: {
+    //       show: false
+    //     },
+    //     y: {
+    //       title: {
+    //         formatter: function (seriesName) {
+    //           return ''
+    //         }
+    //       }
+    //     },
+    //     marker: {
+    //       show: false
+    //     }
+    //   }
+    // }
 
-    var options5 = {
-      chart: {
-        type: 'bar',
-        width: 100,
-        height: 35,
-        sparkline: {
-          enabled: true
-        }
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: '80%'
-        }
-      },
-      series: [{
-        data: [25, 66, 41, 89, 63, 25, 44, 12, 36, 9, 54]
-      }],
-      labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-      xaxis: {
-        crosshairs: {
-          width: 1
-        },
-      },
-      tooltip: {
-        fixed: {
-          enabled: false
-        },
-        x: {
-          show: false
-        },
-        y: {
-          title: {
-            formatter: function (seriesName) {
-              return ''
-            }
-          }
-        },
-        marker: {
-          show: false
-        }
-      }
-    }
+    // var options5 = {
+    //   chart: {
+    //     type: 'bar',
+    //     width: 100,
+    //     height: 35,
+    //     sparkline: {
+    //       enabled: true
+    //     }
+    //   },
+    //   plotOptions: {
+    //     bar: {
+    //       columnWidth: '80%'
+    //     }
+    //   },
+    //   series: [{
+    //     data: [25, 66, 41, 89, 63, 25, 44, 12, 36, 9, 54]
+    //   }],
+    //   labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    //   xaxis: {
+    //     crosshairs: {
+    //       width: 1
+    //     },
+    //   },
+    //   tooltip: {
+    //     fixed: {
+    //       enabled: false
+    //     },
+    //     x: {
+    //       show: false
+    //     },
+    //     y: {
+    //       title: {
+    //         formatter: function (seriesName) {
+    //           return ''
+    //         }
+    //       }
+    //     },
+    //     marker: {
+    //       show: false
+    //     }
+    //   }
+    // }
 
-    var options6 = {
-      chart: {
-        type: 'bar',
-        width: 100,
-        height: 35,
-        sparkline: {
-          enabled: true
-        }
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: '80%'
-        }
-      },
-      series: [{
-        data: [12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14]
-      }],
-      labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-      xaxis: {
-        crosshairs: {
-          width: 1
-        },
-      },
-      tooltip: {
-        fixed: {
-          enabled: false
-        },
-        x: {
-          show: false
-        },
-        y: {
-          title: {
-            formatter: function (seriesName) {
-              return ''
-            }
-          }
-        },
-        marker: {
-          show: false
-        }
-      }
-    }
+    // var options6 = {
+    //   chart: {
+    //     type: 'bar',
+    //     width: 100,
+    //     height: 35,
+    //     sparkline: {
+    //       enabled: true
+    //     }
+    //   },
+    //   plotOptions: {
+    //     bar: {
+    //       columnWidth: '80%'
+    //     }
+    //   },
+    //   series: [{
+    //     data: [12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14]
+    //   }],
+    //   labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    //   xaxis: {
+    //     crosshairs: {
+    //       width: 1
+    //     },
+    //   },
+    //   tooltip: {
+    //     fixed: {
+    //       enabled: false
+    //     },
+    //     x: {
+    //       show: false
+    //     },
+    //     y: {
+    //       title: {
+    //         formatter: function (seriesName) {
+    //           return ''
+    //         }
+    //       }
+    //     },
+    //     marker: {
+    //       show: false
+    //     }
+    //   }
+    // }
 
-    var options7 = {
-      chart: {
-        type: 'bar',
-        width: 100,
-        height: 35,
-        sparkline: {
-          enabled: true
-        }
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: '80%'
-        }
-      },
-      series: [{
-        data: [47, 45, 74, 14, 56, 74, 14, 11, 7, 39, 82]
-      }],
-      labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-      xaxis: {
-        crosshairs: {
-          width: 1
-        },
-      },
-      tooltip: {
-        fixed: {
-          enabled: false
-        },
-        x: {
-          show: false
-        },
-        y: {
-          title: {
-            formatter: function (seriesName) {
-              return ''
-            }
-          }
-        },
-        marker: {
-          show: false
-        }
-      }
-    }
+    // var options7 = {
+    //   chart: {
+    //     type: 'bar',
+    //     width: 100,
+    //     height: 35,
+    //     sparkline: {
+    //       enabled: true
+    //     }
+    //   },
+    //   plotOptions: {
+    //     bar: {
+    //       columnWidth: '80%'
+    //     }
+    //   },
+    //   series: [{
+    //     data: [47, 45, 74, 14, 56, 74, 14, 11, 7, 39, 82]
+    //   }],
+    //   labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    //   xaxis: {
+    //     crosshairs: {
+    //       width: 1
+    //     },
+    //   },
+    //   tooltip: {
+    //     fixed: {
+    //       enabled: false
+    //     },
+    //     x: {
+    //       show: false
+    //     },
+    //     y: {
+    //       title: {
+    //         formatter: function (seriesName) {
+    //           return ''
+    //         }
+    //       }
+    //     },
+    //     marker: {
+    //       show: false
+    //     }
+    //   }
+    // }
 
-    var options8 = {
-      chart: {
-        type: 'bar',
-        width: 100,
-        height: 35,
-        sparkline: {
-          enabled: true
-        }
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: '80%'
-        }
-      },
-      series: [{
-        data: [25, 66, 41, 89, 63, 25, 44, 12, 36, 9, 54]
-      }],
-      labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-      xaxis: {
-        crosshairs: {
-          width: 1
-        },
-      },
-      tooltip: {
-        fixed: {
-          enabled: false
-        },
-        x: {
-          show: false
-        },
-        y: {
-          title: {
-            formatter: function (seriesName) {
-              return ''
-            }
-          }
-        },
-        marker: {
-          show: false
-        }
-      }
-    }
+    // var options8 = {
+    //   chart: {
+    //     type: 'bar',
+    //     width: 100,
+    //     height: 35,
+    //     sparkline: {
+    //       enabled: true
+    //     }
+    //   },
+    //   plotOptions: {
+    //     bar: {
+    //       columnWidth: '80%'
+    //     }
+    //   },
+    //   series: [{
+    //     data: [25, 66, 41, 89, 63, 25, 44, 12, 36, 9, 54]
+    //   }],
+    //   labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    //   xaxis: {
+    //     crosshairs: {
+    //       width: 1
+    //     },
+    //   },
+    //   tooltip: {
+    //     fixed: {
+    //       enabled: false
+    //     },
+    //     x: {
+    //       show: false
+    //     },
+    //     y: {
+    //       title: {
+    //         formatter: function (seriesName) {
+    //           return ''
+    //         }
+    //       }
+    //     },
+    //     marker: {
+    //       show: false
+    //     }
+    //   }
+    // }
 
-    new ApexCharts(document.querySelector("#schart1"), options1).render();
-    new ApexCharts(document.querySelector("#schart2"), options2).render();
-    new ApexCharts(document.querySelector("#schart3"), options3).render();
-    new ApexCharts(document.querySelector("#schart4"), options4).render();
-    new ApexCharts(document.querySelector("#schart5"), options5).render();
-    new ApexCharts(document.querySelector("#schart6"), options6).render();
-    new ApexCharts(document.querySelector("#schart7"), options7).render();
-    new ApexCharts(document.querySelector("#schart8"), options8).render();
+    // new ApexCharts(document.querySelector("#schart1"), options1).render();
+    // new ApexCharts(document.querySelector("#schart2"), options2).render();
+    // new ApexCharts(document.querySelector("#schart3"), options3).render();
+    // new ApexCharts(document.querySelector("#schart4"), options4).render();
+    // new ApexCharts(document.querySelector("#schart5"), options5).render();
+    // new ApexCharts(document.querySelector("#schart6"), options6).render();
+    // new ApexCharts(document.querySelector("#schart7"), options7).render();
+    // new ApexCharts(document.querySelector("#schart8"), options8).render();
   
         
         
@@ -1983,3 +2043,73 @@ $( "#btn-toggle-table" ).click(function() {
 });
 
 $("#table-block-ex").css("display", "none");
+
+
+
+
+ var radarOptions = {
+            chart: {
+                height: 350,
+                type: 'radar',
+                dropShadow: {
+                    enabled: true,
+                    blur: 1,
+                    left: 1,
+                    top: 1
+                }
+            },
+            series: [{
+                name: 'Series 1',
+                data: [80, 50, 30, 40, 100, 20],
+            }, {
+                name: 'Series 2',
+                data: [20, 30, 40, 80, 20, 80],
+            }, {
+                name: 'Series 3',
+                data: [44, 76, 78, 13, 43, 10],
+            }],
+            title: {
+                text: 'Radar Chart - Multi Series'
+            },
+            stroke: {
+                width: 0
+            },
+            fill: {
+                opacity: 0.4
+            },
+            markers: {
+                size: 0
+            },
+            labels: ['2011', '2012', '2013', '2014', '2015', '2016']
+        }
+
+        var radarChart = new ApexCharts(
+            document.querySelector("#radarChart"),
+            radarOptions
+        );
+
+        radarChart.render();
+
+        function update() {
+
+            function randomSeries() {
+                var arr = []
+                for(var i = 0; i < 6; i++) {
+                    arr.push(Math.floor(Math.random() * 100)) 
+                }
+
+                return arr
+            }
+            
+
+            radarChart.updateSeries([{
+                name: 'Series 1',
+                data: randomSeries(),
+            }, {
+                name: 'Series 2',
+                data: randomSeries(),
+            }, {
+                name: 'Series 3',
+                data: randomSeries(),
+            }])
+        }
