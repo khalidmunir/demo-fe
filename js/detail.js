@@ -75,12 +75,31 @@ if (dataObj.PUUID == null ) { /* this means a team leader */
   //console.log("We got a Team Leader Here")
   team = findTeamFromLS(dataObj.UUID)
   
-  console.log("Got the team here", team)
   
   var arrNextAction = team.map( member => member.nextAction )
+  var arrNext3Action = team.map( member => member.next3Action )
+  var arrNext6Action = team.map( member => member.next6Action )
+  var arrNextActionDay = team.map( member => member.nextActionDay )
+  // nextActionDay
+      
+  console.log("Got the nextActionDa here", arrNextActionDay)
+  console.log("Got the arrNext6Action here", arrNext6Action)
+      
+  arrNextActionDay = arrNextActionDay.sort((a, b) => a - b)
+
+  console.log("smallest num was",  arrNextActionDay[0])
  // document.getElementById("team-urgent-sum").innerHTML = arrNextAction.reduce(getSum, 0)
   
-//   let moments = dataFile.map(d => moment(d.ctime, 'MM/DD/YYYY'))
+   //let arrActionDay = arrNextActionDay
+   // sort action days and get min number 
+   // use min number to make a date in correct format
+   // display on page in team section
+   
+   
+ 
+   
+   
+   
 // let maxDate = moment.max(moments)
 // let minDate = moment.min(moments)
 // // numArray = numArray.sort((a, b) => a - b);
@@ -318,8 +337,11 @@ const deepFlatten =
   
   
   
+  let teamNextAction = arrNextAction.reduce(getSum, 0)
+  let teamNext3Action = arrNext3Action.reduce(getSum, 0)
+  let teamNext6Action = arrNext6Action.reduce(getSum, 0)
   
-  
+  console.log("TNA", teamNextAction)
   
   elem.innerHTML = `
   <div class="row team-div-main tile_count team_tile_count">
@@ -345,7 +367,7 @@ const deepFlatten =
       <div class="col-md-2 col-sm-6 col-xs-12 tile_stats_count">
         <span class="count_top"><i class="fa fa-clock-o"></i><b>Team </b> Oldest File</span>
         <div id="team-oldest-file" class="count">25 Mar 99</div>
-        <span id="human-oldest" class="count_bottom red">......</span>
+        <span id="team-human-oldest" class="count_bottom red">......</span>
       </div>
       <div class="col-md-2 col-sm-6 col-xs-12 tile_stats_count">
         <span class="count_top"><i class="fa fa-file"></i><b>Team </b> Largest File</span>
@@ -359,14 +381,14 @@ const deepFlatten =
       </div>
       <div class="col-md-2 col-sm-6 col-xs-12 tile_stats_count">
         <span class="count_top"><i class="fa fa-clock-o"></i> Next Action</span>
-        <div id="team-total-file-date" class="count">......</div>
+        <div id="team-total-next-action" class="count">......</div>
         <!-- <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> --> 
       </div>
       <div class="col-md-2 col-sm-6 col-xs-12 tile_stats_count">
         <span class="count_top"><i class="fa fa-clock-o"></i><b>Team </b> Next Action</span></br>
-        <span style="color:coral" class="count_top"><i class="fa fa-calendar"></i> <span id="team-urgent-sum"><span> Actions Urgent </span></br>
-        <span class="purple"><i class=" fa fa-calendar"></i> 4 Action in next 3 months </span></br>
-        <span class="green"><i class=" fa fa-calendar"></i> 15 action in next 6 months </span></br>
+        <span style="color:coral" class="count_top"><i class="fa fa-calendar"></i> ${teamNextAction} Actions Urgent </span></br>
+        <span class="purple"><i class=" fa fa-calendar"></i> ${teamNext3Action} Action in next 3 months </span></br>
+        <span class="green"><i class=" fa fa-calendar"></i> ${teamNext6Action} action in next 6 months </span></br>
         <span class="green"></span>
         
       </div>
@@ -374,8 +396,40 @@ const deepFlatten =
   </div>
   `
   
-  console.log(team)
+  //console.log(team)
+   if ( arrNextActionDay[0] >= 7 ) {
+    document.getElementById("team-total-next-action").classList.add("green")
+    document.getElementById("team-total-next-action").innerHTML =  moment().add( arrNextActionDay[0], 'days' ).format("DD MMM YY")   
+        
+      // document.getElementById("oldest-file").innerHTML = minDate.format("DD MMM YY")
+      // document.getElementById("human-oldest").innerHTML = minDate.fromNow()
+      
+      // console.log("Max Date", maxDate.format('DD-MM-YYYY'))
+      // console.log("Min Date", minDate)
+      
+    // document.getElementById("next-footer-date").innerHTML =  moment().add( dataObj.nextActionDay, 'days' ).fromNow('days') + " from Now"  // moment( dataObj.nextActionDay ).fromNow()
+    // document.getElementById("nextActionDay").innerHTML = dataObj.nextActionDay + " days time"
+    
+    
+  } else {
+    document.getElementById("team-total-next-action").classList.add("red") 
+    document.getElementById("team-total-next-action").innerHTML = moment().add( arrNextActionDay[0], 'days' ).format("DD MMM YY")   // format("DD MMM YY")moment( dataObj.nextActionDay ).fromNow()
+    // document.getElementById("next-footer-date").innerHTML = "<span class='red'><i class='red fa fa-ban'></i>" + moment().add( dataObj.nextActionDay, 'days' ).fromNow('days') + " overdue </span>"
+    // document.getElementById("nextActionDay").innerHTML = dataObj.nextActionDay + " days overdue"
+    
+  
+  }
 }
+
+
+ 
+
+
+
+
+
+
+
 
 
 
@@ -433,17 +487,18 @@ var trimmedString = string.substring(0, length);
 */
 var fileListHtml = top20.map((src, index) => `
 
-        <tr class="${ (index%2) ? "odd" : "even" } pointer">
+        <tr id="row-${src.uuid}" class="${ (index%2) ? "odd" : "even" } pointer">
             <td class="a-center ">
             
             
            
                 
-            	<select class="form-control">
-                  <option style="background-color: lightgreen"><i class="fa fa-file"></i>No Action</option>
-                  <option style="background-color: lightblue"><i class="fa fa-file"></i>Moved</option>
-                  <option style="background-color: yellow"><i class="fa fa-file"></i>Archived</option>
-                  <option style="background-color: lightpink"><i class="fa fa-file"></i>Lost/unknown</option>
+            	<select id="${src.uuid}" onchange="changedSelect(this)" class="form-control">
+            	    <option value="#f9f9f9" style="background-color: #f9f9f9;"><i class="fa fa-file"></i>please select</option>
+                  <option value="lightgreen" style="background-color: lightgreen"><i class="fa fa-file"></i>No Action</option>
+                  <option value="lightblue" style="background-color: lightblue"><i class="fa fa-file"></i>Moved</option>
+                  <option value="yellow" style="background-color: yellow"><i class="fa fa-file"></i>Archived</option>
+                  <option value="lightpink" style="background-color: lightpink"><i class="fa fa-file"></i>Lost/unknown</option>
                 </select>
          
             
@@ -468,20 +523,34 @@ var fileListHtml = top20.map((src, index) => `
         </tr>
 
             `).join('\n')
+            
+function changedSelect(e) {
+  console.log("selected", e.value)
+  console.log("this select", e.id)
+  var random = Math.random()
+  console.log(random*1000 + 1000)
+  setTimeout(function(){ document.getElementById("row-" + e.id).setAttribute('style', `background-color:${e.value}`); }, 1500);
+  //document.getElementById("row-" + e.id).setAttribute('style', `background-color:${e.value}`); // += e.value
+}
+
+function myFunction() {
+  setTimeout(function(){ alert("Hello"); }, 3000);
+}
 
 var fileListHtmlex = remain.map((src, index) => `
 
-        <tr class="${ (index % 2) ? "odd" : "even" } pointer">
+        <tr id="row-${src.uuid}" class="${ (index % 2) ? "odd" : "even" } pointer">
             <td class="a-center ">
             
             
            
                 
-            	<select class="form-control">
-                  <option style="background-color: lightgreen"><i class="fa fa-file"></i>No Action</option>
-                  <option style="background-color: lightblue"><i class="fa fa-file"></i>Moved</option>
-                  <option style="background-color: yellow"><i class="fa fa-file"></i>Archived</option>
-                  <option style="background-color: lightpink"><i class="fa fa-file"></i>Lost/unknown</option>
+            	<select id="${src.uuid}" onchange="changedSelect(this)" class="form-control">
+            	    <option value="#f9f9f9" style="background-color: #f9f9f9;"><i class="fa fa-file"></i>please select</option>
+                  <option value="lightgreen" style="background-color: lightgreen"><i class="fa fa-file"></i>No Action</option>
+                  <option value="lightblue" style="background-color: lightblue"><i class="fa fa-file"></i>Moved</option>
+                  <option value="yellow" style="background-color: yellow"><i class="fa fa-file"></i>Archived</option>
+                  <option value="lightpink" style="background-color: lightpink"><i class="fa fa-file"></i>Lost/unknown</option>
                 </select>
          
             
