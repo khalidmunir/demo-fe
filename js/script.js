@@ -1,7 +1,7 @@
 //var myButton = document.getElementById("clickButton");
 var myText = document.getElementById("helloText");
 var myUsers = document.getElementById("user-list");
-console.log(myUsers)
+// console.log(myUsers)
 
 var employeedata;
 var metaFactdata;
@@ -10,7 +10,7 @@ function findManagerFromLS(ID) {
     const objArray = employeedata; //await  JSON.parse(localStorage.getItem("local_employee"));
     //console.log("In  findManagerFromLS", objArray)
     return filterObj = objArray.filter(function(e) {
-        console.log("objArray.filter", e.EMPID)
+        // console.log("objArray.filter", e.EMPID)
         return e.EMPID == ID;
     })[0];
 }
@@ -26,7 +26,7 @@ function findTeamFromLS(PID) {
 
 
 function createEmployeeTable(str){
-console.log("got a string", str)    
+// console.log("got a string", str)    
 myUsers.innerHTML = "";
 var temp = `<table class="table table-sm">
 <thead>
@@ -40,7 +40,7 @@ var temp = `<table class="table table-sm">
 </thead>
 <tbody>`;
 
-console.log("in table is here, going to generate with following", str);
+// console.log("in table is here, going to generate with following", str);
 
 //str.map( e => console.log (e))
 
@@ -53,7 +53,7 @@ console.log("in table is here, going to generate with following", str);
 temp += str.map( e => {
     var locMan = findManagerFromLS(e.managerID)
 
-    console.log("locManID", locMan)
+    // console.log("locManID", locMan)
     
     return `<tr>
 <th scope="row">${e.EMPID}</th>
@@ -68,7 +68,7 @@ temp += str.map( e => {
   temp += `</tbody>
 </table>`;
 
-console.log(myUsers);
+// console.log(myUsers);
 
 myUsers.innerHTML = temp;
 }
