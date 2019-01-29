@@ -1,5 +1,49 @@
 //var myButton = document.getElementById("clickButton");
 var myText = document.getElementById("helloText");
+var myUsers = document.getElementById("user-list");
+console.log(myUsers)
+
+
+
+myUsers.innerHTML = "";
+var temp = `<table class="table table-sm">
+<thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">First</th>
+    <th scope="col">Last</th>
+    <th scope="col">Handle</th>
+  </tr>
+</thead>
+<tbody>`;
+
+temp +=  `<tr>
+    <th scope="row">1</th>
+    <td>Mark</td>
+    <td>Otto</td>
+    <td>@mdo</td>
+  </tr>
+  <tr>
+    <th scope="row">2</th>
+    <td>Jacob</td>
+    <td>Thornton</td>
+    <td>@fat</td>
+  </tr>
+  <tr>
+    <th scope="row">3</th>
+    <td colspan="2">Larry the Bird</td>
+    <td>@twitter</td>
+  </tr>`;
+
+  temp += `</tbody>
+</table>`;
+
+
+console.log(myUsers);
+
+
+myUsers.innerHTML = temp;
+
 
 //myButton.addEventListener('click', doSomething, false)
 
@@ -66,13 +110,25 @@ function initApp() {
 async function updateData() {
 
     var res = await fetch(`./data1.json`);
+    var employeedata = await fetch('./employeeV2.json').then(emp=>emp.clone().json());
+    var metaFactdata = await fetch('./metaFactV2.json').then(met=>met.clone().json());
+    console.log('GEORGE1', employeedata);
+
     var localInfo = await res.json();
-    await localStorage.setItem(`local_data`, JSON.stringify(localInfo))
+    var localemployeedata = employeedata;
+    var localmetaFactdata = metaFactdata;
+    await localStorage.setItem(`local_data`, JSON.stringify(localInfo));
+    await localStorage.setItem(`local_employee`, JSON.stringify(localemployeedata))
+    await localStorage.setItem('local_metaFact', JSON.stringify(localmetaFactdata))
 
     console.log(typeof(res))
     console.log(typeof(localInfo))
+    console.log(typeof(localemployeedata))
+    console.log(typeof(localmetaFactdata))
     console.log(res)
     console.log(localInfo)
+    console.log(localemployeedata)
+    console.log(localmetaFactdata)
 
     myText.innerHTML = `<div class="container">
         <div class="row">`
