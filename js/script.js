@@ -3,6 +3,27 @@ var myText = document.getElementById("helloText");
 var myUsers = document.getElementById("user-list");
 console.log(myUsers)
 
+var employeedata;
+var metaFactdata;
+
+function findManagerFromLS(ID) {
+    const objArray = employeedata; //await  JSON.parse(localStorage.getItem("local_employee"));
+    //console.log("In  findManagerFromLS", objArray)
+    return filterObj = objArray.filter(function(e) {
+        console.log("objArray.filter", e.EMPID)
+        return e.EMPID == ID;
+    })[0];
+}
+
+
+function findTeamFromLS(PID) {
+    const objArray = JSON.parse(localStorage.getItem("local_data"));
+    return filterObj = objArray.filter(function(e) {
+        return e.PUUID == PID;
+    });
+}
+
+
 
 function createEmployeeTable(str){
 console.log("got a string", str)    
@@ -14,6 +35,7 @@ var temp = `<table class="table table-sm">
     <th scope="col">First</th>
     <th scope="col">Last</th>
     <th scope="col">Handle</th>
+    <th scope="col">ManagerID</th>
   </tr>
 </thead>
 <tbody>`;
@@ -28,12 +50,18 @@ console.log("in table is here, going to generate with following", str);
 
 // })
 
-temp += str.map( e => `<tr>
+temp += str.map( e => {
+    var locMan = findManagerFromLS(e.managerID)
+
+    console.log("locManID", locMan)
+    
+    return `<tr>
 <th scope="row">${e.EMPID}</th>
 <td>${e.firstName}</td>
 <td>${e.lastName}</td>
 <td>${e.email}</td>
-</tr>`)
+<td>${locMan.email}</td>
+</tr>`})
 
 //
 
@@ -96,7 +124,7 @@ window.addEventListener('load', async e => {
 
     }
 
-    await initApp();
+    //await initApp();
     await updateData();
 
 });
@@ -108,11 +136,14 @@ function initApp() {
 
 
 async function updateData() {
-
+    console.log("In UPDATEDATA")
     var res = await fetch(`./data1.json`);
-    var employeedata = await fetch('./employeeV2.json').then(emp=>emp.clone().json());
-    var metaFactdata = await fetch('./metaFactV2.json').then(met=>met.clone().json());
+    employeedata = await fetch('./employeeV2.json').then(emp=>emp.clone().json());
+    metaFactdata = await fetch('./metaFactV2.json').then(met=>met.clone().json());
     console.log('GEORGE1', employeedata);
+    // metaFactdata
+    console.log('GEORGE2', metaFactdata);
+
 
     var localInfo = await res.json();
     var localemployeedata = employeedata;
