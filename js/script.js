@@ -20,25 +20,22 @@ var temp = `<table class="table table-sm">
 
 console.log("in table is here, going to generate with following", str);
 
-str.map( e => console.log (e))
+//str.map( e => console.log (e))
 
-temp +=  `<tr>
-    <th scope="row">1</th>
-    <td>Mark</td>
-    <td>Otto</td>
-    <td>@mdo</td>
-  </tr>
-  <tr>
-    <th scope="row">2</th>
-    <td>Jacob</td>
-    <td>Thornton</td>
-    <td>@fat</td>
-  </tr>
-  <tr>
-    <th scope="row">3</th>
-    <td colspan="2">Larry the Bird</td>
-    <td>@twitter</td>
-  </tr>`;
+// str.map (( item, index ) => {
+//     console.log("index is ", index)
+//     console.log("item is ", item)
+
+// })
+
+temp += str.map( e => `<tr>
+<th scope="row">${e.EMPID}</th>
+<td>${e.firstName}</td>
+<td>${e.lastName}</td>
+<td>${e.email}</td>
+</tr>`)
+
+//
 
   temp += `</tbody>
 </table>`;
