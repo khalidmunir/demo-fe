@@ -4,7 +4,8 @@ var myUsers = document.getElementById("user-list");
 console.log(myUsers)
 
 
-
+function createEmployeeTable(str){
+console.log("got a string", str)    
 myUsers.innerHTML = "";
 var temp = `<table class="table table-sm">
 <thead>
@@ -16,6 +17,10 @@ var temp = `<table class="table table-sm">
   </tr>
 </thead>
 <tbody>`;
+
+console.log("in table is here, going to generate with following", str);
+
+str.map( e => console.log (e))
 
 temp +=  `<tr>
     <th scope="row">1</th>
@@ -38,12 +43,10 @@ temp +=  `<tr>
   temp += `</tbody>
 </table>`;
 
-
 console.log(myUsers);
 
-
 myUsers.innerHTML = temp;
-
+}
 
 //myButton.addEventListener('click', doSomething, false)
 
@@ -129,6 +132,7 @@ async function updateData() {
     console.log(localInfo)
     console.log(localemployeedata)
     console.log(localmetaFactdata)
+    createEmployeeTable(localemployeedata)
 
     myText.innerHTML = `<div class="container">
         <div class="row">`
@@ -172,9 +176,12 @@ async function updateData() {
             `).join('\n')
 }
 
+
+
     myText.innerHTML += `        </div>
     </div>
 `
+
 
 
 /* 
