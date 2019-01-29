@@ -32,6 +32,7 @@ var temp = `<table class="table table-sm">
 <thead>
   <tr>
     <th scope="col">#</th>
+    <th scope="col">Avatar</th>
     <th scope="col">First</th>
     <th scope="col">Last</th>
     <th scope="col">Handle</th>
@@ -52,16 +53,19 @@ var temp = `<table class="table table-sm">
 
 temp += str.map( e => {
     var locMan = findManagerFromLS(e.managerID)
+    RandomNumber = Math.floor((Math.random() * 10000) % 16) + 1
+    let randomImage = "images/" + RandomNumber + ".png"
 
     // console.log("locManID", locMan)
     
     return `
 <tr> 
-<td><a href="detail3.html?id=${e.EMPID}"><span class="btn btn-block btn-primary">${e.firstName} <span class="fa fa-folder-open"></span></span></a></td>
-<td>${e.firstName}</td>
-<td>${e.lastName}</td>
-<td>${e.email}</td>
-<td>${locMan.email}</td>
+<td class="align-middle"><a href="detail3.html?id=${e.EMPID}"><span class="btn btn-block btn-primary">${e.firstName} <span class="fa fa-folder-open"></span></span></a></td>
+<td class="align-middle"> <img src="${randomImage}" alt="Avatar" class="avatar"> </td>
+<td class="align-middle">${e.firstName}</td>
+<td class="align-middle">${e.lastName}</td>
+<td class="align-middle">${e.email}</td>
+<td class="align-middle">${locMan.email}</td>
 </tr>`}).join('\n')
 
 //

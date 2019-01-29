@@ -33,17 +33,36 @@ window.addEventListener('load', async e => {
   //await initApp();
   await updateData();
   var user = findUserFromStorage(urlid)
+  var files = findUserFilesFromStorage(urlid)
 
-  console.log(user)
+  console.log("FOUND USER",user)
+  console.log("FOUND FILES", files)
+
+  fixData()
+
 
 });
+
+function allClicked() {
+  console.log("you clicked ALL BUTTON")
+}
+
+
+function fixData() {
+  console.log("oppourtunity to fix the data")
+}
+
+function updatePage() {
+  console.log("Update web page")
+
+}
 
 async function updateData() {
 employeedata = await fetch('./employeeV2.json').then(emp=>emp.clone().json());
 metaFactdata = await fetch('./metaFactV2.json').then(met=>met.clone().json());
-console.log('GEORGE1', employeedata);
+//  console.log('GEORGE1', employeedata);
 // metaFactdata
-console.log('GEORGE2', metaFactdata);
+// console.log('GEORGE2', metaFactdata);
 }
 
 
@@ -51,8 +70,29 @@ function findUserFromStorage(ID) {
   //const objArray = JSON.parse(localStorage.getItem("local_data"));
   return filterObj = employeedata.filter(function(e) {
       return e.EMPID == ID;
-  })[0];
+  });
 }
+
+
+// function findUserFromStorage(ID) {
+//   //const objArray = JSON.parse(localStorage.getItem("local_data"));
+//   return filterObj = employeedata.filter(function(e) {
+//       return e.EMPID == ID;
+//   })[0];
+// }
+
+
+// const rebels = pilots.filter(pilot => pilot.faction === "Rebels");
+
+function findUserFilesFromStorage(ID) {
+  //const objArray = JSON.parse(localStorage.getItem("local_data"));
+  return filterObj = metaFactdata.filter(function(e) {
+      return e.employeeFKID == ID;
+  });
+}
+
+
+
 
 // await localStorage.setItem(`local_data`, JSON.stringify(localInfo));
 // await localStorage.setItem(`local_employee`, JSON.stringify(localemployeedata))
