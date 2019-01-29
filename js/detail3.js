@@ -18,19 +18,54 @@ function $_GET(param) {
     return vars;
 }
 
+window.addEventListener('load', async e => {
+  console.log("$$ IN window.addEventListener $$");
 
+  let firstRunEverr = localStorage.getItem("firstRunEv1");
+
+  console.log("FirstRunEv", firstRunEverr);
+  if ((firstRunEverr == null) || (firstRunEverr == undefined)) {
+      localStorage.clear();
+      localStorage.setItem("firstRunEv1", "1");
+
+  }
+
+  //await initApp();
+  await updateData();
+  var user = findUserFromStorage(urlid)
+
+  console.log(user)
+
+});
+
+async function updateData() {
+employeedata = await fetch('./employeeV2.json').then(emp=>emp.clone().json());
+metaFactdata = await fetch('./metaFactV2.json').then(met=>met.clone().json());
+console.log('GEORGE1', employeedata);
+// metaFactdata
+console.log('GEORGE2', metaFactdata);
+}
+
+
+function findUserFromStorage(ID) {
+  //const objArray = JSON.parse(localStorage.getItem("local_data"));
+  return filterObj = employeedata.filter(function(e) {
+      return e.EMPID == ID;
+  })[0];
+}
+
+// await localStorage.setItem(`local_data`, JSON.stringify(localInfo));
+// await localStorage.setItem(`local_employee`, JSON.stringify(localemployeedata))
+// await localStorage.setItem('local_metaFact', JSON.stringify(localmetaFactdata))
+
+/*
 const dataSource = JSON.parse(localStorage.getItem("local_data"))
 
 
 console.log("Wow : new data source ::", dataSource)
 console.log("Wow : data source type ::", typeof(dataSource))
 
-function findDataFromLS(ID) {
-    const objArray = JSON.parse(localStorage.getItem("local_data"));
-    return filterObj = objArray.filter(function(e) {
-        return e.UUID == ID;
-    })[0];
-}
+
 
 
 function findTeamFromLS(PID) {
@@ -121,10 +156,12 @@ document.getElementById("next6Urgent").innerHTML = dataObj.next6Action
 /* team leader stuff  */ 
 
   
-  
+/*  
   if (dataObj.PUUID == null ) { /* this means a team leader */
     //console.log("We got a Team Leader Here")
 
+
+/*
     
   team = findTeamFromLS(dataObj.UUID)
   
@@ -545,6 +582,9 @@ var string = "this is a string";
 var length = 7;
 var trimmedString = string.substring(0, length);
 */
+
+/* 
+
 var fileListHtml = top20.map((src, index) => `
 
         <tr id="row-${src.uuid}" class="${ (index%2) ? "odd" : "even" } pointer">
@@ -927,155 +967,155 @@ document.getElementById("largest-file").innerHTML = humanFileSize(sizes[sizes.le
 
 
 
-var optionsGauge1 = {
-            chart: {
-                type: 'radialBar',
-                height: 316
-            },
-            plotOptions: {
-                radialBar: {
-                    startAngle: -90,
-                    endAngle: 90,
-                    track: {
-                        background: "#e7e7e7",
-                        strokeWidth: '97%',
-                        margin: 5, // margin is in pixels
-                        shadow: {
-                            enabled: true,
-                            top: 2,
-                            left: 0,
-                            color: '#999',
-                            opacity: 1,
-                            blur: 2
-                        }
-                    },
-                    dataLabels: {
-                        name: {
-                            show: false
-                        },   
-                        value: {
-                            offsetY: 15,
-                            fontSize: '22px'
-                        }                     
-                    }
-                }
-            },
-            fill: {
-                gradient: {
-                    enabled: true,
-                    shade: 'light',
-                    shadeIntensity: 0.4,
-                    inverseColors: false,
-                    opacityFrom: 1,
-                    opacityTo: 1,
-                    stops: [0, 50, 53, 91]
-                },
-            },
-            series: [ genRandom() ],
-            labels: ['Average Results'],
-            height: '100px'
+// var optionsGauge1 = {
+//             chart: {
+//                 type: 'radialBar',
+//                 height: 316
+//             },
+//             plotOptions: {
+//                 radialBar: {
+//                     startAngle: -90,
+//                     endAngle: 90,
+//                     track: {
+//                         background: "#e7e7e7",
+//                         strokeWidth: '97%',
+//                         margin: 5, // margin is in pixels
+//                         shadow: {
+//                             enabled: true,
+//                             top: 2,
+//                             left: 0,
+//                             color: '#999',
+//                             opacity: 1,
+//                             blur: 2
+//                         }
+//                     },
+//                     dataLabels: {
+//                         name: {
+//                             show: false
+//                         },   
+//                         value: {
+//                             offsetY: 15,
+//                             fontSize: '22px'
+//                         }                     
+//                     }
+//                 }
+//             },
+//             fill: {
+//                 gradient: {
+//                     enabled: true,
+//                     shade: 'light',
+//                     shadeIntensity: 0.4,
+//                     inverseColors: false,
+//                     opacityFrom: 1,
+//                     opacityTo: 1,
+//                     stops: [0, 50, 53, 91]
+//                 },
+//             },
+//             series: [ genRandom() ],
+//             labels: ['Average Results'],
+//             height: '100px'
            
-        }
+//         }
         
-var optionsGauge2 = {
-            chart: {
-                type: 'radialBar',
-                height: 316
-            },
-            plotOptions: {
-                radialBar: {
-                    startAngle: -90,
-                    endAngle: 90,
-                    track: {
-                        background: "#e7e7e7",
-                        strokeWidth: '97%',
-                        margin: 5, // margin is in pixels
-                        shadow: {
-                            enabled: true,
-                            top: 2,
-                            left: 0,
-                            color: '#999',
-                            opacity: 1,
-                            blur: 2
-                        }
-                    },
-                    dataLabels: {
-                        name: {
-                            show: false
-                        },   
-                        value: {
-                            offsetY: 15,
-                            fontSize: '22px'
-                        }                     
-                    }
-                }
-            },
-            fill: {
-                gradient: {
-                    enabled: true,
-                    shade: 'light',
-                    shadeIntensity: 0.4,
-                    inverseColors: false,
-                    opacityFrom: 1,
-                    opacityTo: 1,
-                    stops: [0, 50, 53, 91]
-                },
-            },
-            series: [ genRandom() ],
-            labels: ['Average Results'],
-            height: '100px'
+// var optionsGauge2 = {
+//             chart: {
+//                 type: 'radialBar',
+//                 height: 316
+//             },
+//             plotOptions: {
+//                 radialBar: {
+//                     startAngle: -90,
+//                     endAngle: 90,
+//                     track: {
+//                         background: "#e7e7e7",
+//                         strokeWidth: '97%',
+//                         margin: 5, // margin is in pixels
+//                         shadow: {
+//                             enabled: true,
+//                             top: 2,
+//                             left: 0,
+//                             color: '#999',
+//                             opacity: 1,
+//                             blur: 2
+//                         }
+//                     },
+//                     dataLabels: {
+//                         name: {
+//                             show: false
+//                         },   
+//                         value: {
+//                             offsetY: 15,
+//                             fontSize: '22px'
+//                         }                     
+//                     }
+//                 }
+//             },
+//             fill: {
+//                 gradient: {
+//                     enabled: true,
+//                     shade: 'light',
+//                     shadeIntensity: 0.4,
+//                     inverseColors: false,
+//                     opacityFrom: 1,
+//                     opacityTo: 1,
+//                     stops: [0, 50, 53, 91]
+//                 },
+//             },
+//             series: [ genRandom() ],
+//             labels: ['Average Results'],
+//             height: '100px'
            
-        }
+//         }
         
-var optionsGauge3 = {
-            chart: {
-                type: 'radialBar',
-                height: 316
-            },
-            plotOptions: {
-                radialBar: {
-                    startAngle: -90,
-                    endAngle: 90,
-                    track: {
-                        background: "#e7e7e7",
-                        strokeWidth: '97%',
-                        margin: 5, // margin is in pixels
-                        shadow: {
-                            enabled: true,
-                            top: 2,
-                            left: 0,
-                            color: '#999',
-                            opacity: 1,
-                            blur: 2
-                        }
-                    },
-                    dataLabels: {
-                        name: {
-                            show: false
-                        },   
-                        value: {
-                            offsetY: 15,
-                            fontSize: '22px'
-                        }                     
-                    }
-                }
-            },
-            fill: {
-                gradient: {
-                    enabled: true,
-                    shade: 'light',
-                    shadeIntensity: 0.4,
-                    inverseColors: false,
-                    opacityFrom: 1,
-                    opacityTo: 1,
-                    stops: [0, 50, 53, 91]
-                },
-            },
-            series: [ genRandom() ],
-            labels: ['Average Results'],
-            height: '100px'
+// var optionsGauge3 = {
+//             chart: {
+//                 type: 'radialBar',
+//                 height: 316
+//             },
+//             plotOptions: {
+//                 radialBar: {
+//                     startAngle: -90,
+//                     endAngle: 90,
+//                     track: {
+//                         background: "#e7e7e7",
+//                         strokeWidth: '97%',
+//                         margin: 5, // margin is in pixels
+//                         shadow: {
+//                             enabled: true,
+//                             top: 2,
+//                             left: 0,
+//                             color: '#999',
+//                             opacity: 1,
+//                             blur: 2
+//                         }
+//                     },
+//                     dataLabels: {
+//                         name: {
+//                             show: false
+//                         },   
+//                         value: {
+//                             offsetY: 15,
+//                             fontSize: '22px'
+//                         }                     
+//                     }
+//                 }
+//             },
+//             fill: {
+//                 gradient: {
+//                     enabled: true,
+//                     shade: 'light',
+//                     shadeIntensity: 0.4,
+//                     inverseColors: false,
+//                     opacityFrom: 1,
+//                     opacityTo: 1,
+//                     stops: [0, 50, 53, 91]
+//                 },
+//             },
+//             series: [ genRandom() ],
+//             labels: ['Average Results'],
+//             height: '100px'
            
-        }
+//         }
         
 // var optionsGauge4 = {
 //             chart: {
@@ -1127,162 +1167,162 @@ var optionsGauge3 = {
            
 //         }        
 
-        var chartGauge1 = new ApexCharts(
-            document.querySelector("#chartGuage1"),
-            optionsGauge1
-        );
+//         var chartGauge1 = new ApexCharts(
+//             document.querySelector("#chartGuage1"),
+//             optionsGauge1
+//         );
         
-        var chartGauge2 = new ApexCharts(
-            document.querySelector("#chartGuage2"),
-            optionsGauge2
-        );
+//         var chartGauge2 = new ApexCharts(
+//             document.querySelector("#chartGuage2"),
+//             optionsGauge2
+//         );
 
-        var chartGauge3 = new ApexCharts(
-            document.querySelector("#chartGuage3"),
-            optionsGauge3
-        );
+//         var chartGauge3 = new ApexCharts(
+//             document.querySelector("#chartGuage3"),
+//             optionsGauge3
+//         );
 
-        // var chartGauge4 = new ApexCharts(
-        //     document.querySelector("#chartGuage4"),
-        //     optionsGauge4
-        // );
+//         // var chartGauge4 = new ApexCharts(
+//         //     document.querySelector("#chartGuage4"),
+//         //     optionsGauge4
+//         // );
         
         
-        chartGauge1.render();
-        chartGauge2.render();
-        chartGauge3.render();
-        //chartGauge4.render();
+//         chartGauge1.render();
+//         chartGauge2.render();
+//         chartGauge3.render();
+//         //chartGauge4.render();
         
-function humanFileSize(bytes, si) {
-    var thresh = si ? 1000 : 1024;
-    if(Math.abs(bytes) < thresh) {
-        return bytes + ' B';
-    }
-    var units = si
-        ? ['kB','MB','GB','TB','PB','EB','ZB','YB']
-        : ['KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB'];
-    var u = -1;
-    do {
-        bytes /= thresh;
-        ++u;
-    } while(Math.abs(bytes) >= thresh && u < units.length - 1);
-    return bytes.toFixed(1)+' '+units[u];
-}
+// function humanFileSize(bytes, si) {
+//     var thresh = si ? 1000 : 1024;
+//     if(Math.abs(bytes) < thresh) {
+//         return bytes + ' B';
+//     }
+//     var units = si
+//         ? ['kB','MB','GB','TB','PB','EB','ZB','YB']
+//         : ['KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB'];
+//     var u = -1;
+//     do {
+//         bytes /= thresh;
+//         ++u;
+//     } while(Math.abs(bytes) >= thresh && u < units.length - 1);
+//     return bytes.toFixed(1)+' '+units[u];
+// }
 
 
 
 
-    var optionsarea2 = {
-      chart: {
-        id: 'chartyear',
-        type: 'area',
-        height: 320,
-        background: '#F6F8FA',
-        toolbar: {
-          show: false,
-          autoSelected: 'pan'
-        },
-        events: {
-          mounted: function (chart) {
-            var commitsEl = document.querySelector('div span.commits');
-            var commits = chart.getSeriesTotalXRange(chart.w.globals.minX, chart.w.globals.maxX)
+//     var optionsarea2 = {
+//       chart: {
+//         id: 'chartyear',
+//         type: 'area',
+//         height: 320,
+//         background: '#F6F8FA',
+//         toolbar: {
+//           show: false,
+//           autoSelected: 'pan'
+//         },
+//         events: {
+//           mounted: function (chart) {
+//             var commitsEl = document.querySelector('div span.commits');
+//             var commits = chart.getSeriesTotalXRange(chart.w.globals.minX, chart.w.globals.maxX)
 
-            commitsEl.innerHTML = commits
-          },
-          updated: function (chart) {
-            var commitsEl = document.querySelector('.cmeta span.commits');
-            var commits = chart.getSeriesTotalXRange(chart.w.globals.minX, chart.w.globals.maxX)
+//             commitsEl.innerHTML = commits
+//           },
+//           updated: function (chart) {
+//             var commitsEl = document.querySelector('.cmeta span.commits');
+//             var commits = chart.getSeriesTotalXRange(chart.w.globals.minX, chart.w.globals.maxX)
 
-            commitsEl.innerHTML = commits
-          }
-        }
-      },
-      colors: ['#FF7F00'],
-      stroke: {
-        width: 0,
-        curve: 'smooth'
-      },
-      dataLabels: {
-        enabled: false
-      },
-      fill: {
-        opacity: 1,
-        type: 'solid'
-      },
-      series: [{
-        name: 'files',
-        data: githubdata.series
-      }],
-      yaxis: {
-        tickAmount: 3,
-        labels: {
-          show: false
-        }
-      },
-      xaxis: {
-        type: 'datetime',
-      }
-    }
+//             commitsEl.innerHTML = commits
+//           }
+//         }
+//       },
+//       colors: ['#FF7F00'],
+//       stroke: {
+//         width: 0,
+//         curve: 'smooth'
+//       },
+//       dataLabels: {
+//         enabled: false
+//       },
+//       fill: {
+//         opacity: 1,
+//         type: 'solid'
+//       },
+//       series: [{
+//         name: 'files',
+//         data: githubdata.series
+//       }],
+//       yaxis: {
+//         tickAmount: 3,
+//         labels: {
+//           show: false
+//         }
+//       },
+//       xaxis: {
+//         type: 'datetime',
+//       }
+//     }
 
-    var chartarea2 = new ApexCharts(
-      document.querySelector("#chart-area2"),
-      optionsarea2
-    );
+//     var chartarea2 = new ApexCharts(
+//       document.querySelector("#chart-area2"),
+//       optionsarea2
+//     );
 
-    chartarea2.render();
+//     chartarea2.render();
 
-    var optionsArea = {
-      chart: {
-        height: 360,
-        type: 'area',
-        background: '#F6F8FA',
-        toolbar: {
-          autoSelected: 'selection',
-        },
-        brush: {
-          enabled: true,
-          target: 'chartyear'
-        },
-        selection: {
-          enabled: true,
-          xaxis: {
-            min: new Date('05 Jan 2014').getTime(),
-            max: new Date('04 Jan 2015').getTime()
-          }
-        },
-      },
-      colors: ['#7BD39A'],
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        width: 0,
-        curve: 'smooth'
-      },
+//     var optionsArea = {
+//       chart: {
+//         height: 360,
+//         type: 'area',
+//         background: '#F6F8FA',
+//         toolbar: {
+//           autoSelected: 'selection',
+//         },
+//         brush: {
+//           enabled: true,
+//           target: 'chartyear'
+//         },
+//         selection: {
+//           enabled: true,
+//           xaxis: {
+//             min: new Date('05 Jan 2014').getTime(),
+//             max: new Date('04 Jan 2015').getTime()
+//           }
+//         },
+//       },
+//       colors: ['#7BD39A'],
+//       dataLabels: {
+//         enabled: false
+//       },
+//       stroke: {
+//         width: 0,
+//         curve: 'smooth'
+//       },
 
-      series: [{
-        name: 'files',
-        data: githubdata.series
-      }],
-      fill: {
-        opacity: 1,
-        type: 'solid'
-      },
-      legend: {
-        position: 'top',
-        horizontalAlign: 'left'
-      },
-      xaxis: {
-        type: 'datetime'
-      },
-    }
+//       series: [{
+//         name: 'files',
+//         data: githubdata.series
+//       }],
+//       fill: {
+//         opacity: 1,
+//         type: 'solid'
+//       },
+//       legend: {
+//         position: 'top',
+//         horizontalAlign: 'left'
+//       },
+//       xaxis: {
+//         type: 'datetime'
+//       },
+//     }
 
-    var chartArea = new ApexCharts(
-      document.querySelector("#chart-area"),
-      optionsArea
-    );
+//     var chartArea = new ApexCharts(
+//       document.querySelector("#chart-area"),
+//       optionsArea
+//     );
 
-    chartArea.render();
+//     chartArea.render();
     
     
     
@@ -1305,245 +1345,245 @@ function humanFileSize(bytes, si) {
     
     
     
-    var products = [
-			{
-            	"name": "Burnify 1",
-	            "points": 120,
-    	        "lastSprint": 13,
-        	    "mvpSprint": 10,
-            	"sprints": [
-					{
-                    	"planned": 10,
-	                    "done": 10
-    	    	    }, {
-        	            "planned": 12,
-            	        "done": 10
-		            }, {
-    	                "planned": 10,
-        	            "done": 10
-    	        	}, {
-                	    "planned": 10,
-	                    "done": 6,
-    	                "added": 52
-        		    }, {
-            	        "planned": 14,
-                	    "done": 8,
-                    	"added": 12
-	        	    }, {
-    	                "planned": 14,
-        	            "done": 8,
-            	        "added": 2,
-                	    "removed": 20
-	            	}, {
-    	                "planned": 12,
-        	            "done": 4
-	            	}, {
-                	    "planned": 10,
-	                    "done": 6,
-    	                "added": 2
-    	    	    }
-        	    ]
-			}, {
-		        "name": "Burnify 2",
-		        "points": 220,
-		        "lastSprint": 10,
-		        "mvpSprint": 8,
-		        "sprints": [{
-		                "done": 18
-		        }, {
-		                "done": 24
-		        }, {
-		                "done": 16
-		        }, {
-		                "done": 22
-		        }, {
-		                "done": 8,
-		                "added": 32
-		        }, {
-		                "done": 20,
-		                "removed": 20
-		        }, {
-		                "done": 30,
-		                "added": 2
-		        }
-		    ]
-		}, {
-		        "name": "Burnify 3",
-		        "points": 120,
-		        "lastSprint": 10,
-		        "mvpSprint": 10,
-		        "sprints": [{
-		                "done": 10
-		        }, {
-		                "done": 10
-		        }, {
-		                "done": 10
-		        }
-		    ]
-		}, {
-		        "name": "Burnify 4",
-		        "points": 200,
-		        "lastSprint": 10,
-		        "mvpSprint": 8,
-		        "sprints": [{
-		                "done": 20
-		        }, {
-		                "done": 20
-		        }, {
-		                "done": 20
-		        }
-		    ]
-		}
-        ];
+//     var products = [
+// 			{
+//             	"name": "Burnify 1",
+// 	            "points": 120,
+//     	        "lastSprint": 13,
+//         	    "mvpSprint": 10,
+//             	"sprints": [
+// 					{
+//                     	"planned": 10,
+// 	                    "done": 10
+//     	    	    }, {
+//         	            "planned": 12,
+//             	        "done": 10
+// 		            }, {
+//     	                "planned": 10,
+//         	            "done": 10
+//     	        	}, {
+//                 	    "planned": 10,
+// 	                    "done": 6,
+//     	                "added": 52
+//         		    }, {
+//             	        "planned": 14,
+//                 	    "done": 8,
+//                     	"added": 12
+// 	        	    }, {
+//     	                "planned": 14,
+//         	            "done": 8,
+//             	        "added": 2,
+//                 	    "removed": 20
+// 	            	}, {
+//     	                "planned": 12,
+//         	            "done": 4
+// 	            	}, {
+//                 	    "planned": 10,
+// 	                    "done": 6,
+//     	                "added": 2
+//     	    	    }
+//         	    ]
+// 			}, {
+// 		        "name": "Burnify 2",
+// 		        "points": 220,
+// 		        "lastSprint": 10,
+// 		        "mvpSprint": 8,
+// 		        "sprints": [{
+// 		                "done": 18
+// 		        }, {
+// 		                "done": 24
+// 		        }, {
+// 		                "done": 16
+// 		        }, {
+// 		                "done": 22
+// 		        }, {
+// 		                "done": 8,
+// 		                "added": 32
+// 		        }, {
+// 		                "done": 20,
+// 		                "removed": 20
+// 		        }, {
+// 		                "done": 30,
+// 		                "added": 2
+// 		        }
+// 		    ]
+// 		}, {
+// 		        "name": "Burnify 3",
+// 		        "points": 120,
+// 		        "lastSprint": 10,
+// 		        "mvpSprint": 10,
+// 		        "sprints": [{
+// 		                "done": 10
+// 		        }, {
+// 		                "done": 10
+// 		        }, {
+// 		                "done": 10
+// 		        }
+// 		    ]
+// 		}, {
+// 		        "name": "Burnify 4",
+// 		        "points": 200,
+// 		        "lastSprint": 10,
+// 		        "mvpSprint": 8,
+// 		        "sprints": [{
+// 		                "done": 20
+// 		        }, {
+// 		                "done": 20
+// 		        }, {
+// 		                "done": 20
+// 		        }
+// 		    ]
+// 		}
+//         ];
         	
-//        b1 = new Burnify("#product1", products[0], 800, 550);
-        b1 = new Burnify("#product1", products[0], 400, 250);
-        b1.onSprintBarClick = function(sprintNumber, sprint) { alert('Sprint ' + sprintNumber + ' (done: '+ sprint.done + ')'); };
-        b1.onFullScopeAreaClick = function(p) { alert('Project ' + p.name + ' full scope area!'); };
-        b1.onDoneScopeAreaClick = function(p) { alert('Project ' + p.name + ' done scope area!'); };
-        b1.onOutScopeAreaClick = function(p) { alert('Project ' + p.name + ' out scope area!'); };
-        b1.draw();
-        new Burnify("#product2", products[1], 400, 250).draw();
-        new Burnify("#product3", products[2], 400, 250).draw();
-        new Burnify("#product4", products[3], 400, 250).draw();
+// //        b1 = new Burnify("#product1", products[0], 800, 550);
+//         b1 = new Burnify("#product1", products[0], 400, 250);
+//         b1.onSprintBarClick = function(sprintNumber, sprint) { alert('Sprint ' + sprintNumber + ' (done: '+ sprint.done + ')'); };
+//         b1.onFullScopeAreaClick = function(p) { alert('Project ' + p.name + ' full scope area!'); };
+//         b1.onDoneScopeAreaClick = function(p) { alert('Project ' + p.name + ' done scope area!'); };
+//         b1.onOutScopeAreaClick = function(p) { alert('Project ' + p.name + ' out scope area!'); };
+//         b1.draw();
+//         new Burnify("#product2", products[1], 400, 250).draw();
+//         new Burnify("#product3", products[2], 400, 250).draw();
+//         new Burnify("#product4", products[3], 400, 250).draw();
         
         
         
         
-      function generateData(count, yrange) {
-            var i = 0;
-            var series = [];
-            while (i < count) {
-                var x = 'w' + (i + 1).toString();
-                var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+//       function generateData(count, yrange) {
+//             var i = 0;
+//             var series = [];
+//             while (i < count) {
+//                 var x = 'w' + (i + 1).toString();
+//                 var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
 
-                series.push({
-                    x: x,
-                    y: y
-                });
-                i++;
-            }
-            return series;
-        }
+//                 series.push({
+//                     x: x,
+//                     y: y
+//                 });
+//                 i++;
+//             }
+//             return series;
+//         }
 
 
-        var optionsHeat = {
-            chart: {
-                height: 350,
-                type: 'heatmap',
-            },
-            dataLabels: {
-                enabled: false
-            },
-            colors: ["#008FFB"],
-            series: [{
-                    name: 'Old Files',
-                    data: generateData(12, {
-                        min: 0,
-                        max: 90
-                    })
-                },
-                {
-                    name: 'Secure Files',
-                    data: generateData(12, {
-                        min: 0,
-                        max: 90
-                    })
-                },
-                {
-                    name: 'Large Files',
-                    data: generateData(12, {
-                        min: 0,
-                        max: 90
-                    })
-                },
-                {
-                    name: 'System Files',
-                    data: generateData(12, {
-                        min: 0,
-                        max: 90
-                    })
-                },
-                {
-                    name: 'config Files',
-                    data: generateData(12, {
-                        min: 0,
-                        max: 90
-                    })
-                },
-                {
-                    name: 'Doc Files',
-                    data: generateData(12, {
-                        min: 0,
-                        max: 90
-                    })
-                },
-                {
-                    name: 'Files',
-                    data: generateData(12, {
-                        min: 0,
-                        max: 90
-                    })
-                },
-                {
-                    name: 'Directories',
-                    data: generateData(12, {
-                        min: 0,
-                        max: 90
-                    })
-                },
-                {
-                    name: 'Archives',
-                    data: generateData(12, {
-                        min: 0,
-                        max: 90
-                    })
-                }
-            ],
-            title: {
-                text: ''
-            },
+//         var optionsHeat = {
+//             chart: {
+//                 height: 350,
+//                 type: 'heatmap',
+//             },
+//             dataLabels: {
+//                 enabled: false
+//             },
+//             colors: ["#008FFB"],
+//             series: [{
+//                     name: 'Old Files',
+//                     data: generateData(12, {
+//                         min: 0,
+//                         max: 90
+//                     })
+//                 },
+//                 {
+//                     name: 'Secure Files',
+//                     data: generateData(12, {
+//                         min: 0,
+//                         max: 90
+//                     })
+//                 },
+//                 {
+//                     name: 'Large Files',
+//                     data: generateData(12, {
+//                         min: 0,
+//                         max: 90
+//                     })
+//                 },
+//                 {
+//                     name: 'System Files',
+//                     data: generateData(12, {
+//                         min: 0,
+//                         max: 90
+//                     })
+//                 },
+//                 {
+//                     name: 'config Files',
+//                     data: generateData(12, {
+//                         min: 0,
+//                         max: 90
+//                     })
+//                 },
+//                 {
+//                     name: 'Doc Files',
+//                     data: generateData(12, {
+//                         min: 0,
+//                         max: 90
+//                     })
+//                 },
+//                 {
+//                     name: 'Files',
+//                     data: generateData(12, {
+//                         min: 0,
+//                         max: 90
+//                     })
+//                 },
+//                 {
+//                     name: 'Directories',
+//                     data: generateData(12, {
+//                         min: 0,
+//                         max: 90
+//                     })
+//                 },
+//                 {
+//                     name: 'Archives',
+//                     data: generateData(12, {
+//                         min: 0,
+//                         max: 90
+//                     })
+//                 }
+//             ],
+//             title: {
+//                 text: ''
+//             },
 
-        }
+//         }
 
-        var chartHeat = new ApexCharts(
-            document.querySelector("#chartHeat"),
-            optionsHeat
-        );
+//         var chartHeat = new ApexCharts(
+//             document.querySelector("#chartHeat"),
+//             optionsHeat
+//         );
 
-        chartHeat.render();
+//         chartHeat.render();
   
-            window.Apex = {
-      stroke: {
-        width: 3
-      },
-      markers: {
-        size: 0
-      },
-      tooltip: {
-        fixed: {
-          enabled: true,
-        }
-      }
-    };
+//             window.Apex = {
+//       stroke: {
+//         width: 3
+//       },
+//       markers: {
+//         size: 0
+//       },
+//       tooltip: {
+//         fixed: {
+//           enabled: true,
+//         }
+//       }
+//     };
     
-    var randomizeArray = function (arg) {
-      var array = arg.slice();
-      var currentIndex = array.length,
-        temporaryValue, randomIndex;
+//     var randomizeArray = function (arg) {
+//       var array = arg.slice();
+//       var currentIndex = array.length,
+//         temporaryValue, randomIndex;
 
-      while (0 !== currentIndex) {
+//       while (0 !== currentIndex) {
 
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
+//         randomIndex = Math.floor(Math.random() * currentIndex);
+//         currentIndex -= 1;
 
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-      }
+//         temporaryValue = array[currentIndex];
+//         array[currentIndex] = array[randomIndex];
+//         array[randomIndex] = temporaryValue;
+//       }
 
-      return array;
-    }
+//       return array;
+//     }
 
     // // data for the sparklines that appear below header area
     // var sparklineData = [47, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54, 43, 19, 46];
@@ -2001,115 +2041,115 @@ function humanFileSize(bytes, si) {
         
         
         
-  var optionsRadialBar = {
-            chart: {
-                height: 350,
-                type: 'radialBar',
-            },
-            plotOptions: {
-                radialBar: {
-                    dataLabels: {
-                        name: {
-                            fontSize: '22px',
-                        },
-                        value: {
-                            fontSize: '16px',
-                        },
-                        total: {
-                            show: true,
-                            label: 'Total',
-                            formatter: function (w) {
-                                // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
-                                return 249
-                            }
-                        }
-                    }
-                }
-            },
-            series: [44, 55, 67, 83],
-            labels: ['Apples', 'Oranges', 'Bananas', 'Berries'],
+//   var optionsRadialBar = {
+//             chart: {
+//                 height: 350,
+//                 type: 'radialBar',
+//             },
+//             plotOptions: {
+//                 radialBar: {
+//                     dataLabels: {
+//                         name: {
+//                             fontSize: '22px',
+//                         },
+//                         value: {
+//                             fontSize: '16px',
+//                         },
+//                         total: {
+//                             show: true,
+//                             label: 'Total',
+//                             formatter: function (w) {
+//                                 // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
+//                                 return 249
+//                             }
+//                         }
+//                     }
+//                 }
+//             },
+//             series: [44, 55, 67, 83],
+//             labels: ['Apples', 'Oranges', 'Bananas', 'Berries'],
             
-        }
+//         }
 
-       var chartRadialBar = new ApexCharts(
-            document.querySelector("#chartRadialBar"),
-            optionsRadialBar
-        );
+//        var chartRadialBar = new ApexCharts(
+//             document.querySelector("#chartRadialBar"),
+//             optionsRadialBar
+//         );
         
-        chartRadialBar.render();
+//         chartRadialBar.render();
         
-$( "#btn-toggle-table" ).click(function() {
-    $( "#table-block-ex" ).toggle();
-});
+// $( "#btn-toggle-table" ).click(function() {
+//     $( "#table-block-ex" ).toggle();
+// });
 
-$("#table-block-ex").css("display", "none");
-
-
+// $("#table-block-ex").css("display", "none");
 
 
- var radarOptions = {
-            chart: {
-                height: 350,
-                type: 'radar',
-                dropShadow: {
-                    enabled: true,
-                    blur: 1,
-                    left: 1,
-                    top: 1
-                }
-            },
-            series: [{
-                name: 'Series 1',
-                data: [80, 50, 30, 40, 100, 20],
-            }, {
-                name: 'Series 2',
-                data: [20, 30, 40, 80, 20, 80],
-            }, {
-                name: 'Series 3',
-                data: [44, 76, 78, 13, 43, 10],
-            }],
-            title: {
-                text: 'Radar Chart - Multi Series'
-            },
-            stroke: {
-                width: 0
-            },
-            fill: {
-                opacity: 0.4
-            },
-            markers: {
-                size: 0
-            },
-            labels: ['2011', '2012', '2013', '2014', '2015', '2016']
-        }
 
-        var radarChart = new ApexCharts(
-            document.querySelector("#radarChart"),
-            radarOptions
-        );
 
-        radarChart.render();
+//  var radarOptions = {
+//             chart: {
+//                 height: 350,
+//                 type: 'radar',
+//                 dropShadow: {
+//                     enabled: true,
+//                     blur: 1,
+//                     left: 1,
+//                     top: 1
+//                 }
+//             },
+//             series: [{
+//                 name: 'Series 1',
+//                 data: [80, 50, 30, 40, 100, 20],
+//             }, {
+//                 name: 'Series 2',
+//                 data: [20, 30, 40, 80, 20, 80],
+//             }, {
+//                 name: 'Series 3',
+//                 data: [44, 76, 78, 13, 43, 10],
+//             }],
+//             title: {
+//                 text: 'Radar Chart - Multi Series'
+//             },
+//             stroke: {
+//                 width: 0
+//             },
+//             fill: {
+//                 opacity: 0.4
+//             },
+//             markers: {
+//                 size: 0
+//             },
+//             labels: ['2011', '2012', '2013', '2014', '2015', '2016']
+//         }
 
-        function update() {
+//         var radarChart = new ApexCharts(
+//             document.querySelector("#radarChart"),
+//             radarOptions
+//         );
 
-            function randomSeries() {
-                var arr = []
-                for(var i = 0; i < 6; i++) {
-                    arr.push(Math.floor(Math.random() * 100)) 
-                }
+//         radarChart.render();
 
-                return arr
-            }
+//         function update() {
+
+//             function randomSeries() {
+//                 var arr = []
+//                 for(var i = 0; i < 6; i++) {
+//                     arr.push(Math.floor(Math.random() * 100)) 
+//                 }
+
+//                 return arr
+//             }
             
 
-            radarChart.updateSeries([{
-                name: 'Series 1',
-                data: randomSeries(),
-            }, {
-                name: 'Series 2',
-                data: randomSeries(),
-            }, {
-                name: 'Series 3',
-                data: randomSeries(),
-            }])
-        }
+//             radarChart.updateSeries([{
+//                 name: 'Series 1',
+//                 data: randomSeries(),
+//             }, {
+//                 name: 'Series 2',
+//                 data: randomSeries(),
+//             }, {
+//                 name: 'Series 3',
+//                 data: randomSeries(),
+//             }])
+//         }

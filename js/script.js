@@ -7,9 +7,9 @@ var employeedata;
 var metaFactdata;
 
 function findManagerFromLS(ID) {
-    const objArray = employeedata; //await  JSON.parse(localStorage.getItem("local_employee"));
+   // const objArray = employeedata; //await  JSON.parse(localStorage.getItem("local_employee"));
     //console.log("In  findManagerFromLS", objArray)
-    return filterObj = objArray.filter(function(e) {
+    return filterObj = employeedata.filter(function(e) {
         // console.log("objArray.filter", e.EMPID)
         return e.EMPID == ID;
     })[0];
@@ -55,9 +55,9 @@ temp += str.map( e => {
 
     // console.log("locManID", locMan)
     
-    return `<tr>
-    
-<th scope="row"><a href="detail3.html?id=${e.EMPID}"><span class="btn btn-primary">${e.firstName} <span class="fa fa-folder-open"></span></span></a></th>
+    return `
+<tr> 
+<td><a href="detail3.html?id=${e.EMPID}"><span class="btn btn-block btn-primary">${e.firstName} <span class="fa fa-folder-open"></span></span></a></td>
 <td>${e.firstName}</td>
 <td>${e.lastName}</td>
 <td>${e.email}</td>
