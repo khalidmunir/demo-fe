@@ -70,7 +70,7 @@ function allClicked() {
   console.log("you clicked ALL BUTTON")
   selectedFilter = "ALL"
   updatePage()
-  makeFileTable(PIIFiles)
+  makeFileTable(files)
 }
 
 function piiClicked() {
@@ -172,7 +172,7 @@ function makeTeamList() {
       console.log("locManL", locManLevel)
       //console.log("user[0].EMPID", user[0].EMPID ) 
       console.log("index", index)
-      return emp.managerID == possibleUserList[locManLevel].
+      return emp.managerID == possibleUserList[locManLevel]
     })
   }
   for (i=0;i<8;i++) {
