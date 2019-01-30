@@ -148,40 +148,61 @@ function fixData() {
   console.log("oppourtunity to fix the data")
   makeTeamList()
   makePieChart()
-makeRadialBar()
+  makeRadialBar()
 }
 
 
 function makeTeamList() {
+
   managerLevel = user[0].level
-  console.log("ManagerLevel", managerLevel)
-  // set a root member to build team from recursively
-  var locManLevel = managerLevel
-  var possibleUserList = []
-  possibleUserList[0] = user
-  while (locManLevel < 8) {
-    console.log("locman", locManLevel)
+  let MAXLEVEL = 5
+
+  var possList = []
+  possList[0] = user[0]
+
+  console.log("p1", possList)
+  var roundList = []
+
+  
+  for(let i=1;i<MAXLEVEL;i++) {
+    possList[i] = employeedata.filter( emp => {
+     // console.log("emp", emp.managerID)
+     // console.log("user[0].EMPID", user[0].EMPID)
+      return emp.level == possList[i-1].level+1 &&  emp.managerID == possList[i-1].EMPID
+    });
+    console.log("PossList", possList, i)
+    roundList[i] = possList[i].filter( e => e.managerID == possList[i-1].EMPID)
+  }
+
+
+  console.log("roundList", roundList)
+  // // set a root member to build team from recursively
+  // var locManLevel = managerLevel
+  // var possibleUserList = []
+  // possibleUserList[0] = user
+  // while (locManLevel < 8) {
+  //   console.log("locman", locManLevel)
     
-    locManLevel++
-    possibleUserList[locManLevel] = employeedata.filter( (emp, index) => {
-      console.log("emp ",emp)
+  //   locManLevel++
+  //   possibleUserList[locManLevel] = employeedata.filter( (emp, index) => {
+  //     console.log("emp ",emp)
       
-      //emp.managerID == user[0].EMPID
-      console.log("emp.managerID", emp.managerID)
-      console.log("emplevel", emp.level)
-      console.log("locManL", locManLevel)
-      //console.log("user[0].EMPID", user[0].EMPID ) 
-      console.log("index", index)
-      return emp.managerID == possibleUserList[locManLevel]
-    })
-  }
-  for (i=0;i<8;i++) {
+  //     //emp.managerID == user[0].EMPID
+  //     console.log("emp.managerID", emp.managerID)
+  //     console.log("emplevel", emp.level)
+  //     console.log("locManL", locManLevel)
+  //     //console.log("user[0].EMPID", user[0].EMPID ) 
+  //     console.log("index", index)
+  //     return emp.managerID == possibleUserList[locManLevel]
+  //   })
+  // }
+  // for (i=0;i<8;i++) {
 
-  }
+  // }
 
 
 
-  console.log("POssible List", possibleUserList)
+  console.log("POssible List", roundList)
 }
 
 function updatePage() {
