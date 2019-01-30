@@ -8,6 +8,7 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
     <link
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       rel="stylesheet"
@@ -16,11 +17,11 @@
   </head>
 
   <body>
-    <div class="container body">
+    <div class="container-fluid body">
       <div class="main_container">
         <div class="bs-example" data-example-id="navbar-button">
           <nav class="navbar navbar-default">
-            <div class="container-fluid">
+            <div class="container">
               <div class="navbar-header">
                 <button
                   type="button"
@@ -34,49 +35,163 @@
                   <span class="icon-bar"></span>
                 </button>
                 <a href="#" class="navbar-brand">Classifications</a>
+                <span class="navbar-text float-right">
+                  Navbar text with an inline element
+                </span>
+
+                <div class="float-right">
+                  <span id="selected-filter">## </span>
+                  <span id="selected-level">### </span>
+                </div>
               </div>
               <div
                 class="collapse navbar-collapse"
-                id="bs-example-navbar-collapse-3">
-                <button onclick="allClicked()" type="button" class="btn btn-info navbar-btn">
-                  All files
-                </button>
-                <button type="button" class="btn btn-primary navbar-btn">
-                  PCI files
-                </button>
-                <button type="button" class="btn btn-primary navbar-btn">
-                  PII files
-                </button>
-                <button type="button" class="btn btn-primary navbar-btn">
-                  SPEC files
-                </button>
-                <button type="button" class="btn btn-primary navbar-btn">
-                  RET files
-                </button>
-            </div>
-<div class="row">
-                <button type="button" class="col-12 btn btn-warning btn-block navbar-btn">
-                    SECRET
-                  </button>
-                  <button type="button" class="col-2 btn btn-warning navbar-btn">
-                    CLASSIFIED(Sen)
-                  </button>
-                  <button type="button" class="col-2 btn btn-warning navbar-btn">
-                    CLASSIFIED
-                  </button>
-                  <button type="button" class="col-2 btn btn-warning navbar-btn">
-                    INTERNAL
-                  </button>
-                  <button type="button" class="col-2 btn btn-warning navbar-btn">
-                    PUBLIC
-                  </button>
+                id="bs-example-navbar-collapse-3"
+              ></div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-4">
+                    <h2>By Security Level</h2>
+                    <div id="pie-chart"></div>
+                  </div>
+                  <div class="col-lg-4">
+                    <h2>By Filter</h2>
+                    <div id="chart"></div>
+                  </div>
+                  <div class="col-lg-4">
+                    <h2>Heading</h2>
+                    <canvas id="myChart" width="400" height="400"></canvas>
+<script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        datasets: [{
+            label: 'overdue',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
+                    
+                  </div>
                 </div>
-              
+                <div class="well">
+                  <div class="row">
+                    <button
+                      onclick="allClicked()"
+                      type="button"
+                      class="ml-4 btn btn-info navbar-btn"
+                    >
+                      All files (<span id="user-total"></span>)
+                    </button>
+                    <button
+                      onclick="pciClicked()"
+                      type="button"
+                      class="btn btn-primary navbar-btn"
+                    >
+                      PCI files (<span id="pci-total"></span>)
+                    </button>
+                    <button
+                      onclick="piiClicked()"
+                      type="button"
+                      class="btn btn-primary navbar-btn"
+                    >
+                      PII files (<span id="pii-total"></span>)
+                    </button>
+                    <button
+                      onclick="specClicked()"
+                      type="button"
+                      class="btn btn-primary navbar-btn"
+                    >
+                      SPEC files (<span id="spec-total"></span>)
+                    </button>
+                    <button
+                      onclick="retClicked()"
+                      type="button"
+                      class="btn btn-primary navbar-btn"
+                    >
+                      RET files (<span id="ret-total"></span>)
+                    </button>
+                  </div>
+                  <div class="row">
+                    <button
+                      onclick="secretClicked()"
+                      type="button"
+                      class="ml-4 col-12 btn btn-warning btn-sm navbar-btn"
+                    >
+                      SECRET (<span id="sec-class-total"></span>)
+                    </button>
+                    <button
+                      onclick="senClassClicked()"
+                      type="button"
+                      class="col-2 btn btn-warning btn-sm navbar-btn"
+                    >
+                      SENSITIVE CLASSIFIED (<span id="sen-class-total"></span>)
+                    </button>
+                    <button
+                      onclick="ClassClicked()"
+                      type="button"
+                      class="col-2 btn btn-warning btn-sm navbar-btn"
+                    >
+                      CLASSIFIED (<span id="cla-class-total"></span>)
+                    </button>
+                    <button
+                      onclick="intClicked()"
+                      type="button"
+                      class="col-2 btn btn-warning btn-sm navbar-btn"
+                    >
+                      INTERNAL (<span id="int-class-total"></span>)
+                    </button>
+                    <button
+                      onclick="pubClicked()"
+                      type="button"
+                      class="col-2 btn btn-warning btn-sm navbar-btn"
+                    >
+                      PUBLIC (<span id="pub-class-total"></span>)
+                    </button>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div id="main-file-list"></div>
+                  <div class="jumbotron"><span id="message"></span></div>
+                </div>
+              </div>
             </div>
           </nav>
         </div>
       </div>
     </div>
+
+    <script src="js/apexcharts.js"></script>
     <script src="js/detail3.js"></script>
   </body>
 </html>

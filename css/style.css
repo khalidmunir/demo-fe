@@ -1,4 +1,4 @@
-#mainContent {
+/* #mainContent {
 	font-family: Arial, Helvetica, sans-serif;
 	
 	font-weight: bold;
@@ -29,4 +29,9 @@
 	background-color: #F5FFD2;
 	color: #669900;
 	cursor: pointer;
+}
+ */
+
+img.avatar {
+    height: 30px;
 }

@@ -1,5 +1,23 @@
 var urlid = $_GET('id')
 var team = null
+var mainFileList = []
+var selectedFilter = ''
+var selectedLevel = ''
+var PCIFiles = []
+var PIIFiles = []
+var SPECFiles = []
+var RETFiles = []
+var SecClassFiles = []
+var SenClassFiles = []
+var ClaClassFiles  = [] 
+var PubClassFiles = [] 
+var IntClassFiles = []
+var files = []
+var user = ''
+var users = []
+var managerLevel = 0
+//var team = []
+
 
 console.log("From URL", urlid)
 
@@ -32,28 +50,217 @@ window.addEventListener('load', async e => {
 
   //await initApp();
   await updateData();
-  var user = findUserFromStorage(urlid)
-  var files = findUserFilesFromStorage(urlid)
-
+  user = findUserFromStorage(urlid)
+  files = findUserFilesFromStorage(urlid)
+  users = loadAllUsersFromStorage()
   console.log("FOUND USER",user)
   console.log("FOUND FILES", files)
 
+  updatePage()
   fixData()
 
 
 });
 
+function loadAllUsersFromStorage() {
+
+}
+
 function allClicked() {
   console.log("you clicked ALL BUTTON")
+  selectedFilter = "ALL"
+  updatePage()
+  makeFileTable(PIIFiles)
 }
+
+function piiClicked() {
+  console.log("you clicked ALL BUTTON")
+  selectedFilter = "PII"
+  updatePage()
+  makeFileTable(PIIFiles)
+}
+
+function pciClicked() {
+  console.log("you clicked ALL BUTTON")
+  selectedFilter = "PCI"
+  updatePage()
+  makeFileTable(PCIFiles)
+}
+
+function specClicked() {
+  console.log("you clicked ALL BUTTON")
+  selectedFilter = "SPEC"
+  updatePage()
+  makeFileTable(SPECFiles)
+}
+
+function retClicked() {
+  console.log("you clicked ALL BUTTON")
+  selectedFilter = "RET"
+  updatePage()
+  makeFileTable(RETFiles)
+}
+
+
+
+function secretClicked() {
+  console.log("you clicked ALL BUTTON")
+  selectedFilter = "secretClicked"
+  updatePage()
+  // SecClassFiles SenClassFiles
+  makeFileTable(SecClassFiles)
+}
+
+
+function senClassClicked() {
+  console.log("you clicked ALL BUTTON")
+  selectedFilter = "senClassClicked"
+  updatePage()
+  makeFileTable(SenClassFiles)
+} 
+
+
+function ClassClicked() {
+  console.log("you clicked ALL BUTTON")
+  selectedFilter = "ClassClicked"
+  updatePage()
+  makeFileTable(ClaClassFiles)
+}
+
+function intClicked() {
+  console.log("you clicked ALL BUTTON")
+  selectedFilter = "intClicked"
+  updatePage()
+  makeFileTable(IntClassFiles)
+} 
+
+function pubClicked() {
+  console.log("you clicked ALL BUTTON")
+  selectedFilter = "pubClicked"
+  updatePage()
+  // ClaClassFiles PubClassFiles IntClassFiles
+  makeFileTable(PubClassFiles)
+}
+
 
 
 function fixData() {
   console.log("oppourtunity to fix the data")
+  makeTeamList()
+  makePieChart()
+makeRadialBar()
+}
+
+
+function makeTeamList() {
+  managerLevel = user[0].level
+  console.log("ManagerLevel", managerLevel)
+  var possibleUserList = employeedata.filter( emp => emp.managerID == user[0].EMPID );
+
+
+  console.log("POssible List", possibleUserList)
 }
 
 function updatePage() {
   console.log("Update web page")
+  files = findUserFilesFromStorage(urlid)
+  document.getElementById("user-total").innerHTML = files.length
+
+  if( (files.length > 0)) {
+    makeFileTable(files)
+  }
+
+  PCIFiles = files.filter( f => f.filter == "PCI") 
+  
+  document.getElementById("pci-total").innerHTML = PCIFiles.length
+
+  PIIFiles = files.filter( f => f.filter == "PII")
+  document.getElementById("pii-total").innerHTML = PIIFiles.length
+
+  SPECFiles = files.filter(function(f) {
+    return f.filter == "SPE";
+  })
+  document.getElementById("spec-total").innerHTML = SPECFiles.length
+
+  RETFiles = files.filter(function(f) {
+    return f.filter == "RET";
+  })
+  document.getElementById("ret-total").innerHTML = RETFiles.length
+
+  //securityClass
+  SecClassFiles = files.filter(function(f) {
+    return f.securityClass == "Secret";
+  })
+  document.getElementById("sec-class-total").innerHTML = SecClassFiles.length
+
+  SenClassFiles = files.filter(function(f) {
+    return f.securityClass == "ClassifiedSen";
+  })
+  document.getElementById("sen-class-total").innerHTML = SenClassFiles.length
+
+  ClaClassFiles = files.filter(function(f) {
+    return f.securityClass == "Classified";
+  })
+  document.getElementById("cla-class-total").innerHTML = ClaClassFiles.length
+
+  IntClassFiles = files.filter(function(f) {
+    return f.securityClass == "Internal";
+  })
+  document.getElementById("int-class-total").innerHTML = IntClassFiles.length
+
+  PubClassFiles = files.filter(function(f) {
+    return f.securityClass == "Public";
+  })
+  document.getElementById("pub-class-total").innerHTML = PubClassFiles.length
+
+  var elem = document.getElementById("message");
+  elem.innerHTML = selectedFilter
+
+ 
+  
+  
+}
+
+
+function makeFileTable(fileList) {
+  var table = `<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Action</th>
+        <th>FileNAme</th>
+        <th>Security Level</th>
+        <th>Filter</th>
+        <th>Path</th>
+        <th>MD5</th>
+      </tr>
+    </thead>
+    <tbody>`;
+
+    table += fileList.map( e => `
+      <tr id="row-${e.MD5}" onchange="changedSelect(this)">
+        <td>
+        <select id="${e.MD5}" onchange="changedSelect(this)" class="form-control">
+        <option value="#f9f9f9" style="background-color: #f9f9f9;"><i class="fa fa-file"></i>please select</option>
+        <option value="lightgreen" style="background-color: lightgreen"><i class="fa fa-file"></i>No Action</option>
+        <option value="lightblue" style="background-color: lightblue"><i class="fa fa-file"></i>Moved</option>
+        <option value="yellow" style="background-color: yellow"><i class="fa fa-file"></i>Archived</option>
+        <option value="lightpink" style="background-color: lightpink"><i class="fa fa-file"></i>Lost/unknown</option>
+      </select>
+      </td>
+        <td>${e.fileName}</td>
+        <td>${e.securityClass}</td>
+        <td>${e.filter}</td>
+        <td>${e.filePath}</td>
+        <td>${e.MD5}</td>
+      </tr>
+    `).join("\n")
+
+    table += `</tbody>
+    </table>
+    </div>`
+
+    document.getElementById("main-file-list").innerHTML = table  
 
 }
 
@@ -90,6 +297,318 @@ function findUserFilesFromStorage(ID) {
       return e.employeeFKID == ID;
   });
 }
+
+console.log ("lengths", SecClassFiles.length)
+
+function makePieChart() {
+  var pieOptions = {
+    chart: {
+        width: 350,
+        type: 'pie',
+    },
+    labels: ['Secret', 'Sensitive', 'Classified', 'Internal', 'Public'],
+    series: [ SecClassFiles.length, SecClassFiles.length, ClaClassFiles.length, IntClassFiles.length, PubClassFiles.length],
+    legend: {
+      show: true,
+      showForSingleSeries: false,
+      showForNullSeries: true,
+      showForZeroSeries: true,
+      position: 'bottom',
+      horizontalAlign: 'center', 
+      floating: true,
+      fontSize: '14px',
+      fontFamily: 'Helvetica, Arial',
+      width: undefined,
+      height: undefined,
+      formatter: undefined,
+      offsetX: 0,
+      offsetY: -10,
+      labels: {
+          colors: undefined,
+          useSeriesColors: false
+      },
+      markers: {
+          width: 12,
+          height: 12,
+          strokeWidth: 0,
+          strokeColor: '#fff',
+          radius: 12,
+          customHTML: undefined,
+          onClick: undefined,
+          offsetX: 0,
+          offsetY: 0
+      },
+      itemMargin: {
+          horizontal: 10,
+          vertical: 5
+      },
+      onItemClick: {
+          toggleDataSeries: true
+      },
+      onItemHover: {
+          highlightDataSeries: true
+      },
+  }
+  
+  }
+  
+  var pieChart = new ApexCharts(
+    document.querySelector("#pie-chart"),
+    pieOptions
+  );
+  
+  pieChart.render();
+  
+}
+
+function makeRadialBar() {
+//   var options = {
+//     chart: {
+//         height: 350,
+//         type: 'radialBar',
+//     },
+//     plotOptions: {
+//         radialBar: {
+//             dataLabels: {
+//                 name: {
+//                     fontSize: '22px',
+//                 },
+//                 value: {
+//                     fontSize: '16px',
+//                 },
+//                 total: {
+//                     show: true,
+//                     label: 'Total',
+//                     formatter: function (w) {
+//                         // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
+//                         return (PCIFiles.length + PIIFiles.length + SPECFiles.length + RETFiles.length)/4
+//                     }
+//                 }
+//             }
+//         }
+//     },
+//     series: [PCIFiles.length, PIIFiles.length, SPECFiles.length, RETFiles.length],
+//     labels: ['PCI', 'PII', 'SPE', 'RET'],
+    
+// }
+
+// var chart = new ApexCharts(
+//     document.querySelector("#chart"),
+//     options
+// );
+
+// chart.render();
+
+
+
+var options = {
+  chart: {
+      type: 'pie',
+      width: 420,
+  },
+  //series: [44, 55, 41, 17, 15],
+  series: [PCIFiles.length, PIIFiles.length, SPECFiles.length, RETFiles.length],
+  labels: ['PCI', 'PII', 'SPE', 'RET'],
+  legend: {
+    show: true,
+    showForSingleSeries: false,
+    showForNullSeries: true,
+    showForZeroSeries: true,
+    position: 'bottom',
+    horizontalAlign: 'center', 
+    floating: false,
+    fontSize: '14px',
+    fontFamily: 'Helvetica, Arial',
+    width: undefined,
+    height: undefined,
+    formatter: undefined,
+    offsetX: 0,
+    offsetY: 100,
+    labels: {
+        colors: undefined,
+        useSeriesColors: false
+    },
+    markers: {
+        width: 12,
+        height: 12,
+        strokeWidth: 0,
+        strokeColor: '#fff',
+        radius: 12,
+        customHTML: undefined,
+        onClick: undefined,
+        offsetX: 0,
+        offsetY: 0
+    },
+    itemMargin: {
+        horizontal: 20,
+        vertical: 5
+    },
+    onItemClick: {
+        toggleDataSeries: true
+    },
+    onItemHover: {
+        highlightDataSeries: true
+    },
+}
+  
+}
+
+var chart = new ApexCharts(
+  document.querySelector("#chart"),
+  options
+);
+
+chart.render();
+
+
+
+}
+
+
+
+function changedSelect(e) {
+  console.log("selected", e.value)
+  console.log("this select", e.id)
+  var random = Math.random()
+  console.log(random*1000 + 1000)
+  setTimeout(function(){ document.getElementById("row-" + e.id).setAttribute('style', `background-color:${e.value}`); }, 1500);
+  //document.getElementById("row-" + e.id).setAttribute('style', `background-color:${e.value}`); // += e.value
+}
+
+
+
+// document.getElementById("main-file-list").innerHTML = `<div class="table-responsive">
+// <table class="table table-striped">
+//   <thead>
+//     <tr>
+//       <th>#</th>
+//       <th>Header</th>
+//       <th>Header</th>
+//       <th>Header</th>
+//       <th>Header</th>
+//     </tr>
+//   </thead>
+//   <tbody>
+//     <tr>
+//       <td>1,001</td>
+//       <td>Lorem</td>
+//       <td>ipsum</td>
+//       <td>dolor</td>
+//       <td>sit</td>
+//     </tr>
+//     <tr>
+//       <td>1,002</td>
+//       <td>amet</td>
+//       <td>consectetur</td>
+//       <td>adipiscing</td>
+//       <td>elit</td>
+//     </tr>
+//     <tr>
+//       <td>1,003</td>
+//       <td>Integer</td>
+//       <td>nec</td>
+//       <td>odio</td>
+//       <td>Praesent</td>
+//     </tr>
+//     <tr>
+//       <td>1,003</td>
+//       <td>libero</td>
+//       <td>Sed</td>
+//       <td>cursus</td>
+//       <td>ante</td>
+//     </tr>
+//     <tr>
+//       <td>1,004</td>
+//       <td>dapibus</td>
+//       <td>diam</td>
+//       <td>Sed</td>
+//       <td>nisi</td>
+//     </tr>
+//     <tr>
+//       <td>1,005</td>
+//       <td>Nulla</td>
+//       <td>quis</td>
+//       <td>sem</td>
+//       <td>at</td>
+//     </tr>
+//     <tr>
+//       <td>1,006</td>
+//       <td>nibh</td>
+//       <td>elementum</td>
+//       <td>imperdiet</td>
+//       <td>Duis</td>
+//     </tr>
+//     <tr>
+//       <td>1,007</td>
+//       <td>sagittis</td>
+//       <td>ipsum</td>
+//       <td>Praesent</td>
+//       <td>mauris</td>
+//     </tr>
+//     <tr>
+//       <td>1,008</td>
+//       <td>Fusce</td>
+//       <td>nec</td>
+//       <td>tellus</td>
+//       <td>sed</td>
+//     </tr>
+//     <tr>
+//       <td>1,009</td>
+//       <td>augue</td>
+//       <td>semper</td>
+//       <td>porta</td>
+//       <td>Mauris</td>
+//     </tr>
+//     <tr>
+//       <td>1,010</td>
+//       <td>massa</td>
+//       <td>Vestibulum</td>
+//       <td>lacinia</td>
+//       <td>arcu</td>
+//     </tr>
+//     <tr>
+//       <td>1,011</td>
+//       <td>eget</td>
+//       <td>nulla</td>
+//       <td>Class</td>
+//       <td>aptent</td>
+//     </tr>
+//     <tr>
+//       <td>1,012</td>
+//       <td>taciti</td>
+//       <td>sociosqu</td>
+//       <td>ad</td>
+//       <td>litora</td>
+//     </tr>
+//     <tr>
+//       <td>1,013</td>
+//       <td>torquent</td>
+//       <td>per</td>
+//       <td>conubia</td>
+//       <td>nostra</td>
+//     </tr>
+//     <tr>
+//       <td>1,014</td>
+//       <td>per</td>
+//       <td>inceptos</td>
+//       <td>himenaeos</td>
+//       <td>Curabitur</td>
+//     </tr>
+//     <tr>
+//       <td>1,015</td>
+//       <td>sodales</td>
+//       <td>ligula</td>
+//       <td>in</td>
+//       <td>libero</td>
+//     </tr>
+//   </tbody>
+// </table>
+// </div>`
+
+
+
+
+
 
 
 
