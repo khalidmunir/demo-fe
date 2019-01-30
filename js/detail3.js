@@ -158,7 +158,7 @@ function makeTeamList() {
   let MAXLEVEL = 5
 
   var possList = []
-  possList[0] = user[0]
+  possList[0] = user
 
   console.log("p1", possList)
   var roundList = []
@@ -166,8 +166,9 @@ function makeTeamList() {
   
   for(let i=1;i<MAXLEVEL;i++) {
     possList[i] = employeedata.filter( emp => {
-     // console.log("emp", emp.managerID)
-     // console.log("user[0].EMPID", user[0].EMPID)
+      console.log("emp", emp)
+      console.log("user[0].EMPID", user)
+      console.log("possList[i-1].level+1", possList[i-1])
       return emp.level == possList[i-1].level+1 &&  emp.managerID == possList[i-1].EMPID
     });
     console.log("PossList", possList, i)
@@ -347,26 +348,26 @@ console.log ("lengths", SecClassFiles.length)
 function makePieChart() {
   var pieOptions = {
     chart: {
-        width: 350,
+        width: 420,
         type: 'pie',
     },
     labels: ['Secret', 'Sensitive', 'Classified', 'Internal', 'Public'],
     series: [ SecClassFiles.length, SecClassFiles.length, ClaClassFiles.length, IntClassFiles.length, PubClassFiles.length],
     legend: {
-      show: true,
+      show: false,
       showForSingleSeries: false,
       showForNullSeries: true,
       showForZeroSeries: true,
       position: 'bottom',
       horizontalAlign: 'center', 
-      floating: true,
+      floating: false,
       fontSize: '14px',
       fontFamily: 'Helvetica, Arial',
-      width: undefined,
-      height: undefined,
+      width: 100,
+      height: 100,
       formatter: undefined,
       offsetX: 0,
-      offsetY: -10,
+      offsetY: -60,
       labels: {
           colors: undefined,
           useSeriesColors: false
@@ -406,103 +407,105 @@ function makePieChart() {
 }
 
 function makeRadialBar() {
-//   var options = {
-//     chart: {
-//         height: 350,
-//         type: 'radialBar',
-//     },
-//     plotOptions: {
-//         radialBar: {
-//             dataLabels: {
-//                 name: {
-//                     fontSize: '22px',
-//                 },
-//                 value: {
-//                     fontSize: '16px',
-//                 },
-//                 total: {
-//                     show: true,
-//                     label: 'Total',
-//                     formatter: function (w) {
-//                         // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
-//                         return (PCIFiles.length + PIIFiles.length + SPECFiles.length + RETFiles.length)/4
-//                     }
-//                 }
-//             }
-//         }
-//     },
-//     series: [PCIFiles.length, PIIFiles.length, SPECFiles.length, RETFiles.length],
-//     labels: ['PCI', 'PII', 'SPE', 'RET'],
+
+
+  var options = {
+    chart: {
+        height: 350,
+        type: 'radialBar',
+    },
+    plotOptions: {
+        radialBar: {
+            dataLabels: {
+                name: {
+                    fontSize: '22px',
+                },
+                value: {
+                    fontSize: '16px',
+                },
+                total: {
+                    show: true,
+                    label: 'Total',
+                    formatter: function (w) {
+                        // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
+                        return (PCIFiles.length + PIIFiles.length + SPECFiles.length + RETFiles.length)
+                    }
+                }
+            }
+        }
+    },
+    series: [PCIFiles.length, PIIFiles.length, SPECFiles.length, RETFiles.length],
+    labels: ['PCI', 'PII', 'SPE', 'RET'],
     
-// }
-
-// var chart = new ApexCharts(
-//     document.querySelector("#chart"),
-//     options
-// );
-
-// chart.render();
-
-
-
-var options = {
-  chart: {
-      type: 'pie',
-      width: 420,
-  },
-  //series: [44, 55, 41, 17, 15],
-  series: [PCIFiles.length, PIIFiles.length, SPECFiles.length, RETFiles.length],
-  labels: ['PCI', 'PII', 'SPE', 'RET'],
-  legend: {
-    show: true,
-    showForSingleSeries: false,
-    showForNullSeries: true,
-    showForZeroSeries: true,
-    position: 'bottom',
-    horizontalAlign: 'center', 
-    floating: false,
-    fontSize: '14px',
-    fontFamily: 'Helvetica, Arial',
-    width: undefined,
-    height: undefined,
-    formatter: undefined,
-    offsetX: 0,
-    offsetY: 100,
-    labels: {
-        colors: undefined,
-        useSeriesColors: false
-    },
-    markers: {
-        width: 12,
-        height: 12,
-        strokeWidth: 0,
-        strokeColor: '#fff',
-        radius: 12,
-        customHTML: undefined,
-        onClick: undefined,
-        offsetX: 0,
-        offsetY: 0
-    },
-    itemMargin: {
-        horizontal: 20,
-        vertical: 5
-    },
-    onItemClick: {
-        toggleDataSeries: true
-    },
-    onItemHover: {
-        highlightDataSeries: true
-    },
-}
-  
 }
 
 var chart = new ApexCharts(
-  document.querySelector("#chart"),
-  options
+    document.querySelector("#chart"),
+    options
 );
 
 chart.render();
+
+
+
+// var options = {
+//   chart: {
+//       type: 'pie',
+//       width: 420,
+//   },
+//   //series: [44, 55, 41, 17, 15],
+//   series: [PCIFiles.length, PIIFiles.length, SPECFiles.length, RETFiles.length],
+//   labels: ['PCI', 'PII', 'SPE', 'RET'],
+//   legend: {
+//     show: true,
+//     showForSingleSeries: false,
+//     showForNullSeries: true,
+//     showForZeroSeries: true,
+//     position: 'bottom',
+//     horizontalAlign: 'center', 
+//     floating: false,
+//     fontSize: '14px',
+//     fontFamily: 'Helvetica, Arial',
+//     width: 100,
+//     height: 30,
+//     formatter: undefined,
+//     offsetX: 0,
+//     offsetY: 100,
+//     labels: {
+//         colors: undefined,
+//         useSeriesColors: false
+//     },
+//     markers: {
+//         width: 12,
+//         height: 12,
+//         strokeWidth: 0,
+//         strokeColor: '#fff',
+//         radius: 12,
+//         customHTML: undefined,
+//         onClick: undefined,
+//         offsetX: 0,
+//         offsetY: 0
+//     },
+//     itemMargin: {
+//         horizontal: 20,
+//         vertical: 5
+//     },
+//     onItemClick: {
+//         toggleDataSeries: true
+//     },
+//     onItemHover: {
+//         highlightDataSeries: true
+//     },
+// }
+  
+// }
+
+// var chart = new ApexCharts(
+//   document.querySelector("#chart"),
+//   options
+// );
+
+// chart.render();
 
 
 
