@@ -155,7 +155,30 @@ makeRadialBar()
 function makeTeamList() {
   managerLevel = user[0].level
   console.log("ManagerLevel", managerLevel)
-  var possibleUserList = employeedata.filter( emp => emp.managerID == user[0].EMPID );
+  // set a root member to build team from recursively
+  var locManLevel = managerLevel
+  var possibleUserList = []
+  possibleUserList[0] = user
+  while (locManLevel < 8) {
+    console.log("locman", locManLevel)
+    
+    locManLevel++
+    possibleUserList[locManLevel] = employeedata.filter( (emp, index) => {
+      console.log("emp ",emp)
+      
+      //emp.managerID == user[0].EMPID
+      console.log("emp.managerID", emp.managerID)
+      console.log("emplevel", emp.level)
+      console.log("locManL", locManLevel)
+      //console.log("user[0].EMPID", user[0].EMPID ) 
+      console.log("index", index)
+      return emp.managerID == possibleUserList[locManLevel].
+    })
+  }
+  for (i=0;i<8;i++) {
+
+  }
+
 
 
   console.log("POssible List", possibleUserList)
