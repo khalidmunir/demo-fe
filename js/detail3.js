@@ -1,4 +1,7 @@
 var urlid = $_GET('id')
+
+var metaFactdata = []
+
 var team = null
 var mainFileList = []
 var selectedFilter = ''
@@ -56,8 +59,8 @@ window.addEventListener('load', async e => {
   console.log("FOUND USER",user)
   console.log("FOUND FILES", files)
 
-  updatePage()
   fixData()
+  updatePage()
 
 
 });
@@ -105,15 +108,15 @@ function retClicked() {
 
 function secretClicked() {
   console.log("you clicked ALL BUTTON")
-  selectedFilter = "secretClicked"
+  selectedFilter = "secretClicked - can run customised function for selecting secretFiles"
   updatePage()
-  // SecClassFiles SenClassFiles
+  // SecClassFiles 
   makeFileTable(SecClassFiles)
 }
 
 
 function senClassClicked() {
-  console.log("you clicked ALL BUTTON")
+  console.log("you clicked SEN BUTTON")
   selectedFilter = "senClassClicked"
   updatePage()
   makeFileTable(SenClassFiles)
@@ -145,12 +148,28 @@ function pubClicked() {
 
 
 function fixData() {
-  console.log("oppourtunity to fix the data")
+  console.log("oppourtunity to fix the data", files)
   makeTeamList()
   makePieChart()
   makeRadialBar()
 }
 
+function addJsonTags() {
+  // add some missing json tags
+  //"size":2840125,"ctime":"10/6/2018","mtime":"4/16/2018","atime":"1/13/2018","hasSeenCount":0,
+  console.log("in JSON tags")
+  console.log("")
+  metaFactdata.map( file => {
+    file.size = Math.floor((Math.random() * 1000) + 4) * Math.floor((Math.random() * 10000) + 4)
+    file.ctime = "10/6/2018"
+    file.mtime = "4/16/2018"
+    file.atime = "1/13/2018"
+    file.hasSeenCount = 0
+
+  })
+
+  console.log("Finished file", metaFactdata)
+}
 
 function makeTeamList() {
 
@@ -172,9 +191,9 @@ function makeTeamList() {
       return emp.level == possList[i-1].level+1 &&  emp.managerID == possList[i-1].EMPID
     });
     console.log("PossList", possList, i)
-    roundList[i] = possList[i].filter( e => e.managerID == possList[i-1].EMPID)
+    // roundList[i] = possList[i].filter( e => e.managerID == possList[i-1].EMPID)
   }
-
+//
 
   console.log("roundList", roundList)
   // // set a root member to build team from recursively
@@ -203,7 +222,7 @@ function makeTeamList() {
 
 
 
-  console.log("POssible List", roundList)
+  console.log("Possible List", roundList)
 }
 
 function updatePage() {
@@ -310,11 +329,15 @@ function makeFileTable(fileList) {
 }
 
 async function updateData() {
-employeedata = await fetch('./employeeV2.json').then(emp=>emp.clone().json());
-metaFactdata = await fetch('./metaFactV2.json').then(met=>met.clone().json());
-//  console.log('GEORGE1', employeedata);
-// metaFactdata
-// console.log('GEORGE2', metaFactdata);
+  employeedata = await fetch('./employeeV2.json').then(emp=>emp.clone().json());
+  metaFactdata = await fetch('./metaFactV2.json').then(met=>met.clone().json());
+
+  addJsonTags()
+  console.log('GEORGE1', employeedata);
+  // metaFactdata
+  console.log('GEORGE2', metaFactdata);
+
+
 }
 
 

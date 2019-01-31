@@ -11,7 +11,12 @@
     "filePath": "/Claims/Bristol/Commercial/Underwriting",
     "extension": "mp3",
     "mimeType": "audio/mpeg3",
-    "MD5": "0x1a7a09a65d56a0114df19660f3a14a32"
+    "MD5": "0x1a7a09a65d56a0114df19660f3a14a32",
+    "size":2840125,
+    "ctime":"10/6/2018",
+    "mtime":"4/16/2018",
+    "atime":"1/13/2018",
+    "hasSeenCount":0
   },
   {
     "MFID": 2,
