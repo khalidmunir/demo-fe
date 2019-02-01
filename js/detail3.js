@@ -82,10 +82,10 @@ function allClicked() {
         ['SPE', 300, 200, 160, 400, 250, 250],
         ['RET', 200, 130, 90, 240, 130, 220],
         ['Secret', 130, 120, 150, 140, 160, 150],
-        ['Sensitive', 90, 70, 20, 50, 60, 120],
-        ['Internal', 90, 70, 20, 50, 60, 120],
+        ['Sensitive', 190, 70, 20, 50, 60, 120],
+        ['Internal', 90, 170, 20, 50, 360, 120],
         ['Classified', 90, 70, 20, 50, 60, 120],
-        ['Public', 90, 70, 20, 50, 60, 120],
+        ['Public', 90, 70, 120, 50, 60, 120]
     ]
 });
 }
@@ -98,7 +98,9 @@ function piiClicked() {
   chart.load({
     columns: [
        ['PII', 200, 130, 90, 240, 130, 220]
-    ]
+    ],
+    unload: [ 'PCI', 'SPE', 'RET', 'Secret', 'Sensitive', 'Internal', 'Classified', 'Public' ]
+    
 });
 }
 
@@ -109,8 +111,10 @@ function pciClicked() {
   makeFileTable(PCIFiles)
   chart.load({
     columns: [
-      ['PCI', 30, 20, 50, 40, 60, 50]
-    ]
+      ['PCI', 30, 20, 50, 40, 60, 50],
+    ],
+    unload: [ 'PII', 'SPE', 'RET', 'Secret', 'Sensitive', 'Internal', 'Classified', 'Public' ]
+    
 });
 }
 
@@ -119,6 +123,13 @@ function specClicked() {
   selectedFilter = "SPEC"
   updatePage()
   makeFileTable(SPECFiles)
+  chart.load({
+    columns: [
+      ['SPE', 300, 200, 160, 400, 250, 250],
+    ],
+    unload: [ 'PII', 'PCI', 'RET', 'Secret', 'Sensitive', 'Internal', 'Classified', 'Public' ]
+    
+});
 }
 
 function retClicked() {
@@ -126,6 +137,13 @@ function retClicked() {
   selectedFilter = "RET"
   updatePage()
   makeFileTable(RETFiles)
+  chart.load({
+    columns: [
+      ['RET', 200, 130, 90, 240, 130, 220],
+    ],
+    unload: [ 'PII', 'SPE', 'PCI', 'Secret', 'Sensitive', 'Internal', 'Classified', 'Public' ]
+    
+});
 }
 
 
@@ -136,6 +154,13 @@ function secretClicked() {
   updatePage()
   // SecClassFiles 
   makeFileTable(SecClassFiles)
+  chart.load({
+    columns: [
+      ['Secret', 130, 120, 150, 140, 160, 150],
+    ],
+    unload: [ 'PII', 'SPE', 'RET', 'PCI', 'Sensitive', 'Internal', 'Classified', 'Public' ]
+    
+});
 }
 
 
@@ -144,6 +169,13 @@ function senClassClicked() {
   selectedFilter = "senClassClicked"
   updatePage()
   makeFileTable(SenClassFiles)
+  chart.load({
+    columns: [
+      ['Sensitive', 90, 70, 20, 50, 60, 120],
+    ],
+    unload: [ 'PII', 'SPE', 'RET', 'Secret', 'PCI', 'Internal', 'Classified', 'Public' ]
+    
+});
 } 
 
 
@@ -152,6 +184,14 @@ function ClassClicked() {
   selectedFilter = "ClassClicked"
   updatePage()
   makeFileTable(ClaClassFiles)
+  chart.load({
+    columns: [
+      ['Classified', 90, 70, 20, 50, 60, 120]
+    ],
+    unload: [ 'PII', 'SPE', 'RET', 'Secret', 'PCI', 'Internal', 'Sensitive', 'Public' ]
+    
+});
+  
 }
 
 function intClicked() {
@@ -159,6 +199,13 @@ function intClicked() {
   selectedFilter = "intClicked"
   updatePage()
   makeFileTable(IntClassFiles)
+  chart.load({
+    columns: [
+      ['Internal', 90, 70, 20, 50, 60, 120],
+    ],
+    unload: [ 'PII', 'SPE', 'RET', 'Secret', 'PCI', 'Internal', 'Classified', 'Public' ]
+    
+});
 } 
 
 function pubClicked() {
@@ -167,6 +214,13 @@ function pubClicked() {
   updatePage()
   // ClaClassFiles PubClassFiles IntClassFiles
   makeFileTable(PubClassFiles)
+  chart.load({
+    columns: [
+      ['Public', 90, 70, 20, 50, 60, 120],
+    ],
+    unload: [ 'PII', 'SPE', 'RET', 'Secret', 'PCI', 'Internal', 'Classified', 'Sensitive' ]
+    
+});
 }
 
 
@@ -574,7 +628,9 @@ function makechart3() {
       type: 'bar',
       types: {
           Secret: 'spline',
-          Sensitive: 'line',
+          Sensitive: 'spline',
+          Internal: 'area',
+          Classified: 'spline',
           Public: 'area',
       },
       groups: [
