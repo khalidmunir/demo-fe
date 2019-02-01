@@ -74,6 +74,20 @@ function allClicked() {
   selectedFilter = "ALL"
   updatePage()
   makeFileTable(files)
+  chart.load({
+    columns: [
+      //[ 'x', 'sec', 'sen', 'cla', 'int', 'pub', 'six'],
+        ['PCI', 30, 20, 50, 40, 60, 50],
+        ['PII', 200, 130, 90, 240, 130, 220],
+        ['SPE', 300, 200, 160, 400, 250, 250],
+        ['RET', 200, 130, 90, 240, 130, 220],
+        ['Secret', 130, 120, 150, 140, 160, 150],
+        ['Sensitive', 90, 70, 20, 50, 60, 120],
+        ['Internal', 90, 70, 20, 50, 60, 120],
+        ['Classified', 90, 70, 20, 50, 60, 120],
+        ['Public', 90, 70, 20, 50, 60, 120],
+    ]
+});
 }
 
 function piiClicked() {
@@ -81,6 +95,11 @@ function piiClicked() {
   selectedFilter = "PII"
   updatePage()
   makeFileTable(PIIFiles)
+  chart.load({
+    columns: [
+       ['PII', 200, 130, 90, 240, 130, 220]
+    ]
+});
 }
 
 function pciClicked() {
@@ -88,6 +107,11 @@ function pciClicked() {
   selectedFilter = "PCI"
   updatePage()
   makeFileTable(PCIFiles)
+  chart.load({
+    columns: [
+      ['PCI', 30, 20, 50, 40, 60, 50]
+    ]
+});
 }
 
 function specClicked() {
@@ -149,9 +173,34 @@ function pubClicked() {
 
 function fixData() {
   console.log("oppourtunity to fix the data", files)
+  PCIFiles = files.filter( f => f.filter == "PCI") 
+  PIIFiles = files.filter( f => f.filter == "PII")
+  SPECFiles = files.filter(function(f) {
+    return f.filter == "SPE";
+  })
+  RETFiles = files.filter(function(f) {
+    return f.filter == "RET";
+  })
+  SecClassFiles = files.filter(function(f) {
+    return f.securityClass == "Secret";
+  })
+  SenClassFiles = files.filter(function(f) {
+    return f.securityClass == "ClassifiedSen";
+  })
+  ClaClassFiles = files.filter(function(f) {
+    return f.securityClass == "Classified";
+  })
+  IntClassFiles = files.filter(function(f) {
+    return f.securityClass == "Internal";
+  })
+  PubClassFiles = files.filter(function(f) {
+    return f.securityClass == "Public";
+  })
+  
   makeTeamList()
   makePieChart()
   makeRadialBar()
+  makechart3()
 }
 
 function addJsonTags() {
@@ -165,6 +214,7 @@ function addJsonTags() {
     file.mtime = "4/16/2018"
     file.atime = "1/13/2018"
     file.hasSeenCount = 0
+
 
   })
 
@@ -234,47 +284,31 @@ function updatePage() {
     makeFileTable(files)
   }
 
-  PCIFiles = files.filter( f => f.filter == "PCI") 
   
   document.getElementById("pci-total").innerHTML = PCIFiles.length
 
-  PIIFiles = files.filter( f => f.filter == "PII")
+  
   document.getElementById("pii-total").innerHTML = PIIFiles.length
-
-  SPECFiles = files.filter(function(f) {
-    return f.filter == "SPE";
-  })
+  
   document.getElementById("spec-total").innerHTML = SPECFiles.length
 
-  RETFiles = files.filter(function(f) {
-    return f.filter == "RET";
-  })
+  
   document.getElementById("ret-total").innerHTML = RETFiles.length
 
   //securityClass
-  SecClassFiles = files.filter(function(f) {
-    return f.securityClass == "Secret";
-  })
+ 
   document.getElementById("sec-class-total").innerHTML = SecClassFiles.length
 
-  SenClassFiles = files.filter(function(f) {
-    return f.securityClass == "ClassifiedSen";
-  })
+  
   document.getElementById("sen-class-total").innerHTML = SenClassFiles.length
 
-  ClaClassFiles = files.filter(function(f) {
-    return f.securityClass == "Classified";
-  })
+  
   document.getElementById("cla-class-total").innerHTML = ClaClassFiles.length
 
-  IntClassFiles = files.filter(function(f) {
-    return f.securityClass == "Internal";
-  })
+  
   document.getElementById("int-class-total").innerHTML = IntClassFiles.length
 
-  PubClassFiles = files.filter(function(f) {
-    return f.securityClass == "Public";
-  })
+  
   document.getElementById("pub-class-total").innerHTML = PubClassFiles.length
 
   var elem = document.getElementById("message");
@@ -369,172 +403,234 @@ function findUserFilesFromStorage(ID) {
 console.log ("lengths", SecClassFiles.length)
 
 function makePieChart() {
-  var pieOptions = {
-    chart: {
-        width: 420,
-        type: 'pie',
+  var PCI = PCIFiles.length
+  console.log("We GOt PCI", PCIFiles)
+
+  var chart = c3.generate({
+    size: {
+      height: 280
     },
-    labels: ['Secret', 'Sensitive', 'Classified', 'Internal', 'Public'],
-    series: [ SecClassFiles.length, SecClassFiles.length, ClaClassFiles.length, IntClassFiles.length, PubClassFiles.length],
-    legend: {
-      show: false,
-      showForSingleSeries: false,
-      showForNullSeries: true,
-      showForZeroSeries: true,
-      position: 'bottom',
-      horizontalAlign: 'center', 
-      floating: false,
-      fontSize: '14px',
-      fontFamily: 'Helvetica, Arial',
-      width: 100,
-      height: 100,
-      formatter: undefined,
-      offsetX: 0,
-      offsetY: -60,
-      labels: {
-          colors: undefined,
-          useSeriesColors: false
-      },
-      markers: {
-          width: 12,
-          height: 12,
-          strokeWidth: 0,
-          strokeColor: '#fff',
-          radius: 12,
-          customHTML: undefined,
-          onClick: undefined,
-          offsetX: 0,
-          offsetY: 0
-      },
-      itemMargin: {
-          horizontal: 10,
-          vertical: 5
-      },
-      onItemClick: {
-          toggleDataSeries: true
-      },
-      onItemHover: {
-          highlightDataSeries: true
-      },
-  }
-  
-  }
-  
-  var pieChart = new ApexCharts(
-    document.querySelector("#pie-chart"),
-    pieOptions
-  );
-  
-  pieChart.render();
-  
+    bindto: '#chart',
+    data: {
+        columns: [
+          // [PCIFiles.length, PIIFiles.length, SPECFiles.length, RETFiles.length]
+            ['PCI', PCIFiles.length ],
+            ['PII', PIIFiles.length ],
+            ['SPEC', SPECFiles.length ],
+            ['RET', RETFiles.length ],
+
+        ],
+        type : 'donut',
+        onclick: function (d, i) { console.log("onclick", d, i); },
+        onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+        onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+    },
+    donut: {
+        title: "Filters"
+    }
+});
+
+
+
+//setTimeout(function () {
+//     chart.load({
+//         columns: [
+//             ["setosa", 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2, 0.1, 0.1, 0.2, 0.4, 0.4, 0.3, 0.3, 0.3, 0.2, 0.4, 0.2, 0.5, 0.2, 0.2, 0.4, 0.2, 0.2, 0.2, 0.2, 0.4, 0.1, 0.2, 0.2, 0.2, 0.2, 0.1, 0.2, 0.2, 0.3, 0.3, 0.2, 0.6, 0.4, 0.3, 0.2, 0.2, 0.2, 0.2],
+//             ["versicolor", 1.4, 1.5, 1.5, 1.3, 1.5, 1.3, 1.6, 1.0, 1.3, 1.4, 1.0, 1.5, 1.0, 1.4, 1.3, 1.4, 1.5, 1.0, 1.5, 1.1, 1.8, 1.3, 1.5, 1.2, 1.3, 1.4, 1.4, 1.7, 1.5, 1.0, 1.1, 1.0, 1.2, 1.6, 1.5, 1.6, 1.5, 1.3, 1.3, 1.3, 1.2, 1.4, 1.2, 1.0, 1.3, 1.2, 1.3, 1.3, 1.1, 1.3],
+//             ["virginica", 2.5, 1.9, 2.1, 1.8, 2.2, 2.1, 1.7, 1.8, 1.8, 2.5, 2.0, 1.9, 2.1, 2.0, 2.4, 2.3, 1.8, 2.2, 2.3, 1.5, 2.3, 2.0, 2.0, 1.8, 2.1, 1.8, 1.8, 1.8, 2.1, 1.6, 1.9, 2.0, 2.2, 1.5, 1.4, 2.3, 2.4, 1.8, 1.8, 2.1, 2.4, 2.3, 1.9, 2.3, 2.5, 2.3, 1.9, 2.0, 2.3, 1.8],
+//         ]
+//     });
+// }, 3500);
+
+// setTimeout(function () {
+//     chart.unload({
+//         ids: 'data1'
+//     });
+//     chart.unload({
+//         ids: 'data2'
+//     });
+// }, 2500);
 }
 
 function makeRadialBar() {
 
-
-  var options = {
-    chart: {
-        height: 350,
-        type: 'radialBar',
+  var chart = c3.generate({
+    size: {
+      height: 280
     },
-    plotOptions: {
-        radialBar: {
-            dataLabels: {
-                name: {
-                    fontSize: '22px',
-                },
-                value: {
-                    fontSize: '16px',
-                },
-                total: {
-                    show: true,
-                    label: 'Total',
-                    formatter: function (w) {
-                        // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
-                        return (PCIFiles.length + PIIFiles.length + SPECFiles.length + RETFiles.length)
-                    }
-                }
-            }
-        }
+    bindto: '#pie-chart',
+    data: {
+        columns: [
+          //   labels: ['Secret', 'Sensitive', 'Classified', 'Internal', 'Public'],
+  //   series: [ SecClassFiles.length, SecClassFiles.length, ClaClassFiles.length, IntClassFiles.length, PubClassFiles.length],
+          // [PCIFiles.length, PIIFiles.length, SPECFiles.length, RETFiles.length]
+           
+            ['Secret', SecClassFiles.length ],
+            ['Sensitive', SecClassFiles.length ],
+            ['Classified', ClaClassFiles.length ],
+            ['Internal', IntClassFiles.length ],
+            ['Public', PubClassFiles.length ],
+            
+
+        ],
+        type : 'donut',
+        onclick: function (d, i) { console.log("onclick", d, i); },
+        onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+        onmouseout: function (d, i) { console.log("onmouseout", d, i); }
     },
-    series: [PCIFiles.length, PIIFiles.length, SPECFiles.length, RETFiles.length],
-    labels: ['PCI', 'PII', 'SPE', 'RET'],
-    
-}
-
-var chart = new ApexCharts(
-    document.querySelector("#chart"),
-    options
-);
-
-chart.render();
-
-
-
-// var options = {
-//   chart: {
-//       type: 'pie',
-//       width: 420,
-//   },
-//   //series: [44, 55, 41, 17, 15],
-//   series: [PCIFiles.length, PIIFiles.length, SPECFiles.length, RETFiles.length],
-//   labels: ['PCI', 'PII', 'SPE', 'RET'],
-//   legend: {
-//     show: true,
-//     showForSingleSeries: false,
-//     showForNullSeries: true,
-//     showForZeroSeries: true,
-//     position: 'bottom',
-//     horizontalAlign: 'center', 
-//     floating: false,
-//     fontSize: '14px',
-//     fontFamily: 'Helvetica, Arial',
-//     width: 100,
-//     height: 30,
-//     formatter: undefined,
-//     offsetX: 0,
-//     offsetY: 100,
-//     labels: {
-//         colors: undefined,
-//         useSeriesColors: false
-//     },
-//     markers: {
-//         width: 12,
-//         height: 12,
-//         strokeWidth: 0,
-//         strokeColor: '#fff',
-//         radius: 12,
-//         customHTML: undefined,
-//         onClick: undefined,
-//         offsetX: 0,
-//         offsetY: 0
-//     },
-//     itemMargin: {
-//         horizontal: 20,
-//         vertical: 5
-//     },
-//     onItemClick: {
-//         toggleDataSeries: true
-//     },
-//     onItemHover: {
-//         highlightDataSeries: true
-//     },
-// }
-  
-// }
-
-// var chart = new ApexCharts(
-//   document.querySelector("#chart"),
-//   options
-// );
-
-// chart.render();
-
+    donut: {
+        title: "Security"
+    }
+});
 
 
 }
 
+function makechart3() {
+//   var chart = c3.generate({
+//     bindto: '#chart3',
+//     data: {
+//         columns: [
+//             ['All', 91.4]
+//         ],
+//         type: 'gauge',
+//         onclick: function (d, i) { console.log("onclick", d, i); },
+//         onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+//         onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+//     },
+//     gauge: {
+// //        label: {
+// //            format: function(value, ratio) {
+// //                return value;
+// //            },
+// //            show: false // to turn off the min/max labels.
+// //        },
+// //    min: 0, // 0 is default, //can handle negative min e.g. vacuum / voltage / current flow / rate of change
+// //    max: 100, // 100 is default
+// //    units: ' %',
+// //    width: 39 // for adjusting arc thickness
+//     },
+//     color: {
+//         pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+//         threshold: {
+// //            unit: 'value', // percentage is default
+// //            max: 200, // 100 is default
+//             values: [30, 60, 90, 100]
+//         }
+//     },
+//     size: {
+//         height: 380
+//     }
+// });
 
+// setTimeout(function () {
+//     chart.load({
+//         columns: [['Secret', 10]]
+//     });
+// }, 1000);
+
+// setTimeout(function () {
+//     chart.load({
+//         columns: [['CLassified', 50]]
+//     });
+// }, 2000);
+
+// setTimeout(function () {
+//     chart.load({
+//         columns: [['Sensitive Classified', 70]]
+//     });
+// }, 3000);
+
+// setTimeout(function () {
+//     chart.load({
+//         columns: [['Internal', 0]]
+//     });
+// }, 4000);
+
+// setTimeout(function () {
+//     chart.load({
+//         columns: [['Public', 45]]
+//     });
+// }, 5000);
+
+  chart = c3.generate({
+  bindto: '#chart3',
+  size: {
+    height: 280
+  },
+  data: {
+      columns: [
+        //[ 'x', 'sec', 'sen', 'cla', 'int', 'pub', 'six'],
+          ['PCI', 30, 20, 50, 40, 60, 50],
+          ['PII', 200, 130, 90, 240, 130, 220],
+          ['SPE', 300, 200, 160, 400, 250, 250],
+          ['RET', 200, 130, 90, 240, 130, 220],
+          ['Secret', 130, 120, 150, 140, 160, 150],
+          ['Sensitive', 90, 70, 20, 50, 60, 120],
+          ['Internal', 90, 70, 20, 50, 60, 120],
+          ['Classified', 90, 70, 20, 50, 60, 120],
+          ['Public', 90, 70, 20, 50, 60, 120],
+      ],
+      type: 'bar',
+      types: {
+          Secret: 'spline',
+          Sensitive: 'line',
+          Public: 'area',
+      },
+      groups: [
+          ['PCI','PII']
+      ]
+  }
+});
+
+
+// var chart = c3.generate({
+//   bindto: '#chart3',
+//   size: {
+//     height: 280
+// },
+//   data: {
+//       columns: [
+//         ['x', '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05', '2013-01-06'],
+//           ['PCI', 300, 350, 300, 0, 0, 120],
+//           ['PII', 130, 100, 140, 200, 150, 50],
+//           ['SPE', 200, 330, 220, 450, 260, 120],
+//           ['RET', 130, 200, 440, 200, 350, 550]
+//       ],
+//       axis: {
+//         x: {
+//             type: 'timeseries',
+//             tick: {
+//                 format: '%Y-%m-%d'
+//             }
+//         }
+//     },
+//       types: {
+//           data1: 'area-spline',
+//           data2: 'area-spline'
+//           // 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
+//       },
+//       groups: [['PCI', 'PII', 'SPE', 'RET']]
+//   }
+// });
+
+
+// var chart = c3.generate({
+//   bindto: '#chart3',
+//   size: {
+//     height: 380
+// },
+//   data: {
+//       columns: [
+//           ['data1', 30, 200, 100, 400, 150, 250],
+//           ['data2', 130, 100, 140, 200, 150, 50]
+//       ],
+//       type: 'spline'
+//   }
+// });
+
+
+}
 
 function changedSelect(e) {
   console.log("selected", e.value)

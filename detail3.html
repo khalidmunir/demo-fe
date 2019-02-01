@@ -12,13 +12,18 @@
     <link
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       rel="stylesheet"
-    />
+    /> 
+    <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.12/c3.css"
+    rel="stylesheet"
+  />
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
+    
     <title>Document</title>
   </head>
 
@@ -71,7 +76,7 @@
                   </div>
       <div class="main_container">
         <div class="bs-example" data-example-id="navbar-button">
-          <nav class="navbar navbar-default">
+          <nav class="container-fluid">
             <div class="">
 
               <div
@@ -90,61 +95,11 @@
                   </div>
                   <div class="col-lg-4">
                     <h2>Heading</h2>
-                    <canvas id="myChart" width="400" height="400"></canvas>
-                    <script>
-                      var ctx = document
-                        .getElementById("myChart")
-                        .getContext("2d");
-                      var myChart = new Chart(ctx, {
-                        type: "bar",
-                        data: {
-                          labels: [
-                            "Red",
-                            "Blue",
-                            "Yellow",
-                            "Green",
-                            "Purple",
-                            "Orange"
-                          ],
-                          datasets: [
-                            {
-                              label: "overdue",
-                              data: [12, 19, 3, 5, 2, 3],
-                              backgroundColor: [
-                                "rgba(255, 99, 132, 0.2)",
-                                "rgba(54, 162, 235, 0.2)",
-                                "rgba(255, 206, 86, 0.2)",
-                                "rgba(75, 192, 192, 0.2)",
-                                "rgba(153, 102, 255, 0.2)",
-                                "rgba(255, 159, 64, 0.2)"
-                              ],
-                              borderColor: [
-                                "rgba(255,99,132,1)",
-                                "rgba(54, 162, 235, 1)",
-                                "rgba(255, 206, 86, 1)",
-                                "rgba(75, 192, 192, 1)",
-                                "rgba(153, 102, 255, 1)",
-                                "rgba(255, 159, 64, 1)"
-                              ],
-                              borderWidth: 1
-                            }
-                          ]
-                        },
-                        options: {
-                          scales: {
-                            yAxes: [
-                              {
-                                ticks: {
-                                  beginAtZero: true
-                                }
-                              }
-                            ]
-                          }
-                        }
-                      });
-                    </script>
+                    <div id="chart3"></div>
+                    
                   </div>
                 </div>
+                <hr>
                 <div class="well">
                   <div class="button-group mt-2 mb-2">
                     <button
@@ -222,7 +177,7 @@
                   </div>
                 </div>
 
-                <div class="row">
+                <div class="container-fluid">
                   <div id="main-file-list"></div>
                   
                 </div>
@@ -235,6 +190,11 @@
     </div>
 
     <script src="js/apexcharts.js"></script>
+    
     <script src="js/detail3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.8.0/d3.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.12/c3.js"></script>
+    
   </body>
 </html>
