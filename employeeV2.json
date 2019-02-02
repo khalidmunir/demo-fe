@@ -6,8 +6,8 @@
     "firstName": "Aubrey",
     "lastName": "Cushelly",
     "email": "aubrey.cushelly@acme.co.uk",
-    "level": 2,
-    "managerID": 2,
+    "level": 1,
+    "managerID": null,
     "emailRelationship": 1
   },
   {
@@ -17,8 +17,8 @@
     "firstName": "Valry",
     "lastName": "Prisk",
     "email": "valry.prisk@acmehealth.co.uk",
-    "level": 1,
-    "managerID": 2,
+    "level": 2,
+    "managerID": 1,
     "emailRelationship": 2
   },
   {
@@ -29,7 +29,7 @@
     "lastName": "Palia",
     "email": "raquela.palia@acme.com",
     "level": 2,
-    "managerID": 2,
+    "managerID": 1,
     "emailRelationship": 3
   },
   {
@@ -72,8 +72,8 @@
     "firstName": "Kerstin",
     "lastName": "Beaumont",
     "email": "kerstin.beaumont@acme.co.uk",
-    "level": 3,
-    "managerID": 2,
+    "level": 2,
+    "managerID": 1,
     "emailRelationship": 1
   },
   {
@@ -94,7 +94,7 @@
     "firstName": "Eugenie",
     "lastName": "Chatelain",
     "email": "eugenie.chatelain@acmehealth.co.uk",
-    "level": 2,
+    "level": 3,
     "managerID": 2,
     "emailRelationship": 2
   },
@@ -138,7 +138,7 @@
     "firstName": "Erna",
     "lastName": "Yeaman",
     "email": "erna.yeaman@acmehealth.co.uk",
-    "level": 2,
+    "level": 3,
     "managerID": 2,
     "emailRelationship": 2
   },
@@ -149,7 +149,7 @@
     "firstName": "Irena",
     "lastName": "Segges",
     "email": "irena.segges@acmehealth.co.uk",
-    "level": 3,
+    "level": 4,
     "managerID": 9,
     "emailRelationship": 2
   },
@@ -193,7 +193,7 @@
     "firstName": "Kimberlee",
     "lastName": "Chestney",
     "email": "kimberlee.chestney@acmehealth.co.uk",
-    "level": 3,
+    "level": 4,
     "managerID": 9,
     "emailRelationship": 2
   },
@@ -204,7 +204,7 @@
     "firstName": "Brady",
     "lastName": "Groocock",
     "email": "brady.groocock@acmehealth.co.uk",
-    "level": 3,
+    "level": 4,
     "managerID": 9,
     "emailRelationship": 2
   },
@@ -248,7 +248,7 @@
     "firstName": "Laurice",
     "lastName": "Aslum",
     "email": "laurice.aslum@acme.co.uk",
-    "level": 4,
+    "level": 3,
     "managerID": 7,
     "emailRelationship": 1
   },
@@ -259,7 +259,7 @@
     "firstName": "Leonore",
     "lastName": "Lansley",
     "email": "leonore.lansley@acmehealth.co.uk",
-    "level": 3,
+    "level": 4,
     "managerID": 13,
     "emailRelationship": 2
   },
@@ -270,7 +270,7 @@
     "firstName": "Gideon",
     "lastName": "Goodlake",
     "email": "gideon.goodlake@acme.co.uk",
-    "level": 4,
+    "level": 3,
     "managerID": 7,
     "emailRelationship": 1
   },
@@ -336,7 +336,7 @@
     "firstName": "Grover",
     "lastName": "Milley",
     "email": "grover.milley@acmehealth.co.uk",
-    "level": 4,
+    "level": 5,
     "managerID": 14,
     "emailRelationship": 2
   },
@@ -358,7 +358,7 @@
     "firstName": "Elayne",
     "lastName": "Gilbank",
     "email": "elayne.gilbank@acmehealth.co.uk",
-    "level": 4,
+    "level": 5,
     "managerID": 14,
     "emailRelationship": 2
   },
@@ -402,7 +402,7 @@
     "firstName": "Chick",
     "lastName": "Soper",
     "email": "chick.soper@acmehealth.co.uk",
-    "level": 4,
+    "level": 5,
     "managerID": 14,
     "emailRelationship": 2
   },
@@ -424,7 +424,7 @@
     "firstName": "Sianna",
     "lastName": "Skoughman",
     "email": "sianna.skoughman@acmehealth.co.uk",
-    "level": 4,
+    "level": 5,
     "managerID": 18,
     "emailRelationship": 2
   },
@@ -435,7 +435,7 @@
     "firstName": "Chas",
     "lastName": "Ditch",
     "email": "chas.ditch@acmehealth.co.uk",
-    "level": 4,
+    "level": 5,
     "managerID": 18,
     "emailRelationship": 2
   },
@@ -479,7 +479,7 @@
     "firstName": "Salvador",
     "lastName": "Fontenot",
     "email": "salvador.fontenot@acmehealth.co.uk",
-    "level": 4,
+    "level": 5,
     "managerID": 19,
     "emailRelationship": 2
   },
@@ -501,7 +501,7 @@
     "firstName": "Harp",
     "lastName": "Hadcock",
     "email": "harp.hadcock@acmehealth.co.uk",
-    "level": 4,
+    "level": 5,
     "managerID": 19,
     "emailRelationship": 2
   },
@@ -556,7 +556,7 @@
     "firstName": "Wynnie",
     "lastName": "Thickpenny",
     "email": "wynnie.thickpenny@acmehealth.co.uk",
-    "level": 4,
+    "level": 6,
     "managerID": 34,
     "emailRelationship": 2
   },
@@ -578,7 +578,7 @@
     "firstName": "Raven",
     "lastName": "Gloves",
     "email": "raven.gloves@acmehealth.co.uk",
-    "level": 4,
+    "level": 6,
     "managerID": 34,
     "emailRelationship": 2
   },
@@ -600,7 +600,7 @@
     "firstName": "Oswald",
     "lastName": "Wiggall",
     "email": "oswald.wiggall@acmehealth.co.uk",
-    "level": 5,
+    "level": 6,
     "managerID": 31,
     "emailRelationship": 2
   },
@@ -611,7 +611,7 @@
     "firstName": "Matelda",
     "lastName": "Knowlys",
     "email": "matelda.knowlys@acmehealth.co.uk",
-    "level": 5,
+    "level": 6,
     "managerID": 31,
     "emailRelationship": 2
   },
@@ -622,7 +622,7 @@
     "firstName": "Nell",
     "lastName": "Gherardi",
     "email": "nell.gherardi@acmehealth.co.uk",
-    "level": 5,
+    "level": 6,
     "managerID": 33,
     "emailRelationship": 2
   },
@@ -644,7 +644,7 @@
     "firstName": "Israel",
     "lastName": "Gannicleff",
     "email": "israel.gannicleff@acmehealth.co.uk",
-    "level": 5,
+    "level": 6,
     "managerID": 33,
     "emailRelationship": 2
   },
@@ -666,7 +666,7 @@
     "firstName": "Herb",
     "lastName": "Anniwell",
     "email": "herb.anniwell@acmehealth.co.uk",
-    "level": 5,
+    "level": 6,
     "managerID": 37,
     "emailRelationship": 2
   },
@@ -677,7 +677,7 @@
     "firstName": "Bordy",
     "lastName": "Hummerston",
     "email": "bordy.hummerston@acmehealth.co.uk",
-    "level": 5,
+    "level": 6,
     "managerID": 37,
     "emailRelationship": 2
   },
@@ -688,7 +688,7 @@
     "firstName": "Albrecht",
     "lastName": "MacConnal",
     "email": "albrecht.macconnal@acmehealth.co.uk",
-    "level": 5,
+    "level": 6,
     "managerID": 37,
     "emailRelationship": 2
   },
@@ -699,7 +699,7 @@
     "firstName": "Ally",
     "lastName": "Challin",
     "email": "ally.challin@acmehealth.co.uk",
-    "level": 5,
+    "level": 6,
     "managerID": 39,
     "emailRelationship": 2
   },
@@ -710,7 +710,7 @@
     "firstName": "Dominik",
     "lastName": "Heyball",
     "email": "dominik.heyball@acmehealth.co.uk",
-    "level": 5,
+    "level": 6,
     "managerID": 39,
     "emailRelationship": 2
   },
@@ -732,7 +732,7 @@
     "firstName": "Johannah",
     "lastName": "Leghorn",
     "email": "johannah.leghorn@acmehealth.co.uk",
-    "level": 5,
+    "level": 6,
     "managerID": 40,
     "emailRelationship": 2
   },
@@ -743,7 +743,7 @@
     "firstName": "Katleen",
     "lastName": "Lawlan",
     "email": "katleen.lawlan@acmehealth.co.uk",
-    "level": 5,
+    "level": 6,
     "managerID": 40,
     "emailRelationship": 2
   },
@@ -765,7 +765,7 @@
     "firstName": "Torrin",
     "lastName": "Del Monte",
     "email": "torrin.del monte@acmehealth.co.uk",
-    "level": 5,
+    "level": 6,
     "managerID": 40,
     "emailRelationship": 2
   },
@@ -809,7 +809,7 @@
     "firstName": "Rebeca",
     "lastName": "Freestone",
     "email": "rebeca.freestone@acme.co.uk",
-    "level": 5,
+    "level": 4,
     "managerID": 23,
     "emailRelationship": 1
   },
@@ -820,7 +820,7 @@
     "firstName": "Marena",
     "lastName": "Girling",
     "email": "marena.girling@acmehealth.co.uk",
-    "level": 5,
+    "level": 6,
     "managerID": 44,
     "emailRelationship": 2
   },
@@ -831,7 +831,7 @@
     "firstName": "Marian",
     "lastName": "Jennison",
     "email": "marian.jennison@acmehealth.co.uk",
-    "level": 5,
+    "level": 6,
     "managerID": 46,
     "emailRelationship": 2
   },
@@ -842,7 +842,7 @@
     "firstName": "Lacee",
     "lastName": "Ferrand",
     "email": "lacee.ferrand@acmehealth.co.uk",
-    "level": 5,
+    "level": 6,
     "managerID": 46,
     "emailRelationship": 2
   },
@@ -853,7 +853,7 @@
     "firstName": "Kris",
     "lastName": "Womersley",
     "email": "kris.womersley@acme.co.uk",
-    "level": 5,
+    "level": 4,
     "managerID": 23,
     "emailRelationship": 1
   },
@@ -864,7 +864,7 @@
     "firstName": "Aleksandr",
     "lastName": "Baser",
     "email": "aleksandr.baser@acmehealth.co.uk",
-    "level": 5,
+    "level": 7,
     "managerID": 51,
     "emailRelationship": 2
   },
@@ -875,7 +875,7 @@
     "firstName": "Herbert",
     "lastName": "MacPharlain",
     "email": "herbert.macpharlain@acme.co.uk",
-    "level": 5,
+    "level": 4,
     "managerID": 23,
     "emailRelationship": 1
   },
@@ -897,7 +897,7 @@
     "firstName": "Claire",
     "lastName": "Cribbin",
     "email": "claire.cribbin@acme.co.uk",
-    "level": 5,
+    "level": 4,
     "managerID": 23,
     "emailRelationship": 1
   },
@@ -908,7 +908,7 @@
     "firstName": "Lanae",
     "lastName": "Rachuig",
     "email": "lanae.rachuig@acmehealth.co.uk",
-    "level": 5,
+    "level": 7,
     "managerID": 51,
     "emailRelationship": 2
   },
@@ -930,7 +930,7 @@
     "firstName": "Halie",
     "lastName": "Brockie",
     "email": "halie.brockie@acmehealth.co.uk",
-    "level": 5,
+    "level": 7,
     "managerID": 53,
     "emailRelationship": 2
   },
@@ -941,7 +941,7 @@
     "firstName": "Hernando",
     "lastName": "Paxeford",
     "email": "hernando.paxeford@acmehealth.co.uk",
-    "level": 5,
+    "level": 7,
     "managerID": 53,
     "emailRelationship": 2
   },
@@ -963,7 +963,7 @@
     "firstName": "Rorke",
     "lastName": "Laxe",
     "email": "rorke.laxe@acmehealth.co.uk",
-    "level": 5,
+    "level": 7,
     "managerID": 53,
     "emailRelationship": 2
   },
@@ -974,7 +974,7 @@
     "firstName": "Gail",
     "lastName": "Grimbaldeston",
     "email": "gail.grimbaldeston@acmehealth.co.uk",
-    "level": 5,
+    "level": 7,
     "managerID": 53,
     "emailRelationship": 2
   },
@@ -985,7 +985,7 @@
     "firstName": "Libbey",
     "lastName": "Blakiston",
     "email": "libbey.blakiston@acmehealth.co.uk",
-    "level": 5,
+    "level": 7,
     "managerID": 53,
     "emailRelationship": 2
   },
@@ -1007,7 +1007,7 @@
     "firstName": "Edgardo",
     "lastName": "Dakhno",
     "email": "edgardo.dakhno@acmehealth.co.uk",
-    "level": 5,
+    "level": 7,
     "managerID": 53,
     "emailRelationship": 2
   },
@@ -1029,7 +1029,7 @@
     "firstName": "Christin",
     "lastName": "Gunderson",
     "email": "christin.gunderson@acmehealth.co.uk",
-    "level": 5,
+    "level": 7,
     "managerID": 53,
     "emailRelationship": 2
   },
@@ -1040,7 +1040,7 @@
     "firstName": "Otho",
     "lastName": "Bunclark",
     "email": "otho.bunclark@acmehealth.co.uk",
-    "level": 5,
+    "level": 7,
     "managerID": 53,
     "emailRelationship": 2
   },
@@ -1051,7 +1051,7 @@
     "firstName": "Dalis",
     "lastName": "Eden",
     "email": "dalis.eden@acme.co.uk",
-    "level": 5,
+    "level": 4,
     "managerID": 25,
     "emailRelationship": 1
   },
@@ -1062,7 +1062,7 @@
     "firstName": "Linet",
     "lastName": "Tellenbach",
     "email": "linet.tellenbach@acme.co.uk",
-    "level": 5,
+    "level": 4,
     "managerID": 25,
     "emailRelationship": 1
   },
@@ -1084,7 +1084,7 @@
     "firstName": "Franni",
     "lastName": "Pipping",
     "email": "franni.pipping@acme.co.uk",
-    "level": 5,
+    "level": 4,
     "managerID": 25,
     "emailRelationship": 1
   },
@@ -1095,7 +1095,7 @@
     "firstName": "Renee",
     "lastName": "Jolliman",
     "email": "renee.jolliman@acme.co.uk",
-    "level": 5,
+    "level": 4,
     "managerID": 25,
     "emailRelationship": 1
   }

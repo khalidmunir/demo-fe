@@ -57,7 +57,7 @@ temp += str.map( e => {
     let randomImage = "images/" + RandomNumber + ".png"
 
     // console.log("locManID", locMan)
-    
+    if (locMan != null ) {
     return `
 <tr> 
 <td class="align-middle"><a href="detail3.html?id=${e.EMPID}"><span class="btn btn-block btn-primary">${e.firstName} <span class="fa fa-folder-open"></span></span></a></td>
@@ -66,12 +66,14 @@ temp += str.map( e => {
 <td class="align-middle">${e.lastName}</td>
 <td class="align-middle">${e.email}</td>
 <td class="align-middle">${locMan.email}</td>
-</tr>`}).join('\n')
+</tr>`}}).join('\n')
 
 //
 
   temp += `</tbody>
-</table>`;
+</table>`
+
+;
 
 // console.log(myUsers);
 

@@ -61,6 +61,7 @@ window.addEventListener('load', async e => {
 
   fixData()
   updatePage()
+  allClicked()
 
 
 });
@@ -277,29 +278,136 @@ function addJsonTags() {
 
 function makeTeamList() {
 
-  managerLevel = user[0].level
-  let MAXLEVEL = 5
 
-  var possList = []
-  possList[0] = user
+  var data = employeedata  // [{"id":1,"name":"X","parentId":null},{"id":2,"name":"Y","parentId":1},{"id":3,"name":"D","parentId":2},{"id":2,"name":"S","parentId":1},{"id":5,"name":"K","parentId":4}]
+    var obj = {};
+    obj.rootElements = [];
+    for (i in data) {
+        var _elem = data[i];
+        if (_elem.managerID) {
+            var _parentId = _elem.managerID;
+            if (_parentId == _elem.EMPID) {
+                // check children, if false - add
+                if (!_elem.children) {
+                    _elem.children = [];
+                }
+                _elem.children.push(_elem);
+            }
+            else {
+                addChildToParent(_elem, _parentId);
+            }
+        }
+        else // is root
+        {
+            obj.rootElements.push(_elem);
+        }
+    }
+    function addChildToParent(child, managerID, root) {
+        for (j in data) {
+            if (data[j].EMPID.toString() == managerID.toString()) {
+                if (!data[j].children) {
+                    data[j].children = [];
+                }
+                data[j].children.push(child);
+            }
+        }
+    }
+    console.log("MASTER TREE", obj.rootElements);
+    
+    
+    
+    // res.send(obj.rootElements);
 
-  console.log("p1", possList)
-  var roundList = []
 
+  // gett root users id info
+  // rootManagerLevel = user[0].level
+  // rootManagerID = user[0].EMPID
+  // let MAXLEVEL = 5
+  // var currentLevel = rootManagerLevel
+
+  // var possList = []
+  // possList[0] = user
+
+  // //console.log("p1", possList)
+  // var roundList = []
+  // var i = 0
+
+
+  // roundList[i] = employeedata.filter( emp => {
+  //   console.log("emp.level", emp.level)
+  //   console.log("rootManagerLevel", rootManagerLevel)
+  //     console.log("emp.managerID", emp.managerID)
+  //     console.log("rootManagerID", rootManagerID)
+  //   return emp.managerID == rootManagerID
+  // })
+
+  // roundList[1] = employeedata.filter( emp => {
+
+  //  // return roundList[0].filter(e => { 
+  //     return emp.managerID == roundList[0].EMPID
+  //  // })
+
+  //   // console.log("emp.level", emp.level)
+  //   // console.log("rootManagerLevel", rootManagerLevel)
+  //   //   console.log("emp.managerID", emp.managerID)
+  //   //   console.log("rootManagerID", rootManagerID)
+    
+  // })
+
+  //i++
+
+  // while( currentLevel <= MAXLEVEL) {
+  //   roundList[i+1] = roundList[i].map( emp => {
+  //       return employeedata.filter( e => {
+  //         console.log("IN EMP", emp)
+  //         console.log("IN E", e)
+  //         return emp.managerID == e.EMPID 
+  //       })
+  //   })
+  //   currentLevel++
+  //   i++
+
+  // }
+
+  // console.log ("roundList", roundList)
+
+
+//  while( currentLevel <= MAXLEVEL) {
+//     // let i = 1
+//     // increment level to get member info
+//     currentLevel++
+
+//     possList[i] = employeedata.filter( emp => {
+//       console.log("currentLevel", currentLevel)
+//       console.log("emp.level", emp.level)
+//       console.log("emp.managerID", emp.managerID)
+//        console.log("possList[i-1].EMPID", possList[(i-1)][0].EMPID)
+       
+    
+//       console.log("EMP", emp)
+//       return emp.level == currentLevel && emp.managerID == possList[i-1].EMPID
+//     })
+
+//     i++
+
+
+
+
+//  }
   
-  for(let i=1;i<MAXLEVEL;i++) {
-    possList[i] = employeedata.filter( emp => {
-      console.log("emp", emp)
-      console.log("user[0].EMPID", user)
-      console.log("possList[i-1].level+1", possList[i-1])
-      return emp.level == possList[i-1].level+1 &&  emp.managerID == possList[i-1].EMPID
-    });
-    console.log("PossList", possList, i)
-    // roundList[i] = possList[i].filter( e => e.managerID == possList[i-1].EMPID)
-  }
+  // for(let i=0;i<MAXLEVEL;i++) {
+  //   possList[i] = employeedata.filter( emp => {
+  //     console.log("emp", emp)
+  //     console.log("user[0].EMPID", user)
+  //     console.log("possList[i-1].level+1", possList[i-1])
+  //     return emp.level == possList[i-1].level+1 &&  emp.managerID == possList[i-1].EMPID
+  //   });
+  //   // roundList[i] = possList[i].filter( e => e.managerID == possList[i-1].EMPID)
+  // }
+  //console.log("PossList", possList, i)
 //
 
-  console.log("roundList", roundList)
+  // console.log("roundList", roundList)
   // // set a root member to build team from recursively
   // var locManLevel = managerLevel
   // var possibleUserList = []
@@ -326,7 +434,9 @@ function makeTeamList() {
 
 
 
-  console.log("Possible List", roundList)
+  // console.log("Possible List", possList)
+   document.getElementById("user-name").innerHTML = user[0].lastName + ", " + user[0].firstName
+ //  document.getElementById("user-message").innerHTML = roundList[0].length + " direct team members "
 }
 
 function updatePage() {
@@ -613,8 +723,9 @@ function makechart3() {
     height: 280
   },
   data: {
+      x : 'x',
       columns: [
-        //[ 'x', 'sec', 'sen', 'cla', 'int', 'pub', 'six'],
+          [ 'x', 'sec', 'sen', 'cla', 'int', 'pub', 'six'],
           ['PCI', 30, 20, 50, 40, 60, 50],
           ['PII', 200, 130, 90, 240, 130, 220],
           ['SPE', 300, 200, 160, 400, 250, 250],
@@ -635,7 +746,12 @@ function makechart3() {
       },
       groups: [
           ['PCI','PII']
-      ]
+      ],
+      axis: {
+        x: {
+            type: 'category' // this needed to load string x value
+        }
+    }
   }
 });
 
