@@ -7,7 +7,7 @@
     "lastName": "Cushelly",
     "email": "aubrey.cushelly@acme.co.uk",
     "level": 1,
-    "managerID": null,
+    "managerID": 0,
     "emailRelationship": 1
   },
   {
@@ -996,7 +996,7 @@
     "firstName": "Ardine",
     "lastName": "Cammish",
     "email": "ardine.cammish@acme.co.uk",
-    "level": 5,
+    "level": 4,
     "managerID": 25,
     "emailRelationship": 1
   },

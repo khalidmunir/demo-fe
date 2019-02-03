@@ -66,6 +66,18 @@ window.addEventListener('load', async e => {
 
 });
 
+
+var toggler = document.getElementsByClassName("caret");
+var iCaret;
+
+for (iCaret = 0; iCaret < toggler.length; iCaret++) {
+  toggler[iCaret].addEventListener("click", function() {
+    this.parentElement.querySelector(".nested").classList.toggle("active");
+    this.classList.toggle("caret-down");
+  });
+}
+
+
 function loadAllUsersFromStorage() {
 
 }
@@ -253,6 +265,7 @@ function fixData() {
   })
   
   makeTeamList()
+  makeOwnTeam(user[0])
   makePieChart()
   makeRadialBar()
   makechart3()
@@ -276,10 +289,50 @@ function addJsonTags() {
   console.log("Finished file", metaFactdata)
 }
 
-function makeTeamList() {
+function makeOwnTeam(teamLeader) {
+  //  { id: 7, name: "Sales and Events", hasChild: true, expanded: true },
+   console.log("OWN TEAM", teamLeader)
+var res = []  
+  //  res = teamLeader.map( e => {
+  //    var hasCHILD = e.children > 0 ? true : false 
+  //   return ({
+  //     id: e.EMPID,
+  //     name: e.firstName + " "  + e.lastName,
+  //     hasChild: hasCHILD,
+  //     expanded : true
+  //   })
+
+  //  })
+
+   $(function () {
+
+    $("#treeView").ejTreeView({
+
+        fields: { id: "id", parentId: "pid", text: "name", hasChild: "hasChild", dataSource: res, expanded: "expanded" },
+
+    });
+
+    //Creates Object for TreeView.
+
+    treeObj = $("#treeView").data("ejTreeView");
+
+});
+   console.log("res", res)
+
+  
+
+  var locLev = teamLeader.level
+  teamLeader.managerID = null
 
 
-  var data = employeedata  // [{"id":1,"name":"X","parentId":null},{"id":2,"name":"Y","parentId":1},{"id":3,"name":"D","parentId":2},{"id":2,"name":"S","parentId":1},{"id":5,"name":"K","parentId":4}]
+  possibleUserList = employeedata.filter( (emp, index) => {
+           return emp.level > locLev
+  })
+
+  console.log("PossUserList",possibleUserList)
+
+    var data = [ teamLeader, ...possibleUserList ] 
+    console.log("data after mashup", data)
     var obj = {};
     obj.rootElements = [];
     for (i in data) {
@@ -294,7 +347,7 @@ function makeTeamList() {
                 _elem.children.push(_elem);
             }
             else {
-                addChildToParent(_elem, _parentId);
+               //  addChildToParent(_elem, _parentId);
             }
         }
         else // is root
@@ -302,17 +355,120 @@ function makeTeamList() {
             obj.rootElements.push(_elem);
         }
     }
-    function addChildToParent(child, managerID, root) {
-        for (j in data) {
-            if (data[j].EMPID.toString() == managerID.toString()) {
-                if (!data[j].children) {
-                    data[j].children = [];
-                }
-                data[j].children.push(child);
-            }
-        }
-    }
-    console.log("MASTER TREE", obj.rootElements);
+    // function addChildToParent(child, managerID, root) {
+    //     for (j in data) {
+    //         if (data[j].EMPID.toString() == managerID.toString()) {
+    //             if (!data[j].children) {
+    //                 data[j].children = [];
+    //             }
+    //             data[j].children.push(child);
+    //         }
+    //     }
+    // }
+    console.log("Own TEAM TREE", obj.rootElements);
+
+
+      //console.log("Possible list", possibleUserList)
+      console.log("teamLeader list", teamLeader)
+      team = teamLeader
+    
+      console.log("team", JSON.stringify(team))
+
+      //var treeview = team
+    //   const iterate = (treeview) => {
+    //     Object.keys(treeview).forEach(key => {
+    
+    //     console.log(`key: ${key}, value: ${treeview[key]}`)
+    
+    //     if (typeof treeview[key] === 'object') {
+    //             iterate(treeview[key])
+    //         }
+    //     })
+    // }
+
+
+   
+
+      if (team[0] != null) {
+        
+      }
+
+
+      
+
+}
+
+
+function walkTree (t) {
+
+ 
+ for( node in t) {
+   console.log("node", t[node])
+   console.log("node name", t[node].firstName + " " + t[node].lastName)
+   if (t[node].children) {
+     console.log("GOt CHildren: t[node].children.length: ", t[node].children)
+     walkTree(t[node].children)
+    //  if (t[node].children.length > 0) {
+    //    //for (child in t[node].children) {
+        
+
+    //    //}
+    //  } 
+       console.log("In Walktree", t)
+
+     
+   }
+ }
+
+}
+
+
+
+function makeTeamList() {
+
+
+  var mydata = employeedata  // [{"id":1,"name":"X","parentId":null},{"id":2,"name":"Y","parentId":1},{"id":3,"name":"D","parentId":2},{"id":2,"name":"S","parentId":1},{"id":5,"name":"K","parentId":4}]
+    // var obj = {};
+    // obj.rootElements = [];
+    // for (i in data) {
+    //     var _elem = data[i];
+    //     if (_elem.managerID) {
+    //         var _parentId = _elem.managerID;
+    //         if (_parentId == _elem.EMPID) {
+    //             // check children, if false - add
+    //             if (!_elem.children) {
+    //                 _elem.children = [];
+    //             }
+    //             _elem.children.push(_elem);
+    //         }
+    //         else {
+    //             addChildToParent(_elem, _parentId);
+    //         }
+    //     }
+    //     else // is root
+    //     {
+    //         obj.rootElements.push(_elem);
+    //     }
+    // }
+    // function addChildToParent(child, managerID, root) {
+    //     for (j in data) {
+    //         if (data[j].EMPID.toString() == managerID.toString()) {
+    //             if (!data[j].children) {
+    //                 data[j].children = [];
+    //             }
+    //             // double check its not already there !
+    //             let exists = 0
+    //             for(let ii=0;ii<data[j].children.length;ii++){
+    //               // console.log("child", child.EMPID)
+    //               console.log("cecking data[j].children[ii]", data[j].children[ii].EMPID + " " + child.EMPID)
+    //               if ( data[j].children[ii].EMPID ==  child.EMPID) { console.log("already Exists");  exists = 1 }
+    //             }
+    //             if (!exists) { console.log("pushing", child); data[j].children.push(child); }
+                
+    //         }
+    //     }
+    // }
+    //console.log("MASTER TREE", obj.rootElements);
     
     
     
@@ -431,8 +587,46 @@ function makeTeamList() {
   // for (i=0;i<8;i++) {
 
   // }
+  unflattenToObject = function(array, parent) {
+    var tree = {};
+    parent = typeof parent !== 'undefined' ? parent : {EMPID: 0};
+  
+    var childrenArray = array.filter(function(child) {
+      return child.managerID == parent.EMPID;
+    });
+  
+    if (childrenArray.length > 0) {
+      var childrenObject = {};
+      // Transform children into a hash/object keyed on token
+      childrenArray.forEach(function(child) {
+        childrenObject[child.EMPID] = child;
+      });
+      if (parent.EMPID == 0) {
+        tree = childrenObject;
+      } else {
+        parent['children'] = childrenObject;
+      }
+      childrenArray.forEach(function(child) {
+        unflattenToObject(array, child);
+      })
+    }
+  
+    return tree;
+  };
+  
+  var arr = [
+      {'id':1 ,'parentid': 0},
+      {'id':2 ,'parentid': 1},
+      {'id':3 ,'parentid': 1},
+      {'id':4 ,'parentid': 2},
+      {'id':5 ,'parentid': 2},
+      {'id':6 ,'parentid': 3},
+      {'id':7 ,'parentid': 4}
+  ];
+  tree = unflattenToObject(mydata);
+  console.log("NEW TREE", tree)
 
-
+  walkTree(tree)
 
   // console.log("Possible List", possList)
    document.getElementById("user-name").innerHTML = user[0].lastName + ", " + user[0].firstName
